@@ -3,15 +3,17 @@ import { AppModule } from './app/app.module';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
-import * as compression from 'compression';
-import * as morgan from 'morgan';
+import compression from 'compression';
+import morgan from 'morgan';
 import { ConfigService } from '@nestjs/config';
 import { Logger, VersioningType } from '@nestjs/common';
 import { useContainer } from 'class-validator';
 import { middleware as expressCtx } from 'express-ctx';
 import setupSwagger from './swagger';
+import { initializeTransactionalContext } from 'typeorm-transactional';
 
 export async function bootstrap() {
+  initializeTransactionalContext();
   const app = await NestFactory.create<NestApplication>(
     AppModule,
     new ExpressAdapter(),
@@ -21,7 +23,9 @@ export async function bootstrap() {
   );
 
   const configService = app.get(ConfigService);
-  const databaseUri: string = configService.get<string>('database.host');
+  const databaseHost: string = configService.get<string>('database.host');
+  const databasePort: string = configService.get<string>('database.port');
+  const databaseUri = `${databaseHost}:${databasePort}`;
   const env: string = configService.get<string>('app.env');
   const port: number = configService.get<number>('app.http.port');
   const globalPrefix: string = configService.get<string>('app.globalPrefix');
@@ -37,7 +41,7 @@ export async function bootstrap() {
   );
   const jobEnable: boolean = configService.get<boolean>('app.jobEnable');
   const documentationEnable: boolean = configService.get<boolean>(
-    'app.documentation.enable',
+    'app.documentationEnable',
   );
 
   const logger = new Logger();
@@ -73,7 +77,7 @@ export async function bootstrap() {
   await app.listen(port);
   logger.log(`==========================================================`);
   logger.log(`Environment Variable`, 'NestApplication');
-  logger.log(JSON.parse(JSON.stringify(process.env)), 'NestApplication');
+  // logger.log(JSON.parse(JSON.stringify(process.env)), 'NestApplication');
   logger.log(`==========================================================`);
   logger.log(`Job is ${jobEnable}`, 'NestApplication');
   logger.log(
@@ -84,6 +88,7 @@ export async function bootstrap() {
   );
   logger.log(`Http versioning is ${versionEnable}`, 'NestApplication');
   logger.log(`Http Server running on ${await app.getUrl()}`, 'NestApplication');
+  logger.log(`Documentation: http://localhost:${port}/documentation`);
   logger.log(`Database uri ${databaseUri}`, 'NestApplication');
   logger.log(`==========================================================`);
   return app;

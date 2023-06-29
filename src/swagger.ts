@@ -1,7 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestApplication } from '@nestjs/core';
-import { ENUM_APP_ENVIRONMENT } from './app/constants/app.enum.constant';
+import { ENUM_APP_ENVIRONMENT } from './app/constant/app.enum.constant';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ResponseDefaultSerialization } from './common/response/serialization/repsonse.default.serialization';
 
