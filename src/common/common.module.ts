@@ -16,6 +16,7 @@ import { addTransactionalDataSource } from 'typeorm-transactional';
 import { DataSource } from 'typeorm';
 import { ENUM_MESSAGE_LANGUAGE } from './message/constant/message.enum.constant';
 import { DatabaseOptionsModule } from './database/database.options.module';
+import { MessageModule } from './message/message.module';
 
 @Module({
     controllers: [],
@@ -160,8 +161,9 @@ import { DatabaseOptionsModule } from './database/database.options.module';
         HelperModule,
         PaginationModule,
         ErrorModule,
-        DebuggerModule.forRoot(),
+        MessageModule,
         ResponseModule,
+        DebuggerModule.forRoot(),
         AuthModule.forRoot(),
     ],
 })

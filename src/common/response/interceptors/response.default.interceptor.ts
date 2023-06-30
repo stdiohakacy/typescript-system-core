@@ -27,13 +27,19 @@ import {
     RESPONSE_SERIALIZATION_OPTIONS_META_KEY,
 } from 'src/common/response/constants/response.constant';
 import { IResponse } from 'src/common/response/interfaces/response.interface';
+import { MessageService } from 'src/message/services/message.serivce';
+import {
+    IMessage,
+    IMessageOptionsProperties,
+} from 'src/message/interface/message.interface';
 
 @Injectable()
 export class ResponseDefaultInterceptor<T>
     implements NestInterceptor<Promise<T>>
 {
     constructor(
-        private readonly reflector: Reflector // private readonly messageService: MessageService
+        private readonly reflector: Reflector,
+        private readonly messageService: MessageService
     ) {}
 
     async intercept(
@@ -61,11 +67,11 @@ export class ResponseDefaultInterceptor<T>
                             RESPONSE_SERIALIZATION_OPTIONS_META_KEY,
                             context.getHandler()
                         );
-                    // let messageProperties: IMessageOptionsProperties =
-                    //     this.reflector.get<IMessageOptionsProperties>(
-                    //         RESPONSE_MESSAGE_PROPERTIES_META_KEY,
-                    //         context.getHandler()
-                    //     );
+                    let messageProperties: IMessageOptionsProperties =
+                        this.reflector.get<IMessageOptionsProperties>(
+                            RESPONSE_MESSAGE_PROPERTIES_META_KEY,
+                            context.getHandler()
+                        );
 
                     // metadata
                     const __customLang = request.__customLang;
@@ -112,9 +118,9 @@ export class ResponseDefaultInterceptor<T>
                             _metadata?.customProperty?.statusCode ?? statusCode;
                         messagePath =
                             _metadata?.customProperty?.message ?? messagePath;
-                        // messageProperties =
-                        //     _metadata?.customProperty?.messageProperties ??
-                        //     messageProperties;
+                        messageProperties =
+                            _metadata?.customProperty?.messageProperties ??
+                            messageProperties;
 
                         delete _metadata?.customProperty;
 
@@ -124,17 +130,17 @@ export class ResponseDefaultInterceptor<T>
                         };
                     }
 
-                    // const message: string | IMessage =
-                    //     await this.messageService.get(messagePath, {
-                    //         customLanguages: __customLang,
-                    //         properties: messageProperties,
-                    //     });
+                    const message: string | IMessage =
+                        await this.messageService.get(messagePath, {
+                            customLanguages: __customLang,
+                            properties: messageProperties,
+                        });
 
                     response.status(httpStatus);
 
                     return {
                         statusCode,
-                        message: '',
+                        message,
                         _metadata: metadata,
                         data,
                     };

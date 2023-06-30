@@ -23,8 +23,6 @@ export class AppHelloSerialization {
     @ApiProperty({ example: faker.date.recent() })
     readonly format: string;
 
-    @ApiProperty({
-        example: 1660190937231,
-    })
+    @ApiProperty({ example: 1660190937231 })
     readonly timestamp: number;
 }

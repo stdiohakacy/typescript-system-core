@@ -69,7 +69,7 @@ async function bootstrap() {
 
     logger.log(`==========================================================`);
     logger.log(`Environment Variable`, 'NestApplication');
-    logger.log(JSON.parse(JSON.stringify(process.env)), 'NestApplication');
+    // logger.log(JSON.parse(JSON.stringify(process.env)), 'NestApplication');
     logger.log(`==========================================================`);
     logger.log(`Job is ${jobEnable}`, 'NestApplication');
     logger.log(
