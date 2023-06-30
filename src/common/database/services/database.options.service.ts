@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { IDatabaseOptionService } from '../interfaces/database.options-service.interface';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import path from 'path';
+import { SnakeNamingStrategy } from 'src/snake-naming-strategy';
 
 @Injectable()
 export class DatabaseOptionService implements IDatabaseOptionService {
@@ -20,7 +22,12 @@ export class DatabaseOptionService implements IDatabaseOptionService {
             : '';
 
         return {
-            entities: [],
+            entities: [
+                path.join(
+                    __dirname,
+                    '../../../modules/**/repository/entities/*{.ts,.js}'
+                ),
+            ],
             migrations: [],
             // keepConnectionAlive: !this.isTest,
             // dropSchema: this.isTest,

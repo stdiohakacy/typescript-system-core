@@ -11,7 +11,7 @@ export const dataSource = new DataSource({
     username: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABASE_NAME,
-    namingStrategy: new SnakeNamingStrategy(),
+    // namingStrategy: new SnakeNamingStrategy(),
     subscribers: [],
     entities: [
         'src/modules/**/*.entity{.ts,.js}',

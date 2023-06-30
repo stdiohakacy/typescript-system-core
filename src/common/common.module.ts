@@ -18,6 +18,7 @@ import { ENUM_MESSAGE_LANGUAGE } from './message/constant/message.enum.constant'
 import { DatabaseOptionsModule } from './database/database.options.module';
 import { MessageModule } from './message/message.module';
 import { LoggerModule } from '../modules/logger/logger.module';
+import { SnakeNamingStrategy } from 'src/snake-naming-strategy';
 
 @Module({
     controllers: [],
@@ -146,10 +147,12 @@ import { LoggerModule } from '../modules/logger/logger.module';
                 abortEarly: true,
             },
         }),
+
         TypeOrmModule.forRootAsync({
             imports: [DatabaseOptionsModule],
-            useFactory: (dbOptionService: DatabaseOptionService) =>
-                dbOptionService.createOption(),
+            useFactory: (dbOptionService: DatabaseOptionService) => {
+                return dbOptionService.createOption();
+            },
             inject: [DatabaseOptionService],
             dataSourceFactory: async (options) => {
                 if (!options) {

@@ -6,10 +6,67 @@ import {
 } from '../constants/logger.enum.constant';
 import { ENUM_REQUEST_METHOD } from '../../../common/request/constants/request.enum.constant';
 import { ENUM_ROLE_TYPE } from '../../role/constant/role.enum.constant';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class LoggerDTO extends BaseDTO {
-    constructor(loggerEntity: LoggerEntity) {
-        super(loggerEntity);
+    @ApiProperty()
+    level: string;
+
+    @ApiProperty()
+    action: string;
+
+    @ApiProperty()
+    method: string;
+
+    @ApiPropertyOptional()
+    requestId?: string;
+
+    @ApiPropertyOptional()
+    userId?: string;
+
+    @ApiPropertyOptional()
+    roleId?: string;
+
+    @ApiProperty()
+    anonymous: boolean;
+
+    @ApiPropertyOptional({ enum: ENUM_ROLE_TYPE })
+    type?: ENUM_ROLE_TYPE;
+
+    @ApiProperty()
+    description: string;
+
+    @ApiProperty()
+    params?: Record<string, any>;
+
+    @ApiPropertyOptional()
+    bodies?: Record<string, any>;
+
+    @ApiPropertyOptional()
+    statusCode?: number;
+
+    @ApiPropertyOptional()
+    path?: string;
+
+    @ApiProperty()
+    tags: string[];
+
+    constructor(entity: LoggerEntity) {
+        super(entity);
+        this.level = entity.level;
+        this.action = entity.action;
+        this.method = entity.method;
+        this.requestId = entity.requestId;
+        this.userId = entity.userId;
+        this.roleId = entity.roleId;
+        this.anonymous = entity.anonymous;
+        this.type = entity.type;
+        this.description = entity.description;
+        this.params = entity.params;
+        this.bodies = entity.bodies;
+        this.statusCode = entity.statusCode;
+        this.path = entity.path;
+        this.tags = entity.tags;
     }
 }
 
@@ -29,6 +86,6 @@ export class LoggerCreateDTO {
     statusCode?: number;
 }
 
-export class LoggerCreateRawDto extends LoggerCreateDTO {
+export class LoggerCreateRawDTO extends LoggerCreateDTO {
     level: ENUM_LOGGER_LEVEL;
 }

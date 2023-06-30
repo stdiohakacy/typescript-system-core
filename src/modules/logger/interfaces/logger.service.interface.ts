@@ -1,4 +1,4 @@
-import { LoggerCreateDTO, LoggerCreateRawDto } from '../dto/logger.dto';
+import { LoggerCreateDTO, LoggerCreateRawDTO } from '../dto/logger.dto';
 
 export interface ILoggerService {
     info({
@@ -76,5 +76,5 @@ export interface ILoggerService {
         path,
         statusCode,
         tags,
-    }: LoggerCreateRawDto);
+    }: LoggerCreateRawDTO);
 }

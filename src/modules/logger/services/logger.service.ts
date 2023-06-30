@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ILoggerService } from '../interfaces/logger.service.interface';
-import { LoggerCreateDTO, LoggerCreateRawDto } from '../dto/logger.dto';
+import { LoggerCreateDTO, LoggerCreateRawDTO } from '../dto/logger.dto';
 import { LoggerEntity } from '../repository/entities/logger.entity';
 import { ENUM_LOGGER_LEVEL } from '../constants/logger.enum.constant';
 
@@ -154,22 +154,23 @@ export class LoggerService implements ILoggerService {
         path,
         statusCode,
         tags,
-    }: LoggerCreateRawDto) {
-        const logger: LoggerEntity = new LoggerEntity();
-        logger.level = level;
-        logger.userId = userId;
-        logger.anonymous = !userId;
-        logger.action = action;
-        logger.description = description;
-        logger.method = method;
-        logger.requestId = requestId;
-        logger.roleId = roleId;
-        logger.type = type;
-        logger.params = params;
-        logger.bodies = bodies;
-        logger.path = path;
-        logger.statusCode = statusCode;
-        logger.tags = tags;
+    }: LoggerCreateRawDTO) {
+        const logger: LoggerEntity = this.loggerRepo.create({
+            level,
+            userId,
+            action,
+            description,
+            method,
+            requestId,
+            roleId,
+            type,
+            params,
+            bodies,
+            path,
+            statusCode,
+            tags,
+            anonymous: !userId,
+        });
 
         return await this.loggerRepo.save<LoggerEntity>(logger);
     }

@@ -20,14 +20,10 @@ export abstract class BaseEntity<DTO extends BaseDTO = BaseDTO, O = never>
     @PrimaryGeneratedColumn('uuid')
     id: Uuid;
 
-    @CreateDateColumn({
-        type: 'timestamp',
-    })
+    @CreateDateColumn({ type: 'timestamp', name: 'createdAt' })
     createdAt: Date;
 
-    @UpdateDateColumn({
-        type: 'timestamp',
-    })
+    @UpdateDateColumn({ type: 'timestamp', name: 'updatedAt' })
     updatedAt: Date;
 
     private dtoClass?: Constructor<DTO, [BaseEntity, O?]>;
