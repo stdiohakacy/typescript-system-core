@@ -5,12 +5,7 @@ import { ResponseCustomHeadersInterceptor } from './interceptors/response.custom
 
 @Module({
     controllers: [],
-    providers: [
-        {
-            provide: APP_INTERCEPTOR,
-            useClass: ResponseCustomHeadersInterceptor,
-        },
-    ],
-    imports: [ResponseMiddlewareModule],
+    providers: [],
+    imports: [],
 })
 export class ResponseModule {}

@@ -26,7 +26,6 @@ export class AppController {
 
     @AppHelloDoc()
     @Response('app.hello', { serialization: AppHelloSerialization })
-    // @Logger(ENUM_LOGGER_ACTION.TEST, { tags: ['test'] })
     @Get('/hello')
     async hello(@RequestUserAgent() userAgent: IResult): Promise<IResponse> {
         const newDate = this.helperDateService.create();

@@ -22,5 +22,7 @@ export default registerAs(
                 : 3000,
         },
         jobEnable: process.env.JOB_ENABLE === 'true' ?? false,
+        documentationEnable:
+            process.env.DOCUMENTATION_ENABLE === 'true' ?? false,
     })
 );

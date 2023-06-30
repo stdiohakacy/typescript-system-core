@@ -5,6 +5,9 @@ import { ConfigService } from '@nestjs/config';
 import { useContainer } from 'class-validator';
 import swaggerInit from './swagger';
 import { initializeTransactionalContext } from 'typeorm-transactional';
+import rateLimit from 'express-rate-limit';
+import compression from 'compression';
+import morgan from 'morgan';
 
 async function bootstrap() {
     initializeTransactionalContext();
@@ -25,7 +28,11 @@ async function bootstrap() {
     const versionEnable: string = configService.get<string>(
         'app.versioning.enable'
     );
+
     const jobEnable: boolean = configService.get<boolean>('app.jobEnable');
+    const documentationEnable: boolean = configService.get<boolean>(
+        'app.documentationEnable'
+    );
 
     const logger = new Logger();
     process.env.NODE_ENV = env;
@@ -33,6 +40,15 @@ async function bootstrap() {
     // Global
     app.setGlobalPrefix(globalPrefix);
     useContainer(app.select(AppModule), { fallbackOnErrors: true });
+
+    app.use(
+        rateLimit({
+            windowMs: 15 * 60 * 1000, // 15 minutes
+            max: 100, // limit each IP to 100 requests per windowMs
+        })
+    );
+    app.use(compression());
+    app.use(morgan('combined'));
 
     // Versioning
     if (versionEnable) {
@@ -44,7 +60,9 @@ async function bootstrap() {
     }
 
     // Swagger
-    await swaggerInit(app);
+    if (documentationEnable) {
+        await swaggerInit(app);
+    }
 
     // Listen
     await app.listen(port);
@@ -66,6 +84,7 @@ async function bootstrap() {
         'NestApplication'
     );
     logger.log(`Database uri ${databaseUri}`, 'NestApplication');
+    logger.log(`Documentation: http://localhost:${port}/documentation`);
     logger.log(`==========================================================`);
 }
 bootstrap();
