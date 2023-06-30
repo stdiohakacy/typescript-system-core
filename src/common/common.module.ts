@@ -17,6 +17,7 @@ import { DataSource } from 'typeorm';
 import { ENUM_MESSAGE_LANGUAGE } from './message/constant/message.enum.constant';
 import { DatabaseOptionsModule } from './database/database.options.module';
 import { MessageModule } from './message/message.module';
+import { LoggerModule } from '../modules/logger/logger.module';
 
 @Module({
     controllers: [],
@@ -163,6 +164,7 @@ import { MessageModule } from './message/message.module';
         ErrorModule,
         MessageModule,
         ResponseModule,
+        LoggerModule,
         DebuggerModule.forRoot(),
         AuthModule.forRoot(),
     ],

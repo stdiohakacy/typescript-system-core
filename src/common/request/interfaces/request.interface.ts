@@ -3,6 +3,7 @@ import { RequestPaginationSerialization } from 'src/common/request/serialization
 import { IResult } from 'ua-parser-js';
 
 export interface IRequestApp extends Request {
+    apiKey?: any; // IApiKeyPayload
     user?: Record<string, any>;
 
     __id: string;
