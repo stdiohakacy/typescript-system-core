@@ -38,7 +38,7 @@ export class ApiKeyAdminController {
 
             return {
                 data: {
-                    _id: apiKeyCreated.data.id,
+                    id: apiKeyCreated.data.id,
                     secret: apiKeyCreated.secret,
                 },
             };

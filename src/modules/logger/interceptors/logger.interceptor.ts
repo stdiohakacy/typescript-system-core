@@ -70,7 +70,7 @@ export class LoggerInterceptor implements NestInterceptor<any> {
                         description:
                             loggerOptions?.description ??
                             `Request ${method} called, url ${originalUrl}, and action ${loggerAction}`,
-                        apiKey: apiKey?._id,
+                        apiKey: apiKey?.id,
                         userId: user?._id,
                         requestId: __id,
                         method: method as ENUM_REQUEST_METHOD,
