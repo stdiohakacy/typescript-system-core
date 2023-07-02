@@ -8,5 +8,5 @@ export class ResponseIdSerialization {
         required: true,
     })
     @Type(() => String)
-    _id: string;
+    id: string;
 }

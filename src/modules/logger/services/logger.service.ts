@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ILoggerService } from '../interfaces/logger.service.interface';
 import { LoggerCreateDTO, LoggerCreateRawDTO } from '../dto/logger.dto';
-import { LoggerEntity } from '../repository/entities/logger.entity';
+import { LoggerEntity } from '../entities/logger.entity';
 import { ENUM_LOGGER_LEVEL } from '../constants/logger.enum.constant';
 
 @Injectable()

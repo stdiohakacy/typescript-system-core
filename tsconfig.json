@@ -16,7 +16,17 @@
     "allowJs": false,
     "esModuleInterop": true,
     "moduleResolution": "node",     
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "paths": {
+      "@app/*": ["src/app/*"],
+      "src/common/*": ["src/common/*"],
+      "@configs/*": ["src/configs/*"],
+      "@health/*": ["src/health/*"],
+      "@jobs/*": ["src/jobs/*"],
+      "@languages/*": ["src/languages/*"],
+      "@message/*": ["src/message/*"],
+      "@modules/*": ["src/modules/*"],
+    },
   },
   "include": [
     "src",

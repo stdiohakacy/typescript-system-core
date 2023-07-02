@@ -23,10 +23,7 @@ export class DatabaseOptionService implements IDatabaseOptionService {
 
         return {
             entities: [
-                path.join(
-                    __dirname,
-                    '../../../modules/**/repository/entities/*{.ts,.js}'
-                ),
+                path.join(__dirname, '../../../modules/**/entities/*{.ts,.js}'),
             ],
             migrations: [],
             // keepConnectionAlive: !this.isTest,

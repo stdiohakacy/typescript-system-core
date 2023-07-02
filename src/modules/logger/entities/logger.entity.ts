@@ -1,16 +1,16 @@
 import { Column, Entity, OneToMany, OneToOne } from 'typeorm';
-import { LoggerDTO } from '../../dto/logger.dto';
+import { LoggerDTO } from '../dto/logger.dto';
 import {
     ENUM_LOGGER_ACTION,
     ENUM_LOGGER_LEVEL,
-} from '../../constants/logger.enum.constant';
+} from '../constants/logger.enum.constant';
 import {
     BaseEntity,
     IBaseEntity,
-} from '../../../../common/base/entity/base.entity';
-import { ENUM_ROLE_TYPE } from '../../../role/constant/role.enum.constant';
-import { UseDTO } from '../../../../common/base/decorators/use-dto.decorator';
-import { ENUM_REQUEST_METHOD } from '../../../../common/request/constants/request.enum.constant';
+} from '../../../common/base/entity/base.entity';
+import { ENUM_ROLE_TYPE } from '../../role/constant/role.enum.constant';
+import { UseDTO } from '../../../common/base/decorators/use-dto.decorator';
+import { ENUM_REQUEST_METHOD } from '../../../common/request/constants/request.enum.constant';
 
 export interface ILoggerEntity extends IBaseEntity<LoggerDTO> {
     level: string;

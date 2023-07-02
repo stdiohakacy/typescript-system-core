@@ -4,7 +4,7 @@ import {
     UpdateDateColumn,
 } from 'typeorm';
 import { BaseDTO } from '../dto/base.dto';
-import { Constructor } from 'src/types';
+import { Constructor, Uuid } from '../../../types';
 
 export interface IBaseEntity<DTO extends BaseDTO, O = never> {
     id: Uuid;

@@ -3,7 +3,7 @@ import moment from 'moment';
 import {
     ENUM_HELPER_DATE_DIFF,
     ENUM_HELPER_DATE_FORMAT,
-} from 'src/common/helper/constants/helper.enum.constant';
+} from '../../helper/constants/helper.enum.constant';
 import { IHelperDateService } from 'src/common/helper/interfaces/helper.date-service.interface';
 import {
     IHelperDateExtractDate,

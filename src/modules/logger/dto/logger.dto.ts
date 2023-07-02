@@ -1,5 +1,5 @@
 import { BaseDTO } from '../../../common/base/dto/base.dto';
-import { LoggerEntity } from '../repository/entities/logger.entity';
+import { LoggerEntity } from '../entities/logger.entity';
 import {
     ENUM_LOGGER_ACTION,
     ENUM_LOGGER_LEVEL,

@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { BaseEntity } from '../entity/base.entity';
+import { Uuid } from '../../../types';
 
 export class BaseDTO {
     @ApiProperty()

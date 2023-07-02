@@ -42,3 +42,5 @@ export type KeyOfType<Entity, U> = {
         ? P
         : never;
 }[keyof Entity];
+
+export type Uuid = string & { _uuidBrand: undefined };

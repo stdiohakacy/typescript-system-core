@@ -6,10 +6,10 @@ import { ENUM_APP_ENVIRONMENT } from 'src/app/constants/app.enum.constant';
 import {
     AwsS3MultipartPartsSerialization,
     AwsS3MultipartSerialization,
-} from 'src/common/aws/serializations/aws.s3-multipart.serialization';
-import { AwsS3Serialization } from 'src/common/aws/serializations/aws.s3.serialization';
-import { ResponseDefaultSerialization } from 'src/common/response/serializations/response.default.serialization';
-import { ResponsePagingSerialization } from 'src/common/response/serializations/response.paging.serialization';
+} from './common/aws/serializations/aws.s3-multipart.serialization';
+import { AwsS3Serialization } from './common/aws/serializations/aws.s3.serialization';
+import { ResponseDefaultSerialization } from './common/response/serializations/response.default.serialization';
+import { ResponsePagingSerialization } from './common/response/serializations/response.paging.serialization';
 
 export default async function (app: NestApplication) {
     const configService = app.get(ConfigService);

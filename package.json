@@ -20,7 +20,9 @@
     "typeorm": "typeorm-ts-node-esm",
     "migration:generate": "yarn run typeorm migration:generate -d ormconfig",
     "migration:create": "yarn run typeorm migration:create -d ormconfig",
-    "migration:run": "yarn run typeorm migration:run -d ormconfig"
+    "migration:run": "yarn run typeorm migration:run -d ormconfig",
+    "seed:apikey": "nestjs-command seed:apikey",
+    "seed": "yarn seed:apikey"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.317.0",

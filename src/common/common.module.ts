@@ -1,28 +1,30 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { DebuggerModule } from 'src/common/debugger/debugger.module';
-import { HelperModule } from 'src/common/helper/helper.module';
-import { ErrorModule } from 'src/common/error/error.module';
-import { ResponseModule } from 'src/common/response/response.module';
-import { AuthModule } from 'src/common/auth/auth.module';
-import { PaginationModule } from 'src/common/pagination/pagination.module';
-import Joi from 'joi';
-import configs from 'src/configs';
-import { DatabaseOptionService } from 'src/common/database/services/database.options.service';
-import { ENUM_APP_ENVIRONMENT } from 'src/app/constants/app.enum.constant';
-import { APP_LANGUAGE } from 'src/app/constants/app.constant';
+import { DataSource } from 'typeorm';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { addTransactionalDataSource } from 'typeorm-transactional';
-import { DataSource } from 'typeorm';
+import Joi from 'joi';
+
+import { DebuggerModule } from '../common/debugger/debugger.module';
+import { HelperModule } from '../common/helper/helper.module';
+import { ErrorModule } from '../common/error/error.module';
+import { ResponseModule } from '../common/response/response.module';
+import { AuthModule } from '../common/auth/auth.module';
+import { PaginationModule } from '../common/pagination/pagination.module';
+import configs from '../configs';
+import { DatabaseOptionService } from '../common/database/services/database.options.service';
+import { ENUM_APP_ENVIRONMENT } from '../app/constants/app.enum.constant';
+import { APP_LANGUAGE } from '../app/constants/app.constant';
 import { ENUM_MESSAGE_LANGUAGE } from './message/constant/message.enum.constant';
 import { DatabaseOptionsModule } from './database/database.options.module';
 import { MessageModule } from './message/message.module';
 import { LoggerModule } from '../modules/logger/logger.module';
-import { SnakeNamingStrategy } from 'src/snake-naming-strategy';
+import { MigrationApiKeySeed } from '../migrations/seeds/migration.api-key.seed';
+import { ApiKeyModule } from '../modules/api-key/api-key.module';
 
 @Module({
     controllers: [],
-    providers: [],
+    providers: [MigrationApiKeySeed],
     imports: [
         ConfigModule.forRoot({
             load: configs,
@@ -168,6 +170,7 @@ import { SnakeNamingStrategy } from 'src/snake-naming-strategy';
         MessageModule,
         ResponseModule,
         LoggerModule,
+        ApiKeyModule,
         DebuggerModule.forRoot(),
         AuthModule.forRoot(),
     ],
