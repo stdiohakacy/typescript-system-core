@@ -2,6 +2,7 @@ import { DynamicModule, ForwardReference, Module, Type } from '@nestjs/common';
 import { RouterModule as NestJsRouterModule } from '@nestjs/core';
 import { RoutesAdminModule } from './routes/routes.admin.module';
 import { AppController } from 'src/app/controllers/app.controller';
+import { RoutesPublicModule } from './routes/route.public.module';
 
 @Module({})
 export class RouterModule {
@@ -15,11 +16,16 @@ export class RouterModule {
 
         if (process.env.HTTP_ENABLE === 'true') {
             imports.push(
+                RoutesPublicModule,
                 RoutesAdminModule,
                 NestJsRouterModule.register([
                     {
                         path: '/admin',
                         module: RoutesAdminModule,
+                    },
+                    {
+                        path: '/public',
+                        module: RoutesPublicModule,
                     },
                 ])
             );
