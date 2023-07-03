@@ -6,8 +6,8 @@ import {
     IErrors,
     IErrorsImport,
     IValidationErrorImport,
-} from 'src/common/error/interfaces/error.interface';
-import { HelperArrayService } from 'src/common/helper/services/helper.array.service';
+} from '../../common/error/interfaces/error.interface';
+import { HelperArrayService } from '../../common/helper/services/helper.array.service';
 import { IMessageService } from '../interface/message.service.interface';
 import {
     IMessageErrorOptions,

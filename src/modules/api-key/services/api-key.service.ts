@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { IApiKeyService } from '../interfaces/api-key.service.interface';
-import { HelperStringService } from 'src/common/helper/services/helper.string.service';
+import { HelperStringService } from '../../../common/helper/services/helper.string.service';
 import { ConfigService } from '@nestjs/config';
-import { HelperHashService } from 'src/common/helper/services/helper.hash.service';
-import { HelperDateService } from 'src/common/helper/services/helper.date.service';
+import { HelperHashService } from '../../../common/helper/services/helper.hash.service';
+import { HelperDateService } from '../../../common/helper/services/helper.date.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ApiKeyEntity } from '../entities/api-key.entity';

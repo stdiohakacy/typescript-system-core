@@ -13,7 +13,7 @@ import {
     ApiSecurity,
     getSchemaPath,
 } from '@nestjs/swagger';
-import { APP_LANGUAGE } from 'src/app/constants/app.constant';
+import { APP_LANGUAGE } from '../../../app/constants/app.constant';
 import { ENUM_API_KEY_STATUS_CODE_ERROR } from 'src/modules/api-key/constant/api-key.status-code.constant';
 import { ENUM_AUTH_STATUS_CODE_ERROR } from '../../../common/auth/constants/auth.status-code.constant';
 import {

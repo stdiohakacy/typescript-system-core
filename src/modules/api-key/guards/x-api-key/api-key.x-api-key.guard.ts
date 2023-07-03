@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { BadRequestError } from 'passport-headerapikey';
-import { HelperNumberService } from 'src/common/helper/services/helper.number.service';
+import { HelperNumberService } from '../../../../common/helper/services/helper.number.service';
 import { ENUM_API_KEY_STATUS_CODE_ERROR } from '../../constant/api-key.status-code.constant';
 
 @Injectable()

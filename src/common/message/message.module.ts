@@ -2,7 +2,7 @@ import { Global, Module } from '@nestjs/common';
 import * as path from 'path';
 import { I18nModule, HeaderResolver, I18nJsonLoader } from 'nestjs-i18n';
 import { ConfigService } from '@nestjs/config';
-import { MessageService } from 'src/message/services/message.serivce';
+import { MessageService } from '../../message/services/message.serivce';
 import { ENUM_MESSAGE_LANGUAGE } from './constant/message.enum.constant';
 import { MessageMiddlewareModule } from './middleware/message.middleware.module';
 

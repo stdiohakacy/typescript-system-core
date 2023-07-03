@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { RequestPaginationSerialization } from 'src/common/request/serializations/request.pagination.serialization';
+import { RequestPaginationSerialization } from '../../../common/request/serializations/request.pagination.serialization';
 import { IResult } from 'ua-parser-js';
 
 export interface IRequestApp extends Request {

@@ -6,12 +6,12 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { ApiKeyAdminCreateDoc } from '../docs/api-key.admin.doc';
-import { Response } from 'src/common/response/decorators/response.decorator';
+import { Response } from '../../../common/response/decorators/response.decorator';
 import { ApiKeyCreateSerialization } from '../serializations/api-key.create.serialization';
-import { IResponse } from 'src/common/response/interfaces/response.interface';
+import { IResponse } from '../../../common/response/interfaces/response.interface';
 import { ApiKeyService } from '../services/api-key.service';
 import { IApiKeyCreated } from '../interfaces/api-key.interface';
-import { ENUM_ERROR_STATUS_CODE_ERROR } from 'src/common/error/constants/error.status-code.constant';
+import { ENUM_ERROR_STATUS_CODE_ERROR } from '../../../common/error/constants/error.status-code.constant';
 import { ApiKeyCreateDTO } from '../dtos/api-key.create.dto';
 
 @ApiTags('common.admin.apiKey')

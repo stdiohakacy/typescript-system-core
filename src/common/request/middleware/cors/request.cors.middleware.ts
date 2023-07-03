@@ -2,7 +2,7 @@ import { HttpStatus, Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import cors, { CorsOptions } from 'cors';
 import { ConfigService } from '@nestjs/config';
-import { ENUM_APP_ENVIRONMENT } from 'src/app/constants/app.enum.constant';
+import { ENUM_APP_ENVIRONMENT } from '../../../../app/constants/app.enum.constant';
 
 @Injectable()
 export class RequestCorsMiddleware implements NestMiddleware {

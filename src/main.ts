@@ -1,6 +1,6 @@
 import { NestApplication, NestFactory } from '@nestjs/core';
 import { Logger, VersioningType } from '@nestjs/common';
-import { AppModule } from 'src/app/app.module';
+import { AppModule } from './app/app.module';
 import { ConfigService } from '@nestjs/config';
 import { useContainer } from 'class-validator';
 import swaggerInit from './swagger';

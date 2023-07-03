@@ -7,7 +7,7 @@ import {
     IHelperFileReadExcelOptions,
     IHelperFileRows,
     IHelperFileCreateExcelWorkbookOptions,
-} from 'src/common/helper/interfaces/helper.interface';
+} from '../../../common/helper/interfaces/helper.interface';
 import { utils, write, read, WorkBook } from 'xlsx';
 import { writeFileSync, readFileSync } from 'fs';
 

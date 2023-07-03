@@ -3,7 +3,7 @@ import {
     IErrors,
     IErrorsImport,
     IValidationErrorImport,
-} from 'src/common/error/interfaces/error.interface';
+} from '../../common/error/interfaces/error.interface';
 import {
     IMessageErrorOptions,
     IMessageOptions,

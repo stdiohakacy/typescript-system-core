@@ -1,8 +1,8 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Response, NextFunction } from 'express';
-import { HelperArrayService } from 'src/common/helper/services/helper.array.service';
-import { IRequestApp } from 'src/common/request/interfaces/request.interface';
-import { MessageService } from 'src/message/services/message.serivce';
+import { HelperArrayService } from '../../../../common/helper/services/helper.array.service';
+import { IRequestApp } from '../../../../common/request/interfaces/request.interface';
+import { MessageService } from '../../../../message/services/message.serivce';
 
 @Injectable()
 export class MessageCustomLanguageMiddleware implements NestMiddleware {

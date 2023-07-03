@@ -15,23 +15,23 @@ import {
     ClassTransformOptions,
     plainToInstance,
 } from 'class-transformer';
-import { IRequestApp } from 'src/common/request/interfaces/request.interface';
+import { IRequestApp } from '../../../common/request/interfaces/request.interface';
 import {
     ResponseDefaultSerialization,
     ResponseMetadataSerialization,
-} from 'src/common/response/serializations/response.default.serialization';
+} from '../../../common/response/serializations/response.default.serialization';
 import {
     RESPONSE_MESSAGE_PATH_META_KEY,
     RESPONSE_MESSAGE_PROPERTIES_META_KEY,
     RESPONSE_SERIALIZATION_META_KEY,
     RESPONSE_SERIALIZATION_OPTIONS_META_KEY,
-} from 'src/common/response/constants/response.constant';
-import { IResponse } from 'src/common/response/interfaces/response.interface';
-import { MessageService } from 'src/message/services/message.serivce';
+} from '../../../common/response/constants/response.constant';
+import { IResponse } from '../../../common/response/interfaces/response.interface';
+import { MessageService } from '../../../message/services/message.serivce';
 import {
     IMessage,
     IMessageOptionsProperties,
-} from 'src/message/interface/message.interface';
+} from '../../../message/interface/message.interface';
 
 @Injectable()
 export class ResponseDefaultInterceptor<T>

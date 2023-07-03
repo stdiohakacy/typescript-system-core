@@ -1,4 +1,4 @@
-import { Constructor } from 'src/types';
+import { Constructor } from '../../../types';
 import { BaseDTO } from '../dto/base.dto';
 import { BaseEntity } from '../entity/base.entity';
 
