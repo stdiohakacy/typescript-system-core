@@ -7,4 +7,6 @@ export interface IUserService {
         payload: UserRegisterDTO,
         authPassword: IAuthPassword
     ): Promise<UserEntity>;
+
+    findOneByUsername<T>(username: string): Promise<T>;
 }

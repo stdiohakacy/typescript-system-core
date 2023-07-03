@@ -20,6 +20,10 @@ export class UserService implements IUserService {
         private userRepo: Repository<UserEntity>
     ) {}
 
+    async findOneByUsername<T>(username: string): Promise<T> {
+        return <T>this.userRepo.findOne({ where: { username } });
+    }
+
     async create(
         { email, username, firstName, lastName, phone }: UserRegisterDTO,
         { passwordExpired, passwordHash, salt, passwordCreated }: IAuthPassword
