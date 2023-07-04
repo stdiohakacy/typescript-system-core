@@ -24,3 +24,11 @@ export function UserPublicLoginDoc(): MethodDecorator {
         })
     );
 }
+
+export function UserPublicActiveDoc(): MethodDecorator {
+    return applyDecorators(
+        Doc({ operation: 'modules.public.user' }),
+        DocRequest({ bodyType: ENUM_DOC_REQUEST_BODY_TYPE.JSON }),
+        DocResponse('user.active', { httpStatus: HttpStatus.OK })
+    );
+}

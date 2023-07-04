@@ -26,6 +26,7 @@
         "emailExist": "Email user used",
         "mobileNumberExist": "Mobile Number user used",
         "passwordExpired": "User password expired",
+        "activeKeyExpired": "User active key expired",
         "passwordAttemptMax": "Password attempt user max",
         "passwordNotMatch": "Password not match",
         "blocked": "User blocked",

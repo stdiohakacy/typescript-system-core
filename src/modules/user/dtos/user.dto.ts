@@ -1,15 +1,15 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import {
     IsBoolean,
     IsDate,
     IsEmail,
     IsNotEmpty,
     IsNumber,
-    IsOptional,
     IsString,
     MaxLength,
     MinLength,
     ValidateIf,
+    isNotEmpty,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { faker } from '@faker-js/faker';
@@ -54,13 +54,13 @@ export class UserDTO extends BaseDTO {
         required: true,
     })
     @IsString()
-    @IsOptional()
     @MinLength(10)
     @MaxLength(14)
+    @IsNotEmpty()
     @ValidateIf((e) => e.mobileNumber !== '')
     @Type(() => String)
     @MobileNumberAllowed()
-    phone?: string;
+    phone: string;
 
     @ApiProperty({ example: faker.internet.email(), required: true })
     @IsEmail()
@@ -81,32 +81,50 @@ export class UserDTO extends BaseDTO {
     @MaxLength(50)
     password: string;
 
-    @ApiPropertyOptional()
-    @IsOptional()
+    @ApiProperty()
     @IsDate()
     @Type(() => Date)
-    passwordExpired?: Date;
+    @IsNotEmpty()
+    passwordExpired: Date;
 
-    @ApiPropertyOptional()
+    @ApiProperty()
     @IsDate()
     @Type(() => Date)
-    passwordCreated?: Date;
+    @IsNotEmpty()
+    passwordCreated: Date;
 
-    @ApiPropertyOptional()
+    @ApiProperty()
     @IsNumber()
-    passwordAttempt?: number;
+    @IsNotEmpty()
+    passwordAttempt: number;
 
     @ApiProperty()
     @IsString()
-    salt?: string;
+    @IsNotEmpty()
+    salt: string;
 
-    @ApiPropertyOptional()
+    @ApiProperty()
     @IsBoolean()
-    blocked?: boolean;
+    @IsNotEmpty()
+    blocked: boolean;
 
-    @ApiPropertyOptional()
+    @ApiProperty()
     @IsDate()
-    blockedAt?: Date;
+    @IsNotEmpty()
+    blockedAt: Date;
+
+    @ApiProperty({
+        example:
+            'bda2313317b383b4d106647cd412bb7ec9bb02693782a5938cb3b444dccf4fdc',
+        required: true,
+    })
+    @IsNotEmpty()
+    activeKey: string;
+
+    @ApiProperty()
+    @Type(() => Date)
+    @IsNotEmpty()
+    activatedAt: Date;
 
     constructor(user: UserEntity) {
         super(user);
@@ -115,12 +133,13 @@ export class UserDTO extends BaseDTO {
         this.lastName = user.lastName;
         this.phone = user.phone;
         this.email = user.email;
-        this.password = user.password;
         this.passwordExpired = user.passwordExpired;
         this.passwordCreated = user.passwordCreated;
         this.passwordAttempt = user.passwordAttempt;
         this.salt = user.salt;
         this.blocked = user.blocked;
         this.blockedAt = user.blockedAt;
+        this.activeKey = user.activeKey;
+        this.activatedAt = user.activatedAt;
     }
 }

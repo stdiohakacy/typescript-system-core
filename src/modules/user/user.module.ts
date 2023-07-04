@@ -7,8 +7,13 @@ import { AuthModule } from '../../common/auth/auth.module';
 import { MailModule } from '../../common/integration/mail/mail.module';
 import { UserLoginHandler } from './commands/user-login.command';
 import { SettingModule } from '../setting/setting.module';
+import { UserActiveHandler } from './commands/user-active.command';
 
-export const handlers = [UserRegisterHandler, UserLoginHandler];
+export const handlers = [
+    UserRegisterHandler,
+    UserLoginHandler,
+    UserActiveHandler,
+];
 
 @Module({
     imports: [

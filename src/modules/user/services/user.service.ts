@@ -75,4 +75,13 @@ export class UserService implements IUserService {
     payloadSerialization(user: UserEntity): UserPayloadSerialization {
         return plainToInstance(UserPayloadSerialization, user);
     }
+
+    async active(user: UserEntity) {
+        await this.userRepo.update(user.id, {
+            status: UserStatus.ACTIVE,
+            activatedAt: this.helperDateService.create(),
+            activeKey: '',
+            activeExpire: null,
+        });
+    }
 }

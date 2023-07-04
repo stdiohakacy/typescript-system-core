@@ -23,6 +23,7 @@ export interface IUserEntity extends IBaseEntity<UserDTO> {
     activeExpire: Date;
     blocked?: boolean;
     blockedAt?: Date;
+    activatedAt?: Date;
 }
 
 @Entity({ name: 'users' })
@@ -72,4 +73,7 @@ export class UserEntity extends BaseEntity<UserDTO> implements IUserEntity {
 
     @Column({ name: 'activeExpire', type: 'timestamptz', nullable: true })
     activeExpire: Date;
+
+    @Column({ name: 'activatedAt', type: 'timestamptz', nullable: true })
+    activatedAt: Date;
 }
