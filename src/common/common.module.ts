@@ -21,6 +21,7 @@ import { MessageModule } from './message/message.module';
 import { LoggerModule } from '../modules/logger/logger.module';
 import { MigrationApiKeySeed } from '../migrations/seeds/migration.api-key.seed';
 import { ApiKeyModule } from '../modules/api-key/api-key.module';
+import { MailModule } from './integration/mail/mail.module';
 
 @Module({
     controllers: [],
@@ -135,14 +136,12 @@ import { ApiKeyModule } from '../modules/api-key/api-key.module';
                 SSO_GOOGLE_CLIENT_SECRET: Joi.string()
                     .allow(null, '')
                     .optional(),
-                SSO_GOOGLE_CALLBACK_URL_LOGIN: Joi.string()
-                    .allow(null, '')
-                    .uri()
-                    .optional(),
-                SSO_GOOGLE_CALLBACK_URL_SIGN_UP: Joi.string()
-                    .allow(null, '')
-                    .uri()
-                    .optional(),
+
+                SMTP_HOST: Joi.string().allow(null, '').optional(),
+                SMTP_PORT: Joi.string().allow(null, '').optional(),
+                SMTP_TLS: Joi.string().allow(null, '').optional(),
+                SMTP_USERNAME: Joi.string().allow(null, '').optional(),
+                SMTP_PASSWORD: Joi.string().allow(null, '').optional(),
             }),
             validationOptions: {
                 allowUnknown: true,
@@ -171,6 +170,7 @@ import { ApiKeyModule } from '../modules/api-key/api-key.module';
         ResponseModule,
         LoggerModule,
         ApiKeyModule,
+        MailModule,
         DebuggerModule.forRoot(),
         AuthModule.forRoot(),
     ],

@@ -100,18 +100,6 @@ export class UserDTO extends BaseDTO {
     @IsString()
     salt?: string;
 
-    @ApiProperty()
-    @IsBoolean()
-    isActive: boolean;
-
-    @ApiProperty()
-    @IsBoolean()
-    inactivePermanent: boolean;
-
-    @ApiProperty()
-    @IsDate()
-    inactiveAt: Date;
-
     @ApiPropertyOptional()
     @IsBoolean()
     blocked?: boolean;
@@ -132,9 +120,6 @@ export class UserDTO extends BaseDTO {
         this.passwordCreated = user.passwordCreated;
         this.passwordAttempt = user.passwordAttempt;
         this.salt = user.salt;
-        this.isActive = user.isActive;
-        this.inactivePermanent = user.inactivePermanent;
-        this.inactiveAt = user.inactiveAt;
         this.blocked = user.blocked;
         this.blockedAt = user.blockedAt;
     }

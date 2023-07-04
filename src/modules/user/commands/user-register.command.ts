@@ -3,9 +3,12 @@ import { UserRegisterDTO } from '../dtos/user.register.dto';
 import { UserEntity } from '../entities/user.entity';
 import { UserService } from '../services/user.service';
 import { AuthService } from '../../../common/auth/services/auth.service';
-import { IAuthPassword } from '../../../common/auth/interfaces/auth.interface';
+import { ConfigService } from '@nestjs/config';
+import { IMailService } from '../../../common/integration/mail/interfaces/mail.service.interface';
+import { MailServiceFactory } from '../../../common/integration/mail/factory/mail.factory.service';
 import { ConflictException } from '@nestjs/common';
 import { ENUM_USER_STATUS_CODE_ERROR } from '../constants/user.status-code.constant';
+import { ENUM_MAIL_PROVIDER_TYPE } from '../../../common/integration/mail/constants/mail.enum.constant';
 
 export class UserRegisterCommand implements ICommand {
     constructor(public readonly payload: UserRegisterDTO) {}
@@ -15,9 +18,12 @@ export class UserRegisterCommand implements ICommand {
 export class UserRegisterHandler
     implements ICommandHandler<UserRegisterCommand, UserEntity>
 {
+    private mailService: IMailService;
+
     constructor(
         private readonly userService: UserService,
-        private readonly authService: AuthService
+        private readonly authService: AuthService,
+        private readonly mailServiceFactory: MailServiceFactory
     ) {}
 
     async execute({ payload }: UserRegisterCommand): Promise<UserEntity> {
@@ -31,8 +37,19 @@ export class UserRegisterHandler
                 message: 'user.error.usernameExist',
             });
         }
-        const passwordAuth: IAuthPassword =
-            await this.authService.createPassword(payload.password);
+        const passwordAuth = await this.authService.createPassword(
+            payload.password
+        );
+
+        this.mailService = this.mailServiceFactory.createService(
+            ENUM_MAIL_PROVIDER_TYPE.SEND_IN_BLUE
+        );
+        this.mailService.sendEmail(
+            payload.email,
+            'Account activation',
+            'Test account activation'
+        );
+
         return await this.userService.create(payload, passwordAuth);
     }
 }

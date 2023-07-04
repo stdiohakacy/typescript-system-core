@@ -1,0 +1,3 @@
+export enum ENUM_MAIL_PROVIDER_TYPE {
+    SEND_IN_BLUE = 'SEND_IN_BLUE',
+}

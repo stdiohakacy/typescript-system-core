@@ -4,7 +4,7 @@ import { Response } from '../../../common/response/decorators/response.decorator
 import { UserPublicRegisterDoc } from '../docs/user.public.doc';
 import { UserRegisterDTO } from '../dtos/user.register.dto';
 import { CommandBus } from '@nestjs/cqrs';
-import { UserRegisterCommand } from '../commands/user-register.comand';
+import { UserRegisterCommand } from '../commands/user-register.command';
 
 @ApiTags('modules.public.user')
 @Controller({
