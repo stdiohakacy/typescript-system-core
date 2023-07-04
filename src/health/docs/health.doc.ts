@@ -1,14 +1,17 @@
 import { applyDecorators } from '@nestjs/common';
-import { Doc } from '../../common/doc/decorators/doc.decorator';
-import { HealthSerialization } from 'src/health/serializations/health.serialization';
+import {
+    Doc,
+    DocAuth,
+    DocResponse,
+} from '../../common/doc/decorators/doc.decorator';
+import { HealthSerialization } from '../../health/serializations/health.serialization';
 
 export function HealthCheckDoc(): MethodDecorator {
     return applyDecorators(
-        Doc<HealthSerialization>('health.check', {
-            auth: {
-                jwtAccessToken: false,
-            },
-            response: { serialization: HealthSerialization },
+        Doc({ operation: 'health' }),
+        DocAuth({ jwtAccessToken: true }),
+        DocResponse<HealthSerialization>('health.check', {
+            serialization: HealthSerialization,
         })
     );
 }

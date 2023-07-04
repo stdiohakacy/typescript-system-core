@@ -44,11 +44,12 @@ export class UserRegisterHandler
         this.mailService = this.mailServiceFactory.createService(
             ENUM_MAIL_PROVIDER_TYPE.SEND_IN_BLUE
         );
-        this.mailService.sendEmail(
-            payload.email,
-            'Account activation',
-            'Test account activation'
-        );
+
+        // this.mailService.sendEmail(
+        //     'elasticsearch22101995@gmail.com',
+        //     'Account activation',
+        //     'Test account activation'
+        // );
 
         return await this.userService.create(payload, passwordAuth);
     }
