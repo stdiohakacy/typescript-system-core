@@ -5,7 +5,7 @@ import {
     ENUM_LOGGER_LEVEL,
 } from '../constants/logger.enum.constant';
 import { ENUM_REQUEST_METHOD } from '../../../common/request/constants/request.enum.constant';
-import { ENUM_ROLE_TYPE } from '../../role/constant/role.enum.constant';
+import { ENUM_ROLE_TYPE } from '../../role/constants/role.enum.constant';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class LoggerDTO extends BaseDTO {

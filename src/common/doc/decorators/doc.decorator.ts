@@ -37,7 +37,7 @@ import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from '../../../common/pagination
 import { ENUM_REQUEST_STATUS_CODE_ERROR } from '../../../common/request/constants/request.status-code.constant';
 import { ResponseDefaultSerialization } from '../../../common/response/serializations/response.default.serialization';
 import { ResponsePagingSerialization } from '../../../common/response/serializations/response.paging.serialization';
-import { ENUM_ROLE_STATUS_CODE_ERROR } from '../../../modules/role/constant/role.status-code.constant';
+import { ENUM_ROLE_STATUS_CODE_ERROR } from '../../../modules/role/constants/role.status-code.constant';
 import { faker } from '@faker-js/faker';
 import { ENUM_POLICY_STATUS_CODE_ERROR } from '../../../common/policy/constants/policy.status-code.constant';
 

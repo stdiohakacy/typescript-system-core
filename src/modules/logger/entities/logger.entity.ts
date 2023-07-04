@@ -8,7 +8,7 @@ import {
     BaseEntity,
     IBaseEntity,
 } from '../../../common/base/entity/base.entity';
-import { ENUM_ROLE_TYPE } from '../../role/constant/role.enum.constant';
+import { ENUM_ROLE_TYPE } from '../../role/constants/role.enum.constant';
 import { UseDTO } from '../../../common/base/decorators/use-dto.decorator';
 import { ENUM_REQUEST_METHOD } from '../../../common/request/constants/request.enum.constant';
 
