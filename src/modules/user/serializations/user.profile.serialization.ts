@@ -10,6 +10,9 @@ export class UserProfileSerialization extends OmitType(UserGetSerialization, [
     'passwordCreated',
     'passwordAttempt',
     'blockedDate',
+    'createdBy',
+    'updatedBy',
+    'deletedBy',
 ] as const) {
     @ApiHideProperty()
     @Exclude()
@@ -34,4 +37,16 @@ export class UserProfileSerialization extends OmitType(UserGetSerialization, [
     @ApiHideProperty()
     @Exclude()
     readonly blockedDate?: Date;
+
+    @ApiHideProperty()
+    @Exclude()
+    readonly createdBy: string;
+
+    @ApiHideProperty()
+    @Exclude()
+    readonly updatedBy: string;
+
+    @ApiHideProperty()
+    @Exclude()
+    readonly deletedBy: string;
 }

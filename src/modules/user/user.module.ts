@@ -26,7 +26,7 @@ export const handlers = [
         MailModule,
         SettingModule,
     ],
-    exports: [],
+    exports: [UserService],
     providers: [...handlers, UserService],
     controllers: [],
 })

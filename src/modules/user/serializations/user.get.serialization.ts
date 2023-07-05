@@ -109,4 +109,40 @@ export class UserGetSerialization extends ResponseIdSerialization {
     @ApiHideProperty()
     @Exclude()
     readonly deletedAt?: Date;
+
+    @ApiHideProperty()
+    @Exclude()
+    readonly createdBy: string;
+
+    @ApiHideProperty()
+    @Exclude()
+    readonly updatedBy: string;
+
+    @ApiHideProperty()
+    @Exclude()
+    readonly deletedBy: string;
+
+    @ApiHideProperty()
+    @Exclude()
+    readonly blockedAt: string;
+
+    @ApiHideProperty()
+    @Exclude()
+    readonly activeKey: string;
+
+    @ApiHideProperty()
+    @Exclude()
+    readonly activeExpire: string;
+
+    @ApiHideProperty()
+    @Exclude()
+    readonly activatedAt: string;
+
+    @ApiHideProperty()
+    @Exclude()
+    readonly forgotKey: string;
+
+    @ApiHideProperty()
+    @Exclude()
+    readonly forgotExpire: string;
 }

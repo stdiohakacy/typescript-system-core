@@ -16,6 +16,7 @@ import { UserPayloadSerialization } from '../serializations/user.payload.seriali
 import { plainToInstance } from 'class-transformer';
 import { UserResetPasswordDTO } from '../dtos/user.reset-password.dto';
 import { AuthService } from '../../../common/auth/services/auth.service';
+import { Uuid } from '../../../types';
 
 @Injectable()
 export class UserService implements IUserService {
@@ -40,6 +41,10 @@ export class UserService implements IUserService {
 
     async findOneByUsername<T>(username: string): Promise<T> {
         return <T>this.userRepo.findOne({ where: { username } });
+    }
+
+    async findOneById(id: Uuid): Promise<UserEntity> {
+        return await this.userRepo.findOne({ where: { id } });
     }
 
     async create(
