@@ -76,4 +76,10 @@ export class UserEntity extends BaseEntity<UserDTO> implements IUserEntity {
 
     @Column({ name: 'activatedAt', type: 'timestamptz', nullable: true })
     activatedAt: Date;
+
+    @Column({ name: 'forgotKey', nullable: true })
+    forgotKey: string;
+
+    @Column({ name: 'forgotExpire', type: 'timestamptz', nullable: true })
+    forgotExpire: Date;
 }

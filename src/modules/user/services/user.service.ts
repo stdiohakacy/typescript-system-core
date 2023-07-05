@@ -8,9 +8,6 @@ import { UserRegisterDTO } from '../dtos/user.register.dto';
 import { UserEntity } from '../entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { ENUM_USER_STATUS_CODE_ERROR } from '../constants/user.status-code.constant';
-import { AuthService } from '../../../common/auth/services/auth.service';
-import { ENUM_ERROR_STATUS_CODE_ERROR } from '../../../common/error/constants/error.status-code.constant';
 import { IAuthPassword } from '../../../common/auth/interfaces/auth.interface';
 import { UserStatus } from '../constants/user.enum.constant';
 import { randomBytes } from 'crypto';
@@ -82,6 +79,15 @@ export class UserService implements IUserService {
             activatedAt: this.helperDateService.create(),
             activeKey: '',
             activeExpire: null,
+        });
+    }
+
+    async forgotPassword(user: UserEntity) {
+        await this.userRepo.update(user.id, {
+            forgotKey: randomBytes(32).toString('hex'),
+            forgotExpire: this.helperDateService.forwardInMilliseconds(
+                3 * 24 * 60 * 60
+            ),
         });
     }
 }

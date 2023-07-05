@@ -32,3 +32,11 @@ export function UserPublicActiveDoc(): MethodDecorator {
         DocResponse('user.active', { httpStatus: HttpStatus.OK })
     );
 }
+
+export function UserPublicForgotPasswordDoc(): MethodDecorator {
+    return applyDecorators(
+        Doc({ operation: 'modules.public.user' }),
+        DocRequest({ bodyType: ENUM_DOC_REQUEST_BODY_TYPE.JSON }),
+        DocResponse('user.forgotPassword', { httpStatus: HttpStatus.OK })
+    );
+}

@@ -126,6 +126,19 @@ export class UserDTO extends BaseDTO {
     @IsNotEmpty()
     activatedAt: Date;
 
+    @ApiProperty({
+        example:
+            'bda2313317b383b4d106647cd412bb7ec9bb02693782a5938cb3b444dccf4fdc',
+        required: true,
+    })
+    @IsNotEmpty()
+    forgotKey: string;
+
+    @ApiProperty()
+    @Type(() => Date)
+    @IsNotEmpty()
+    forgotExpire: Date;
+
     constructor(user: UserEntity) {
         super(user);
         this.username = user.username;

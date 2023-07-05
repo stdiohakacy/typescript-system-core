@@ -3,18 +3,21 @@ import { ApiTags } from '@nestjs/swagger';
 import { Response } from '../../../common/response/decorators/response.decorator';
 import {
     UserPublicActiveDoc,
+    UserPublicForgotPasswordDoc,
     UserPublicLoginDoc,
     UserPublicRegisterDoc,
 } from '../docs/user.public.doc';
 import { UserRegisterDTO } from '../dtos/user.register.dto';
 import { CommandBus } from '@nestjs/cqrs';
-import { UserRegisterCommand } from '../commands/user-register.command';
+import { UserRegisterCommand } from '../commands/user.register.command';
 import { UserLoginSerialization } from '../serializations/user.login.serialization';
 import { IResponse } from '../../../common/response/interfaces/response.interface';
-import { UserLoginCommand } from '../commands/user-login.command';
+import { UserLoginCommand } from '../commands/user.login.command';
 import { UserLoginDTO } from '../dtos/user.login.dto';
 import { UserActiveDTO } from '../dtos/user.active';
-import { UserActiveCommand } from '../commands/user-active.command';
+import { UserActiveCommand } from '../commands/user.active.command';
+import { UserForgotPasswordDTO } from '../dtos/user.forgot-password';
+import { UserForgotPasswordCommand } from '../commands/user.forgot-password.command';
 
 @ApiTags('modules.public.user')
 @Controller({
@@ -45,5 +48,17 @@ export class UserPublicController {
     @Post('/active')
     async active(@Body() payload: UserActiveDTO): Promise<IResponse> {
         return await this.commandBus.execute(new UserActiveCommand(payload));
+    }
+
+    @UserPublicForgotPasswordDoc()
+    @Response('user.forgotPassword')
+    @HttpCode(HttpStatus.OK)
+    @Post('/forgot-password')
+    async forgotPassword(
+        @Body() payload: UserForgotPasswordDTO
+    ): Promise<IResponse> {
+        return await this.commandBus.execute(
+            new UserForgotPasswordCommand(payload)
+        );
     }
 }
