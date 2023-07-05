@@ -3,15 +3,16 @@ import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { AuthJwtAccessGuard } from '../../../common/auth/guards/jwt-access/auth.jwt-access.guard';
 import { AuthJwtRefreshGuard } from '../../../common/auth/guards/jwt-refresh/auth.jwt-refresh.guard';
 import { IRequestApp } from '../../../common/request/interfaces/request.interface';
+import { UserPayloadSerialization } from '../../../modules/user/serializations/user.payload.serialization';
 
-// export const AuthJwtPayload = createParamDecorator(
-//     (data: string, ctx: ExecutionContext): Record<string, any> => {
-//         const { user } = ctx
-//             .switchToHttp()
-//             .getRequest<IRequestApp & { user: UserPayloadSerialization }>();
-//         return data ? user[data] : user;
-//     }
-// );
+export const AuthJwtPayload = createParamDecorator(
+    (data: string, ctx: ExecutionContext): Record<string, any> => {
+        const { user } = ctx
+            .switchToHttp()
+            .getRequest<IRequestApp & { user: UserPayloadSerialization }>();
+        return data ? user[data] : user;
+    }
+);
 
 export const AuthJwtToken = createParamDecorator(
     (data: string, ctx: ExecutionContext): string => {

@@ -10,6 +10,8 @@ import { SettingModule } from '../setting/setting.module';
 import { UserActiveHandler } from './commands/user.active.command';
 import { UserForgotPasswordHandler } from './commands/user.forgot-password.command';
 import { UserResetPasswordHandler } from './commands/user.reset-password.command';
+import { UserChangePasswordHandler } from './commands/user.change-password.command';
+import { CqrsModule } from '@nestjs/cqrs';
 
 export const handlers = [
     UserRegisterHandler,
@@ -17,6 +19,7 @@ export const handlers = [
     UserActiveHandler,
     UserForgotPasswordHandler,
     UserResetPasswordHandler,
+    UserChangePasswordHandler,
 ];
 
 @Module({

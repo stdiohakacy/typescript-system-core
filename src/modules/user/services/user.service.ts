@@ -115,4 +115,15 @@ export class UserService implements IUserService {
             passwordAttempt: 0,
         });
     }
+
+    async updatePassword(user: UserEntity, authPassword: IAuthPassword) {
+        const { passwordHash, passwordExpired, passwordCreated, salt } =
+            authPassword;
+        await this.userRepo.update(user.id, {
+            password: passwordHash,
+            passwordExpired,
+            passwordCreated,
+            salt,
+        });
+    }
 }
