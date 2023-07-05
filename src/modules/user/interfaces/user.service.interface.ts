@@ -1,9 +1,9 @@
 import { Uuid } from '../../../types';
-import { IAuthPassword } from '../../../common/auth/interfaces/auth.interface';
 import { UserRegisterDTO } from '../dtos/user.register.dto';
 import { UserEntity } from '../entities/user.entity';
 import { UserPayloadSerialization } from '../serializations/user.payload.serialization';
 import { UserResetPasswordDTO } from '../dtos/user.reset-password.dto';
+import { IAuthPassword } from '../../../modules/auth/interfaces/auth.interface';
 
 export interface IUserService {
     create(

@@ -15,7 +15,6 @@ import {
 } from '@nestjs/swagger';
 import { APP_LANGUAGE } from '../../../app/constants/app.constant';
 import { ENUM_API_KEY_STATUS_CODE_ERROR } from '../../../modules/api-key/constant/api-key.status-code.constant';
-import { ENUM_AUTH_STATUS_CODE_ERROR } from '../../../common/auth/constants/auth.status-code.constant';
 import { ENUM_DOC_REQUEST_BODY_TYPE } from '../../../common/doc/constants/doc.enum.constant';
 import {
     IDocAuthOptions,
@@ -40,6 +39,7 @@ import { ResponsePagingSerialization } from '../../../common/response/serializat
 import { ENUM_ROLE_STATUS_CODE_ERROR } from '../../../modules/role/constants/role.status-code.constant';
 import { faker } from '@faker-js/faker';
 import { ENUM_POLICY_STATUS_CODE_ERROR } from '../../../common/policy/constants/policy.status-code.constant';
+import { ENUM_AUTH_STATUS_CODE_ERROR } from '../../../modules/auth/constants/auth.status-code.constant';
 
 export function DocDefault<T>(options: IDocDefaultOptions): MethodDecorator {
     const docs = [];

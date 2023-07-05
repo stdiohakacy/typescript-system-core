@@ -7,8 +7,8 @@ import { BadRequestException, ForbiddenException } from '@nestjs/common';
 import { ENUM_USER_STATUS_CODE_ERROR } from '../constants/user.status-code.constant';
 import { UserChangePasswordDTO } from '../dtos/user.change-password.dto';
 import { SettingService } from '../../../modules/setting/services/setting.service';
-import { AuthService } from '../../../common/auth/services/auth.service';
-import { IAuthPassword } from 'src/common/auth/interfaces/auth.interface';
+import { AuthService } from '../../../modules/auth/services/auth.service';
+import { IAuthPassword } from '../../../modules/auth/interfaces/auth.interface';
 
 export class UserChangePasswordCommand implements ICommand {
     constructor(

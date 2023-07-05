@@ -1,15 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+
+import { HelperDateService } from 'src/common/helper/services/helper.date.service';
+import { HelperEncryptionService } from 'src/common/helper/services/helper.encryption.service';
+import { HelperHashService } from 'src/common/helper/services/helper.hash.service';
+import { HelperStringService } from 'src/common/helper/services/helper.string.service';
+import { IAuthService } from '../interfaces/auth.service.interface';
 import {
     IAuthPassword,
     IAuthPayloadOptions,
     IAuthRefreshTokenOptions,
-} from '../../../common/auth/interfaces/auth.interface';
-import { IAuthService } from '../../../common/auth/interfaces/auth.service.interface';
-import { HelperDateService } from '../../../common/helper/services/helper.date.service';
-import { HelperEncryptionService } from '../../../common/helper/services/helper.encryption.service';
-import { HelperHashService } from '../../../common/helper/services/helper.hash.service';
-import { HelperStringService } from '../../../common/helper/services/helper.string.service';
+} from '../interfaces/auth.interface';
 
 @Injectable()
 export class AuthService implements IAuthService {
@@ -206,10 +207,14 @@ export class AuthService implements IAuthService {
         return data;
     }
 
-    async createPayloadRefreshToken(id: string): Promise<Record<string, any>> {
+    async createPayloadRefreshToken(
+        id: string,
+        options?: IAuthPayloadOptions
+    ): Promise<Record<string, any>> {
         return {
             id,
             loginDate: this.helperDateService.create(),
+            loginWith: options?.loginWith,
         };
     }
 

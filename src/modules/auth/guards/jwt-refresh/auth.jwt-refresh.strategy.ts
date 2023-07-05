@@ -2,10 +2,13 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { AuthService } from '../../../../common/auth/services/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 @Injectable()
-export class AuthJwtAccessStrategy extends PassportStrategy(Strategy, 'jwt') {
+export class AuthJwtRefreshStrategy extends PassportStrategy(
+    Strategy,
+    'jwt-refresh'
+) {
     constructor(
         private readonly configService: ConfigService,
         private readonly authService: AuthService
@@ -16,13 +19,13 @@ export class AuthJwtAccessStrategy extends PassportStrategy(Strategy, 'jwt') {
             ),
             ignoreExpiration: false,
             jsonWebTokenOptions: {
-                ignoreNotBefore: false,
+                ignoreNotBefore: true,
                 audience: configService.get<string>('auth.audience'),
                 issuer: configService.get<string>('auth.issuer'),
                 subject: configService.get<string>('auth.subject'),
             },
             secretOrKey: configService.get<string>(
-                'auth.accessToken.secretKey'
+                'auth.refreshToken.secretKey'
             ),
         });
     }
@@ -34,7 +37,7 @@ export class AuthJwtAccessStrategy extends PassportStrategy(Strategy, 'jwt') {
             await this.authService.getPayloadEncryption();
 
         return payloadEncryption
-            ? this.authService.decryptAccessToken({ data })
+            ? this.authService.decryptRefreshToken({ data })
             : data;
     }
 }

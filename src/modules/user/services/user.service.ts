@@ -8,15 +8,15 @@ import { UserRegisterDTO } from '../dtos/user.register.dto';
 import { UserEntity } from '../entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { IAuthPassword } from '../../../common/auth/interfaces/auth.interface';
 import { UserStatus } from '../constants/user.enum.constant';
 import { randomBytes } from 'crypto';
 import { HelperDateService } from '../../../common/helper/services/helper.date.service';
 import { UserPayloadSerialization } from '../serializations/user.payload.serialization';
 import { plainToInstance } from 'class-transformer';
 import { UserResetPasswordDTO } from '../dtos/user.reset-password.dto';
-import { AuthService } from '../../../common/auth/services/auth.service';
 import { Uuid } from '../../../types';
+import { AuthService } from '../../../modules/auth/services/auth.service';
+import { IAuthPassword } from '../../../modules/auth/interfaces/auth.interface';
 
 @Injectable()
 export class UserService implements IUserService {

@@ -9,7 +9,6 @@ import { DebuggerModule } from '../common/debugger/debugger.module';
 import { HelperModule } from '../common/helper/helper.module';
 import { ErrorModule } from '../common/error/error.module';
 import { ResponseModule } from '../common/response/response.module';
-import { AuthModule } from '../common/auth/auth.module';
 import { PaginationModule } from '../common/pagination/pagination.module';
 import configs from '../configs';
 import { DatabaseOptionService } from '../common/database/services/database.options.service';
@@ -22,6 +21,7 @@ import { LoggerModule } from '../modules/logger/logger.module';
 import { MigrationApiKeySeed } from '../migrations/seeds/migration.api-key.seed';
 import { ApiKeyModule } from '../modules/api-key/api-key.module';
 import { MailModule } from './integration/mail/mail.module';
+import { AuthModule } from '../modules/auth/auth.module';
 
 @Module({
     controllers: [],
