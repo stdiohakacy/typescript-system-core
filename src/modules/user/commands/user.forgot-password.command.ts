@@ -1,11 +1,11 @@
 import { CommandHandler, ICommand, ICommandHandler } from '@nestjs/cqrs';
-import { UserActiveDTO } from '../dtos/user.active';
+import { UserActiveDTO } from '../dtos/user.active.dto';
 import { UserService } from '../services/user.service';
 import { UserEntity } from '../entities/user.entity';
 import { UserStatus } from '../constants/user.enum.constant';
 import { BadRequestException } from '@nestjs/common';
 import { ENUM_USER_STATUS_CODE_ERROR } from '../constants/user.status-code.constant';
-import { UserForgotPasswordDTO } from '../dtos/user.forgot-password';
+import { UserForgotPasswordDTO } from '../dtos/user.forgot-password.dto';
 
 export class UserForgotPasswordCommand implements ICommand {
     constructor(public readonly payload: UserForgotPasswordDTO) {}

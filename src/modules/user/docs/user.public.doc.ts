@@ -40,3 +40,11 @@ export function UserPublicForgotPasswordDoc(): MethodDecorator {
         DocResponse('user.forgotPassword', { httpStatus: HttpStatus.OK })
     );
 }
+
+export function UserPublicResetPasswordDoc(): MethodDecorator {
+    return applyDecorators(
+        Doc({ operation: 'modules.public.user' }),
+        DocRequest({ bodyType: ENUM_DOC_REQUEST_BODY_TYPE.JSON }),
+        DocResponse('user.resetPassword', { httpStatus: HttpStatus.OK })
+    );
+}

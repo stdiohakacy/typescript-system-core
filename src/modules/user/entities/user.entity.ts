@@ -6,6 +6,7 @@ import {
 import { UseDTO } from '../../../common/base/decorators/use-dto.decorator';
 import { UserDTO } from '../dtos/user.dto';
 import { UserStatus } from '../constants/user.enum.constant';
+import { Uuid } from '../../../types';
 
 export interface IUserEntity extends IBaseEntity<UserDTO> {
     username: string;
@@ -24,6 +25,8 @@ export interface IUserEntity extends IBaseEntity<UserDTO> {
     blocked?: boolean;
     blockedAt?: Date;
     activatedAt?: Date;
+    forgotKey?: string;
+    forgotExpire?: Date;
 }
 
 @Entity({ name: 'users' })
@@ -78,8 +81,8 @@ export class UserEntity extends BaseEntity<UserDTO> implements IUserEntity {
     activatedAt: Date;
 
     @Column({ name: 'forgotKey', nullable: true })
-    forgotKey: string;
+    forgotKey?: string;
 
     @Column({ name: 'forgotExpire', type: 'timestamptz', nullable: true })
-    forgotExpire: Date;
+    forgotExpire?: Date;
 }

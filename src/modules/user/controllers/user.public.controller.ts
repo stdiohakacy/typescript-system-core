@@ -6,6 +6,7 @@ import {
     UserPublicForgotPasswordDoc,
     UserPublicLoginDoc,
     UserPublicRegisterDoc,
+    UserPublicResetPasswordDoc,
 } from '../docs/user.public.doc';
 import { UserRegisterDTO } from '../dtos/user.register.dto';
 import { CommandBus } from '@nestjs/cqrs';
@@ -14,10 +15,12 @@ import { UserLoginSerialization } from '../serializations/user.login.serializati
 import { IResponse } from '../../../common/response/interfaces/response.interface';
 import { UserLoginCommand } from '../commands/user.login.command';
 import { UserLoginDTO } from '../dtos/user.login.dto';
-import { UserActiveDTO } from '../dtos/user.active';
+import { UserActiveDTO } from '../dtos/user.active.dto';
 import { UserActiveCommand } from '../commands/user.active.command';
-import { UserForgotPasswordDTO } from '../dtos/user.forgot-password';
+import { UserForgotPasswordDTO } from '../dtos/user.forgot-password.dto';
 import { UserForgotPasswordCommand } from '../commands/user.forgot-password.command';
+import { UserResetPasswordDTO } from '../dtos/user.reset-password.dto';
+import { UserResetPasswordCommand } from '../commands/user.reset-password.command';
 
 @ApiTags('modules.public.user')
 @Controller({
@@ -59,6 +62,18 @@ export class UserPublicController {
     ): Promise<IResponse> {
         return await this.commandBus.execute(
             new UserForgotPasswordCommand(payload)
+        );
+    }
+
+    @UserPublicResetPasswordDoc()
+    @Response('user.resetPassword')
+    @HttpCode(HttpStatus.OK)
+    @Post('/reset-password')
+    async resetPassword(
+        @Body() payload: UserResetPasswordDTO
+    ): Promise<IResponse> {
+        return await this.commandBus.execute(
+            new UserResetPasswordCommand(payload)
         );
     }
 }

@@ -9,12 +9,14 @@ import { UserLoginHandler } from './commands/user.login.command';
 import { SettingModule } from '../setting/setting.module';
 import { UserActiveHandler } from './commands/user.active.command';
 import { UserForgotPasswordHandler } from './commands/user.forgot-password.command';
+import { UserResetPasswordHandler } from './commands/user.reset-password.command';
 
 export const handlers = [
     UserRegisterHandler,
     UserLoginHandler,
     UserActiveHandler,
     UserForgotPasswordHandler,
+    UserResetPasswordHandler,
 ];
 
 @Module({

@@ -11,16 +11,19 @@ import { Repository } from 'typeorm';
 import { IAuthPassword } from '../../../common/auth/interfaces/auth.interface';
 import { UserStatus } from '../constants/user.enum.constant';
 import { randomBytes } from 'crypto';
-import { HelperDateService } from 'src/common/helper/services/helper.date.service';
+import { HelperDateService } from '../../../common/helper/services/helper.date.service';
 import { UserPayloadSerialization } from '../serializations/user.payload.serialization';
 import { plainToInstance } from 'class-transformer';
+import { UserResetPasswordDTO } from '../dtos/user.reset-password.dto';
+import { AuthService } from '../../../common/auth/services/auth.service';
 
 @Injectable()
 export class UserService implements IUserService {
     constructor(
         @InjectRepository(UserEntity)
         private userRepo: Repository<UserEntity>,
-        private readonly helperDateService: HelperDateService
+        private readonly helperDateService: HelperDateService,
+        private readonly authService: AuthService
     ) {}
 
     async increasePasswordAttempt(user: UserEntity): Promise<void> {
@@ -88,6 +91,23 @@ export class UserService implements IUserService {
             forgotExpire: this.helperDateService.forwardInMilliseconds(
                 3 * 24 * 60 * 60
             ),
+        });
+    }
+
+    async resetPassword(user: UserEntity, payload: UserResetPasswordDTO) {
+        const passwordAuth = await this.authService.createPassword(
+            payload.password
+        );
+
+        await this.userRepo.update(user.id, {
+            forgotKey: '',
+            forgotExpire: null,
+            password: passwordAuth.passwordHash,
+            blocked: false,
+            salt: passwordAuth.salt,
+            passwordExpired: passwordAuth.passwordExpired,
+            passwordCreated: passwordAuth.passwordCreated,
+            passwordAttempt: 0,
         });
     }
 }

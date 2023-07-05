@@ -1,5 +1,5 @@
 import { CommandHandler, ICommand, ICommandHandler } from '@nestjs/cqrs';
-import { UserActiveDTO } from '../dtos/user.active';
+import { UserActiveDTO } from '../dtos/user.active.dto';
 import { UserService } from '../services/user.service';
 import { UserEntity } from '../entities/user.entity';
 import { UserStatus } from '../constants/user.enum.constant';
