@@ -6,6 +6,7 @@ import {
     HttpStatus,
     Patch,
     Post,
+    UploadedFile,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Response } from '../../../common/response/decorators/response.decorator';
@@ -27,6 +28,7 @@ import {
     UserAuthProfileDoc,
     UserAuthRefreshDoc,
     UserAuthUpdateProfileDoc,
+    UserAuthUploadProfileDoc,
 } from '../dtos/user.auth.doc';
 import { UserPayloadSerialization } from '../serializations/user.payload.serialization';
 import { UserRefreshSerialization } from '../serializations/user.refresh-serialization';
@@ -41,6 +43,12 @@ import { UserUpdateProfileDTO } from '../dtos/user.update-profile.dto';
 import { UserUpdateProfileCommand } from '../commands/user.update-profile.command';
 import { UserClaimUsernameDTO } from '../dtos/user.claim-username.dto';
 import { UserClaimUsernameCommand } from '../commands/user.claim-username.command';
+import { UploadFileSingle } from '../../../common/file/decorators/file.decorator';
+import { IFile } from '../../../common/file/interfaces/file.interface';
+import { FileRequiredPipe } from '../../../common/file/pipes/file.required.pipe';
+import { FileSizeImagePipe } from '../../../common/file/pipes/file.size.pipe';
+import { FileTypeImagePipe } from '../../../common/file/pipes/file.type.pipe';
+import { UserUploadCommand } from '../commands/user.upload.command';
 
 @ApiTags('modules.auth.user')
 @Controller({ version: '1', path: '/user' })
@@ -121,6 +129,23 @@ export class UserAuthController {
     ) {
         return await this.commandBus.execute(
             new UserClaimUsernameCommand(userAuth, payload)
+        );
+    }
+
+    @UserAuthUploadProfileDoc()
+    @Response('user.upload')
+    @UserProtected()
+    @AuthJwtAccessProtected()
+    @UploadFileSingle('file')
+    @HttpCode(HttpStatus.OK)
+    @Post('/profile/upload')
+    async upload(
+        @GetUser() userAuth: UserEntity,
+        @UploadedFile(FileRequiredPipe, FileSizeImagePipe, FileTypeImagePipe)
+        file: IFile
+    ) {
+        return await this.commandBus.execute(
+            new UserUploadCommand(userAuth, file)
         );
     }
 }

@@ -14,12 +14,19 @@ export interface IUserService {
     ): Promise<UserEntity>;
 
     findOneByUsername<T>(username: string): Promise<T>;
+
     findOneById(id: Uuid): Promise<UserEntity>;
+
     increasePasswordAttempt(user: UserEntity): Promise<void>;
+
     resetPasswordAttempt(user: UserEntity): Promise<void>;
+
     payloadSerialization(user: UserEntity): UserPayloadSerialization;
+
     active(user: UserEntity): Promise<void>;
+
     forgotPassword(user: UserEntity): Promise<void>;
+
     resetPassword(
         user: UserEntity,
         payload: UserResetPasswordDTO
@@ -36,4 +43,6 @@ export interface IUserService {
     ): Promise<void>;
 
     updateUsername(user, payload: UserClaimUsernameDTO): Promise<void>;
+
+    createPhotoFilename(): Promise<Record<string, any>>;
 }

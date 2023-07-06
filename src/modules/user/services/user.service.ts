@@ -1,33 +1,36 @@
-import {
-    ConflictException,
-    Injectable,
-    InternalServerErrorException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { randomBytes } from 'crypto';
+import { plainToInstance } from 'class-transformer';
 import { IUserService } from '../interfaces/user.service.interface';
 import { UserRegisterDTO } from '../dtos/user.register.dto';
 import { UserEntity } from '../entities/user.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { UserStatus } from '../constants/user.enum.constant';
-import { randomBytes } from 'crypto';
 import { HelperDateService } from '../../../common/helper/services/helper.date.service';
 import { UserPayloadSerialization } from '../serializations/user.payload.serialization';
-import { plainToInstance } from 'class-transformer';
 import { UserResetPasswordDTO } from '../dtos/user.reset-password.dto';
 import { Uuid } from '../../../types';
 import { AuthService } from '../../../modules/auth/services/auth.service';
 import { IAuthPassword } from '../../../modules/auth/interfaces/auth.interface';
 import { UserUpdateProfileDTO } from '../dtos/user.update-profile.dto';
 import { UserClaimUsernameDTO } from '../dtos/user.claim-username.dto';
+import { HelperStringService } from '../../../common/helper/services/helper.string.service';
 
 @Injectable()
 export class UserService implements IUserService {
+    private readonly uploadPath: string;
     constructor(
         @InjectRepository(UserEntity)
         private userRepo: Repository<UserEntity>,
         private readonly helperDateService: HelperDateService,
-        private readonly authService: AuthService
-    ) {}
+        private readonly helperStringService: HelperStringService,
+        private readonly authService: AuthService,
+        private readonly configService: ConfigService
+    ) {
+        this.uploadPath = this.configService.get<string>('user.uploadPath');
+    }
 
     async increasePasswordAttempt(user: UserEntity): Promise<void> {
         const passwordAttempt = user.passwordAttempt + 1;
@@ -135,5 +138,14 @@ export class UserService implements IUserService {
 
     async updateUsername(user: UserEntity, payload: UserClaimUsernameDTO) {
         await this.userRepo.update(user.id, payload);
+    }
+
+    async createPhotoFilename(): Promise<Record<string, any>> {
+        const fileName: string = this.helperStringService.random(20);
+
+        return {
+            path: this.uploadPath,
+            filename: fileName,
+        };
     }
 }

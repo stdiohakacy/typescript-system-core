@@ -3,6 +3,7 @@ import {
     Doc,
     DocAuth,
     DocRequest,
+    DocRequestFile,
     DocResponse,
 } from '../../../common/doc/decorators/doc.decorator';
 import { UserProfileSerialization } from '../serializations/user.profile.serialization';
@@ -64,5 +65,14 @@ export function UserAuthClaimUsernameDoc(): MethodDecorator {
         DocAuth({ jwtAccessToken: true }),
         DocRequest({ bodyType: ENUM_DOC_REQUEST_BODY_TYPE.JSON }),
         DocResponse('user.claimUsername')
+    );
+}
+
+export function UserAuthUploadProfileDoc(): MethodDecorator {
+    return applyDecorators(
+        Doc({ operation: 'modules.auth.user' }),
+        DocAuth({ jwtAccessToken: true }),
+        DocRequestFile(),
+        DocResponse('user.upload')
     );
 }

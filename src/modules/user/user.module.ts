@@ -14,6 +14,8 @@ import { AuthModule } from '../auth/auth.module';
 import { UserRefreshTokenHandler } from './commands/user.refresh-token.command';
 import { UserUpdateProfileHandler } from './commands/user.update-profile.command';
 import { UserClaimUsernameHandler } from './commands/user.claim-username.command';
+import { UserUploadHandler } from './commands/user.upload.command';
+import { IntegrationModule } from '../../common/integration/integration.module';
 
 export const handlers = [
     UserRegisterHandler,
@@ -25,6 +27,7 @@ export const handlers = [
     UserRefreshTokenHandler,
     UserUpdateProfileHandler,
     UserClaimUsernameHandler,
+    UserUploadHandler,
 ];
 
 @Module({
@@ -33,6 +36,7 @@ export const handlers = [
         AuthModule,
         MailModule,
         SettingModule,
+        IntegrationModule,
     ],
     exports: [UserService],
     providers: [...handlers, UserService],
