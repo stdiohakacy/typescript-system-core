@@ -28,10 +28,14 @@ import { UserForgotPasswordDTO } from '../dtos/user.forgot-password.dto';
 import { UserForgotPasswordCommand } from '../commands/user.forgot-password.command';
 import { UserResetPasswordDTO } from '../dtos/user.reset-password.dto';
 import { UserResetPasswordCommand } from '../commands/user.reset-password.command';
-import { AuthGoogleOAuth2SignUpProtected } from '../../../modules/auth/decorators/auth.google.decorator';
+import {
+    AuthGoogleOAuth2LoginProtected,
+    AuthGoogleOAuth2SignUpProtected,
+} from '../../../modules/auth/decorators/auth.google.decorator';
 import { AuthJwtPayload } from 'src/modules/auth/decorators/auth.jwt-decorator';
 import { IAuthGooglePayload } from 'src/modules/auth/interfaces/auth.interface';
-import { UserSignInGoogleCallbackCommand } from '../commands/user.sign-in-google-callback.command';
+import { UserSignUpGoogleCallbackCommand } from '../commands/user.sign-up-google-callback.command';
+import { UserLoginGoogleCallbackCommand } from '../commands/user.login-google-callback.command';
 
 @ApiTags('modules.public.user')
 @Controller({
@@ -102,11 +106,30 @@ export class UserPublicController {
     @HttpCode(HttpStatus.CREATED)
     @Get('/sign-up/google/callback')
     async signUpGoogleCallback(
-        @AuthJwtPayload()
-        payload: IAuthGooglePayload
+        @AuthJwtPayload() payload: IAuthGooglePayload
     ): Promise<void> {
         return await this.commandBus.execute(
-            new UserSignInGoogleCallbackCommand(payload)
+            new UserSignUpGoogleCallbackCommand(payload)
+        );
+    }
+
+    @ApiExcludeEndpoint()
+    @Response('user.loginGoogle')
+    @AuthGoogleOAuth2LoginProtected()
+    @Get('/login/google')
+    async loginGoogle(): Promise<void> {
+        return;
+    }
+
+    @ApiExcludeEndpoint()
+    @Response('user.loginGoogleCallback')
+    @AuthGoogleOAuth2LoginProtected()
+    @Get('/login/google/callback')
+    async loginGoogleCallback(
+        @AuthJwtPayload() authGooglePayload: IAuthGooglePayload
+    ): Promise<IResponse> {
+        return this.commandBus.execute(
+            new UserLoginGoogleCallbackCommand(authGooglePayload)
         );
     }
 }

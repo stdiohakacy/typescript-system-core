@@ -3,6 +3,7 @@ import { AuthService } from './services/auth.service';
 import { AuthJwtAccessStrategy } from './guards/jwt-access/auth.jwt-access.strategy';
 import { AuthJwtRefreshStrategy } from './guards/jwt-refresh/auth.jwt-refresh.strategy';
 import { AuthGoogleOAuth2SignUpStrategy } from './guards/google-oauth2/auth.google-oauth2.sign-up.guard';
+import { AuthGoogleOAuth2LoginStrategy } from './guards/google-oauth2/auth.google-oauth2.login.strategy';
 
 @Module({
     providers: [AuthService],
@@ -21,7 +22,7 @@ export class AuthModule {
             process.env.SSO_GOOGLE_CLIENT_ID &&
             process.env.SSO_GOOGLE_CLIENT_SECRET
         ) {
-            // providers.push(AuthGoogleOAuth2LoginStrategy);
+            providers.push(AuthGoogleOAuth2LoginStrategy);
             providers.push(AuthGoogleOAuth2SignUpStrategy);
         }
 

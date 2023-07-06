@@ -1,28 +1,28 @@
 import { CommandHandler, ICommand, ICommandHandler } from '@nestjs/cqrs';
-import { IAuthGooglePayload } from '../../../modules/auth/interfaces/auth.interface';
+import { IAuthGooglePayload } from '../../auth/interfaces/auth.interface';
 import { UserService } from '../services/user.service';
 import {
     ConflictException,
     InternalServerErrorException,
 } from '@nestjs/common';
 import { ENUM_USER_STATUS_CODE_ERROR } from '../constants/user.status-code.constant';
-import { AuthService } from '../../../modules/auth/services/auth.service';
+import { AuthService } from '../../auth/services/auth.service';
 import { ENUM_USER_SIGN_UP_FROM } from '../constants/user.enum.constant';
 import { ENUM_ERROR_STATUS_CODE_ERROR } from '../../../common/error/constants/error.status-code.constant';
 
-export class UserSignInGoogleCallbackCommand implements ICommand {
+export class UserSignUpGoogleCallbackCommand implements ICommand {
     constructor(public readonly payload: IAuthGooglePayload) {}
 }
 
-@CommandHandler(UserSignInGoogleCallbackCommand)
-export class UserSignInGoogleCallbackHandler
-    implements ICommandHandler<UserSignInGoogleCallbackCommand>
+@CommandHandler(UserSignUpGoogleCallbackCommand)
+export class UserSignUpGoogleCallbackHandler
+    implements ICommandHandler<UserSignUpGoogleCallbackCommand>
 {
     constructor(
         private readonly userService: UserService,
         private readonly authService: AuthService
     ) {}
-    async execute({ payload }: UserSignInGoogleCallbackCommand) {
+    async execute({ payload }: UserSignUpGoogleCallbackCommand) {
         const { email, firstName, lastName, accessToken, refreshToken } =
             payload;
 
