@@ -57,3 +57,12 @@ export function UserAuthUpdateProfileDoc(): MethodDecorator {
         DocResponse('user.updateProfile')
     );
 }
+
+export function UserAuthClaimUsernameDoc(): MethodDecorator {
+    return applyDecorators(
+        Doc({ operation: 'modules.auth.user' }),
+        DocAuth({ jwtAccessToken: true }),
+        DocRequest({ bodyType: ENUM_DOC_REQUEST_BODY_TYPE.JSON }),
+        DocResponse('user.claimUsername')
+    );
+}

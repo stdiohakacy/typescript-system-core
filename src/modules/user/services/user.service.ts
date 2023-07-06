@@ -18,6 +18,7 @@ import { Uuid } from '../../../types';
 import { AuthService } from '../../../modules/auth/services/auth.service';
 import { IAuthPassword } from '../../../modules/auth/interfaces/auth.interface';
 import { UserUpdateProfileDTO } from '../dtos/user.update-profile.dto';
+import { UserClaimUsernameDTO } from '../dtos/user.claim-username.dto';
 
 @Injectable()
 export class UserService implements IUserService {
@@ -129,6 +130,10 @@ export class UserService implements IUserService {
     }
 
     async updateProfile(user: UserEntity, payload: UserUpdateProfileDTO) {
+        await this.userRepo.update(user.id, payload);
+    }
+
+    async updateUsername(user: UserEntity, payload: UserClaimUsernameDTO) {
         await this.userRepo.update(user.id, payload);
     }
 }

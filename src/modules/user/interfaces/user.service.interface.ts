@@ -5,6 +5,7 @@ import { UserPayloadSerialization } from '../serializations/user.payload.seriali
 import { UserResetPasswordDTO } from '../dtos/user.reset-password.dto';
 import { IAuthPassword } from '../../../modules/auth/interfaces/auth.interface';
 import { UserUpdateProfileDTO } from '../dtos/user.update-profile.dto';
+import { UserClaimUsernameDTO } from '../dtos/user.claim-username.dto';
 
 export interface IUserService {
     create(
@@ -33,4 +34,6 @@ export interface IUserService {
         user: UserEntity,
         payload: UserUpdateProfileDTO
     ): Promise<void>;
+
+    updateUsername(user, payload: UserClaimUsernameDTO): Promise<void>;
 }

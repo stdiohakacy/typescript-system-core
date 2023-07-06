@@ -22,6 +22,7 @@ import { CommandBus } from '@nestjs/cqrs';
 import { UserChangePasswordCommand } from '../commands/user.change-password.command';
 import {
     UserAuthChangePasswordDoc,
+    UserAuthClaimUsernameDoc,
     UserAuthInfoDoc,
     UserAuthProfileDoc,
     UserAuthRefreshDoc,
@@ -38,6 +39,8 @@ import {
 import { UserRefreshTokenCommand } from '../commands/user.refresh-token.command';
 import { UserUpdateProfileDTO } from '../dtos/user.update-profile.dto';
 import { UserUpdateProfileCommand } from '../commands/user.update-profile.command';
+import { UserClaimUsernameDTO } from '../dtos/user.claim-username.dto';
+import { UserClaimUsernameCommand } from '../commands/user.claim-username.command';
 
 @ApiTags('modules.auth.user')
 @Controller({ version: '1', path: '/user' })
@@ -104,6 +107,20 @@ export class UserAuthController {
     ) {
         return await this.commandBus.execute(
             new UserUpdateProfileCommand(userAuth, payload)
+        );
+    }
+
+    @UserAuthClaimUsernameDoc()
+    @Response('user.claimUsername')
+    @UserProtected()
+    @AuthJwtAccessProtected()
+    @Patch('/profile/claim-username')
+    async claimUsername(
+        @GetUser() userAuth: UserEntity,
+        @Body() payload: UserClaimUsernameDTO
+    ) {
+        return await this.commandBus.execute(
+            new UserClaimUsernameCommand(userAuth, payload)
         );
     }
 }

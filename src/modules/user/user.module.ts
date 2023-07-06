@@ -13,6 +13,7 @@ import { UserChangePasswordHandler } from './commands/user.change-password.comma
 import { AuthModule } from '../auth/auth.module';
 import { UserRefreshTokenHandler } from './commands/user.refresh-token.command';
 import { UserUpdateProfileHandler } from './commands/user.update-profile.command';
+import { UserClaimUsernameHandler } from './commands/user.claim-username.command';
 
 export const handlers = [
     UserRegisterHandler,
@@ -23,6 +24,7 @@ export const handlers = [
     UserChangePasswordHandler,
     UserRefreshTokenHandler,
     UserUpdateProfileHandler,
+    UserClaimUsernameHandler,
 ];
 
 @Module({
