@@ -17,6 +17,7 @@ import { UserResetPasswordDTO } from '../dtos/user.reset-password.dto';
 import { Uuid } from '../../../types';
 import { AuthService } from '../../../modules/auth/services/auth.service';
 import { IAuthPassword } from '../../../modules/auth/interfaces/auth.interface';
+import { UserUpdateProfileDTO } from '../dtos/user.update-profile.dto';
 
 @Injectable()
 export class UserService implements IUserService {
@@ -125,5 +126,9 @@ export class UserService implements IUserService {
             passwordCreated,
             salt,
         });
+    }
+
+    async updateProfile(user: UserEntity, payload: UserUpdateProfileDTO) {
+        await this.userRepo.update(user.id, payload);
     }
 }

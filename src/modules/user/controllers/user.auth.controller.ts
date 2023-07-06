@@ -25,6 +25,7 @@ import {
     UserAuthInfoDoc,
     UserAuthProfileDoc,
     UserAuthRefreshDoc,
+    UserAuthUpdateProfileDoc,
 } from '../dtos/user.auth.doc';
 import { UserPayloadSerialization } from '../serializations/user.payload.serialization';
 import { UserRefreshSerialization } from '../serializations/user.refresh-serialization';
@@ -35,6 +36,8 @@ import {
     AuthJwtToken,
 } from '../../../modules/auth/decorators/auth.jwt-decorator';
 import { UserRefreshTokenCommand } from '../commands/user.refresh-token.command';
+import { UserUpdateProfileDTO } from '../dtos/user.update-profile.dto';
+import { UserUpdateProfileCommand } from '../commands/user.update-profile.command';
 
 @ApiTags('modules.auth.user')
 @Controller({ version: '1', path: '/user' })
@@ -87,6 +90,20 @@ export class UserAuthController {
     ): Promise<IResponse> {
         return await this.commandBus.execute(
             new UserRefreshTokenCommand(userAuth, refreshToken)
+        );
+    }
+
+    @UserAuthUpdateProfileDoc()
+    @Response('user.updateProfile')
+    @UserProtected()
+    @AuthJwtAccessProtected()
+    @Patch('/profile/update')
+    async updateProfile(
+        @GetUser() userAuth: UserEntity,
+        @Body() payload: UserUpdateProfileDTO
+    ) {
+        return await this.commandBus.execute(
+            new UserUpdateProfileCommand(userAuth, payload)
         );
     }
 }

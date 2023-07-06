@@ -48,3 +48,12 @@ export function UserAuthRefreshDoc(): MethodDecorator {
         })
     );
 }
+
+export function UserAuthUpdateProfileDoc(): MethodDecorator {
+    return applyDecorators(
+        Doc({ operation: 'modules.auth.user' }),
+        DocAuth({ jwtAccessToken: true }),
+        DocRequest({ bodyType: ENUM_DOC_REQUEST_BODY_TYPE.JSON }),
+        DocResponse('user.updateProfile')
+    );
+}

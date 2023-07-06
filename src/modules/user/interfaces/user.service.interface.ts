@@ -4,6 +4,7 @@ import { UserEntity } from '../entities/user.entity';
 import { UserPayloadSerialization } from '../serializations/user.payload.serialization';
 import { UserResetPasswordDTO } from '../dtos/user.reset-password.dto';
 import { IAuthPassword } from '../../../modules/auth/interfaces/auth.interface';
+import { UserUpdateProfileDTO } from '../dtos/user.update-profile.dto';
 
 export interface IUserService {
     create(
@@ -21,5 +22,15 @@ export interface IUserService {
     resetPassword(
         user: UserEntity,
         payload: UserResetPasswordDTO
+    ): Promise<void>;
+
+    updatePassword(
+        user: UserEntity,
+        authPassword: IAuthPassword
+    ): Promise<void>;
+
+    updateProfile(
+        user: UserEntity,
+        payload: UserUpdateProfileDTO
     ): Promise<void>;
 }
