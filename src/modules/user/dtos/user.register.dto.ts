@@ -8,4 +8,5 @@ export class UserRegisterDTO extends PickType(UserDTO, [
     'firstName',
     'lastName',
     'phone',
+    'signUpFrom',
 ]) {}

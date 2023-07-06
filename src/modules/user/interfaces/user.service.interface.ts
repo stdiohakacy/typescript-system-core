@@ -7,6 +7,7 @@ import { IAuthPassword } from '../../../modules/auth/interfaces/auth.interface';
 import { UserUpdateProfileDTO } from '../dtos/user.update-profile.dto';
 import { UserClaimUsernameDTO } from '../dtos/user.claim-username.dto';
 import { AwsS3Serialization } from '../../../common/aws/serializations/aws.s3.serialization';
+import { UserUpdateGoogleSSODTO } from '../dtos/user.update-google-sso.dto';
 
 export interface IUserService {
     create(
@@ -48,4 +49,11 @@ export interface IUserService {
     createPhotoFilename(): Promise<Record<string, any>>;
 
     updatePhoto(userAuth: UserEntity, photo: AwsS3Serialization): Promise<void>;
+
+    findOneByEmail(email: string): Promise<UserEntity>;
+
+    updateGoogleSSO(
+        user: UserEntity,
+        google: UserUpdateGoogleSSODTO
+    ): Promise<void>;
 }

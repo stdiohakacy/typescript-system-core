@@ -5,8 +5,12 @@ import {
 } from '../../../common/base/entity/base.entity';
 import { UseDTO } from '../../../common/base/decorators/use-dto.decorator';
 import { UserDTO } from '../dtos/user.dto';
-import { UserStatus } from '../constants/user.enum.constant';
+import {
+    ENUM_USER_SIGN_UP_FROM,
+    UserStatus,
+} from '../constants/user.enum.constant';
 import { AwsS3Serialization } from '../../../common/aws/serializations/aws.s3.serialization';
+import { IUserGoogleEntity } from '../interfaces/user.interface';
 
 export interface IUserEntity extends IBaseEntity<UserDTO> {
     username: string;
@@ -89,4 +93,18 @@ export class UserEntity extends BaseEntity<UserDTO> implements IUserEntity {
 
     @Column({ name: 'photo', type: 'jsonb', nullable: true })
     photo?: AwsS3Serialization;
+
+    @Column({
+        name: 'signUpFrom',
+        enum: ENUM_USER_SIGN_UP_FROM,
+        default: ENUM_USER_SIGN_UP_FROM.LOCAL,
+    })
+    signUpFrom: ENUM_USER_SIGN_UP_FROM;
+
+    @Column({
+        name: 'google',
+        type: 'jsonb',
+        nullable: true,
+    })
+    google?: IUserGoogleEntity;
 }

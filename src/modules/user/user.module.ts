@@ -16,6 +16,7 @@ import { UserUpdateProfileHandler } from './commands/user.update-profile.command
 import { UserClaimUsernameHandler } from './commands/user.claim-username.command';
 import { UserUploadHandler } from './commands/user.upload.command';
 import { IntegrationModule } from '../../common/integration/integration.module';
+import { UserSignInGoogleCallbackHandler } from './commands/user.sign-in-google-callback.command';
 
 export const handlers = [
     UserRegisterHandler,
@@ -28,6 +29,7 @@ export const handlers = [
     UserUpdateProfileHandler,
     UserClaimUsernameHandler,
     UserUploadHandler,
+    UserSignInGoogleCallbackHandler,
 ];
 
 @Module({

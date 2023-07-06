@@ -3,6 +3,7 @@ import {
     IsBoolean,
     IsDate,
     IsEmail,
+    IsEnum,
     IsNotEmpty,
     IsNumber,
     IsString,
@@ -17,6 +18,7 @@ import { BaseDTO } from '../../../common/base/dto/base.dto';
 import { UserEntity } from '../entities/user.entity';
 import { IsPasswordStrong } from '../../../common/request/validations/request.is-password-strong.validation';
 import { MobileNumberAllowed } from '../../../common/request/validations/request.mobile-number-allowed.validation';
+import { ENUM_USER_SIGN_UP_FROM } from '../constants/user.enum.constant';
 
 export class UserDTO extends BaseDTO {
     @ApiProperty({
@@ -139,6 +141,11 @@ export class UserDTO extends BaseDTO {
     @IsNotEmpty()
     forgotExpire: Date;
 
+    @IsEnum(ENUM_USER_SIGN_UP_FROM)
+    @IsString()
+    @IsNotEmpty()
+    readonly signUpFrom: ENUM_USER_SIGN_UP_FROM;
+
     constructor(user: UserEntity) {
         super(user);
         this.username = user.username;
@@ -154,5 +161,6 @@ export class UserDTO extends BaseDTO {
         this.blockedAt = user.blockedAt;
         this.activeKey = user.activeKey;
         this.activatedAt = user.activatedAt;
+        this.signUpFrom = user.signUpFrom;
     }
 }

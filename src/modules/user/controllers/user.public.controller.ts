@@ -1,5 +1,12 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import {
+    Body,
+    Controller,
+    Get,
+    HttpCode,
+    HttpStatus,
+    Post,
+} from '@nestjs/common';
+import { ApiExcludeEndpoint, ApiTags } from '@nestjs/swagger';
 import { Response } from '../../../common/response/decorators/response.decorator';
 import {
     UserPublicActiveDoc,
@@ -21,6 +28,10 @@ import { UserForgotPasswordDTO } from '../dtos/user.forgot-password.dto';
 import { UserForgotPasswordCommand } from '../commands/user.forgot-password.command';
 import { UserResetPasswordDTO } from '../dtos/user.reset-password.dto';
 import { UserResetPasswordCommand } from '../commands/user.reset-password.command';
+import { AuthGoogleOAuth2SignUpProtected } from '../../../modules/auth/decorators/auth.google.decorator';
+import { AuthJwtPayload } from 'src/modules/auth/decorators/auth.jwt-decorator';
+import { IAuthGooglePayload } from 'src/modules/auth/interfaces/auth.interface';
+import { UserSignInGoogleCallbackCommand } from '../commands/user.sign-in-google-callback.command';
 
 @ApiTags('modules.public.user')
 @Controller({
@@ -74,6 +85,28 @@ export class UserPublicController {
     ): Promise<IResponse> {
         return await this.commandBus.execute(
             new UserResetPasswordCommand(payload)
+        );
+    }
+
+    @ApiExcludeEndpoint()
+    @Response('user.signUpGoogle')
+    @AuthGoogleOAuth2SignUpProtected()
+    @Get('/sign-up/google')
+    async signUpGoogle(): Promise<void> {
+        return;
+    }
+
+    @ApiExcludeEndpoint()
+    @Response('user.signUpGoogleCallback')
+    @AuthGoogleOAuth2SignUpProtected()
+    @HttpCode(HttpStatus.CREATED)
+    @Get('/sign-up/google/callback')
+    async signUpGoogleCallback(
+        @AuthJwtPayload()
+        payload: IAuthGooglePayload
+    ): Promise<void> {
+        return await this.commandBus.execute(
+            new UserSignInGoogleCallbackCommand(payload)
         );
     }
 }

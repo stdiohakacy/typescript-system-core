@@ -18,6 +18,7 @@ import { UserUpdateProfileDTO } from '../dtos/user.update-profile.dto';
 import { UserClaimUsernameDTO } from '../dtos/user.claim-username.dto';
 import { HelperStringService } from '../../../common/helper/services/helper.string.service';
 import { AwsS3Serialization } from 'src/common/aws/serializations/aws.s3.serialization';
+import { UserUpdateGoogleSSODTO } from '../dtos/user.update-google-sso.dto';
 
 @Injectable()
 export class UserService implements IUserService {
@@ -57,7 +58,8 @@ export class UserService implements IUserService {
         payload: UserRegisterDTO,
         authPassword: IAuthPassword
     ): Promise<UserEntity> {
-        const { email, username, firstName, lastName, phone } = payload;
+        const { email, username, firstName, lastName, phone, signUpFrom } =
+            payload;
         const { passwordExpired, passwordHash, salt, passwordCreated } =
             authPassword;
 
@@ -78,6 +80,7 @@ export class UserService implements IUserService {
             activeExpire: this.helperDateService.forwardInMilliseconds(
                 3 * 24 * 60 * 60
             ),
+            signUpFrom,
         });
 
         return await this.userRepo.save(userEntity);
@@ -152,5 +155,16 @@ export class UserService implements IUserService {
 
     async updatePhoto(userAuth: UserEntity, photo: AwsS3Serialization) {
         await this.userRepo.update(userAuth.id, { photo });
+    }
+
+    async findOneByEmail(email: string): Promise<UserEntity> {
+        return await this.userRepo.findOne({ where: { email } });
+    }
+
+    async updateGoogleSSO(
+        user: UserEntity,
+        google: UserUpdateGoogleSSODTO
+    ): Promise<void> {
+        await this.userRepo.update(user.id, { google });
     }
 }
