@@ -30,14 +30,13 @@ export class UserUploadHandler implements ICommandHandler<UserUploadCommand> {
         const path = await this.userService.createPhotoFilename();
 
         try {
-            const aws = await this.awsS3Service.putItemInBucket(
+            const awsPhotoResponse = await this.awsS3Service.putItemInBucket(
                 `${path.filename}.${mime}`,
                 content,
                 { path: `${path.path}/${userAuth.id}` }
             );
 
-            console.log(aws);
-            // await this.userService.updatePhoto(user, aws);
+            await this.userService.updatePhoto(userAuth, awsPhotoResponse);
         } catch (err: any) {
             throw new InternalServerErrorException({
                 statusCode: ENUM_ERROR_STATUS_CODE_ERROR.ERROR_UNKNOWN,

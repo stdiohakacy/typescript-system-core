@@ -6,6 +6,7 @@ import { UserResetPasswordDTO } from '../dtos/user.reset-password.dto';
 import { IAuthPassword } from '../../../modules/auth/interfaces/auth.interface';
 import { UserUpdateProfileDTO } from '../dtos/user.update-profile.dto';
 import { UserClaimUsernameDTO } from '../dtos/user.claim-username.dto';
+import { AwsS3Serialization } from '../../../common/aws/serializations/aws.s3.serialization';
 
 export interface IUserService {
     create(
@@ -45,4 +46,6 @@ export interface IUserService {
     updateUsername(user, payload: UserClaimUsernameDTO): Promise<void>;
 
     createPhotoFilename(): Promise<Record<string, any>>;
+
+    updatePhoto(userAuth: UserEntity, photo: AwsS3Serialization): Promise<void>;
 }

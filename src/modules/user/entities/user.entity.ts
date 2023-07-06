@@ -6,7 +6,7 @@ import {
 import { UseDTO } from '../../../common/base/decorators/use-dto.decorator';
 import { UserDTO } from '../dtos/user.dto';
 import { UserStatus } from '../constants/user.enum.constant';
-import { Uuid } from '../../../types';
+import { AwsS3Serialization } from '../../../common/aws/serializations/aws.s3.serialization';
 
 export interface IUserEntity extends IBaseEntity<UserDTO> {
     username: string;
@@ -27,6 +27,7 @@ export interface IUserEntity extends IBaseEntity<UserDTO> {
     activatedAt?: Date;
     forgotKey?: string;
     forgotExpire?: Date;
+    photo?: AwsS3Serialization;
 }
 
 @Entity({ name: 'users' })
@@ -85,4 +86,7 @@ export class UserEntity extends BaseEntity<UserDTO> implements IUserEntity {
 
     @Column({ name: 'forgotExpire', type: 'timestamptz', nullable: true })
     forgotExpire?: Date;
+
+    @Column({ name: 'photo', type: 'jsonb', nullable: true })
+    photo?: AwsS3Serialization;
 }

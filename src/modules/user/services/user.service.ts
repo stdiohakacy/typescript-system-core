@@ -17,6 +17,7 @@ import { IAuthPassword } from '../../../modules/auth/interfaces/auth.interface';
 import { UserUpdateProfileDTO } from '../dtos/user.update-profile.dto';
 import { UserClaimUsernameDTO } from '../dtos/user.claim-username.dto';
 import { HelperStringService } from '../../../common/helper/services/helper.string.service';
+import { AwsS3Serialization } from 'src/common/aws/serializations/aws.s3.serialization';
 
 @Injectable()
 export class UserService implements IUserService {
@@ -147,5 +148,9 @@ export class UserService implements IUserService {
             path: this.uploadPath,
             filename: fileName,
         };
+    }
+
+    async updatePhoto(userAuth: UserEntity, photo: AwsS3Serialization) {
+        await this.userRepo.update(userAuth.id, { photo });
     }
 }
