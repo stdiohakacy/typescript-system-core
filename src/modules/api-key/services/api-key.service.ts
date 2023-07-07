@@ -5,7 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { HelperHashService } from '../../../common/helper/services/helper.hash.service';
 import { HelperDateService } from '../../../common/helper/services/helper.date.service';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { ApiKeyEntity } from '../entities/api-key.entity';
 import { IApiKeyCreated } from '../interfaces/api-key.interface';
 import { ApiKeyCreateDTO } from '../dtos/api-key.create.dto';
@@ -117,5 +117,9 @@ export class ApiKeyService implements IApiKeyService {
             secret,
             data: apiKeyCreated,
         } as IApiKeyCreated;
+    }
+
+    async deleteMany(find: Record<string, any>): Promise<DeleteResult> {
+        return await this.apiKeyRepo.delete(find);
     }
 }

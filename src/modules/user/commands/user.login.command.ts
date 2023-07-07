@@ -12,7 +12,7 @@ import {
     ENUM_USER_STATUS_CODE_SUCCESS,
 } from '../constants/user.status-code.constant';
 import { SettingService } from '../../setting/services/setting.service';
-import { UserStatus } from '../constants/user.enum.constant';
+import { ENUM_USER_STATUS } from '../constants/user.enum.constant';
 import { UserPayloadSerialization } from '../serializations/user.payload.serialization';
 import { AuthService } from '../../../modules/auth/services/auth.service';
 
@@ -70,7 +70,7 @@ export class UserLoginHandler implements ICommandHandler<UserLoginCommand> {
                 statusCode: ENUM_USER_STATUS_CODE_ERROR.USER_BLOCKED_ERROR,
                 message: 'user.error.blocked',
             });
-        } else if (user.status !== UserStatus.ACTIVE) {
+        } else if (user.status !== ENUM_USER_STATUS.ACTIVE) {
             throw new ForbiddenException({
                 statusCode: ENUM_USER_STATUS_CODE_ERROR.USER_INACTIVE_ERROR,
                 message: 'user.error.inactive',

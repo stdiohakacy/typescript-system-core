@@ -1,4 +1,4 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany } from 'typeorm';
 import {
     BaseEntity,
     IBaseEntity,
@@ -6,11 +6,14 @@ import {
 import { UseDTO } from '../../../common/base/decorators/use-dto.decorator';
 import { UserDTO } from '../dtos/user.dto';
 import {
+    ENUM_PERMISSION_TYPE,
+    ENUM_ROLE_TYPE,
     ENUM_USER_SIGN_UP_FROM,
-    UserStatus,
+    ENUM_USER_STATUS,
 } from '../constants/user.enum.constant';
 import { AwsS3Serialization } from '../../../common/aws/serializations/aws.s3.serialization';
 import { IUserGoogleEntity } from '../interfaces/user.interface';
+import { RoleEntity } from 'src/modules/role/entities/role.entity';
 
 export interface IUserEntity extends IBaseEntity<UserDTO> {
     username: string;
@@ -23,7 +26,7 @@ export interface IUserEntity extends IBaseEntity<UserDTO> {
     passwordCreated?: Date;
     passwordAttempt?: number;
     salt: string;
-    status: UserStatus;
+    status: ENUM_USER_STATUS;
     activeKey: string;
     activeExpire: Date;
     blocked?: boolean;
@@ -32,6 +35,8 @@ export interface IUserEntity extends IBaseEntity<UserDTO> {
     forgotKey?: string;
     forgotExpire?: Date;
     photo?: AwsS3Serialization;
+    inactivePermanent?: boolean;
+    inactiveDate?: Date;
 }
 
 @Entity({ name: 'users' })
@@ -73,8 +78,12 @@ export class UserEntity extends BaseEntity<UserDTO> implements IUserEntity {
     @Column({ name: 'blockedAt', type: 'timestamptz', nullable: true })
     blockedAt?: Date;
 
-    @Column({ name: 'status', enum: UserStatus, default: UserStatus.INACTIVE })
-    status: UserStatus;
+    @Column({
+        name: 'status',
+        enum: ENUM_USER_STATUS,
+        default: ENUM_USER_STATUS.INACTIVE,
+    })
+    status: ENUM_USER_STATUS;
 
     @Column({ name: 'activeKey', nullable: true })
     activeKey: string;
@@ -107,4 +116,17 @@ export class UserEntity extends BaseEntity<UserDTO> implements IUserEntity {
         nullable: true,
     })
     google?: IUserGoogleEntity;
+
+    @Column({
+        name: 'inactivePermanent',
+        nullable: true,
+    })
+    inactivePermanent?: boolean;
+
+    @Column({
+        name: 'inactiveDate',
+        nullable: true,
+        type: 'timestamptz',
+    })
+    inactiveDate?: Date;
 }

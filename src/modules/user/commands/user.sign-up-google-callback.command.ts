@@ -47,9 +47,9 @@ export class UserSignUpGoogleCallbackHandler
                     firstName,
                     lastName,
                     password: passwordString,
-                    signUpFrom: ENUM_USER_SIGN_UP_FROM.GOOGLE,
                     username: '',
                     phone: '',
+                    signUpFrom: ENUM_USER_SIGN_UP_FROM.GOOGLE,
                 },
                 password
             );

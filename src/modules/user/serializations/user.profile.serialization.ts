@@ -1,7 +1,7 @@
 import { ApiHideProperty, OmitType } from '@nestjs/swagger';
 import { UserGetSerialization } from './user.get.serialization';
 import { Exclude } from 'class-transformer';
-import { UserStatus } from '../constants/user.enum.constant';
+import { ENUM_USER_STATUS } from '../constants/user.enum.constant';
 
 export class UserProfileSerialization extends OmitType(UserGetSerialization, [
     'status',
@@ -16,7 +16,7 @@ export class UserProfileSerialization extends OmitType(UserGetSerialization, [
 ] as const) {
     @ApiHideProperty()
     @Exclude()
-    readonly status: UserStatus;
+    readonly status: ENUM_USER_STATUS;
 
     @ApiHideProperty()
     @Exclude()

@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
 import { Exclude } from 'class-transformer';
 import { ResponseIdSerialization } from 'src/common/response/serializations/response.id.serialization';
-import { UserStatus } from '../constants/user.enum.constant';
+import { ENUM_USER_STATUS } from '../constants/user.enum.constant';
 
 export class UserGetSerialization extends ResponseIdSerialization {
     @ApiProperty({
@@ -29,9 +29,9 @@ export class UserGetSerialization extends ResponseIdSerialization {
     @ApiProperty({
         required: true,
         nullable: false,
-        example: UserStatus.ACTIVE,
+        example: ENUM_USER_STATUS.ACTIVE,
     })
-    readonly status: UserStatus;
+    readonly status: ENUM_USER_STATUS;
 
     @ApiProperty({
         required: true,

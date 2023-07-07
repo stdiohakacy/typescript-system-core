@@ -4,7 +4,7 @@ import { Uuid } from '../../../types';
 
 export class BaseDTO {
     @ApiProperty()
-    id: Uuid;
+    id: string;
 
     @ApiProperty()
     createdAt: Date;

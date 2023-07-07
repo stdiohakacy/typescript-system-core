@@ -12,7 +12,7 @@ import { UserNotFoundGuard } from '../guards/user.not-found.guard';
 import { instanceToPlain } from 'class-transformer';
 import { UserBlockedGuard } from '../guards/user.blocked.guard';
 import { UserActiveGuard } from '../guards/user.active.guard';
-import { UserStatus } from '../constants/user.enum.constant';
+import { ENUM_USER_STATUS } from '../constants/user.enum.constant';
 import {
     USER_ACTIVE_META_KEY,
     USER_BLOCKED_META_KEY,
@@ -42,6 +42,6 @@ export function UserAuthProtected(): MethodDecorator {
         ),
         SetMetadata(USER_INACTIVE_PERMANENT_META_KEY, [false]),
         SetMetadata(USER_BLOCKED_META_KEY, [false]),
-        SetMetadata(USER_ACTIVE_META_KEY, [UserStatus.ACTIVE])
+        SetMetadata(USER_ACTIVE_META_KEY, [ENUM_USER_STATUS.ACTIVE])
     );
 }

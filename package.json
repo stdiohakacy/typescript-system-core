@@ -21,8 +21,15 @@
     "migration:generate": "yarn run typeorm migration:generate -d ormconfig",
     "migration:create": "yarn run typeorm migration:create -d ormconfig",
     "migration:run": "yarn run typeorm migration:run -d ormconfig",
+    "seed:user": "nestjs-command seed:user",
     "seed:apikey": "nestjs-command seed:apikey",
-    "seed": "yarn seed:apikey"
+    "seed:role": "nestjs-command seed:role",
+    "rollback:apikey": "nestjs-command remove:apikey",
+    "rollback:role": "nestjs-command remove:role",
+    "rollback:user": "nestjs-command remove:user",
+    "seed": "yarn seed:apikey && yarn seed:role && yarn seed:user",
+    "rollback": "yarn rollback:apikey && yarn rollback:user && yarn rollback:role"
+
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.363.0",

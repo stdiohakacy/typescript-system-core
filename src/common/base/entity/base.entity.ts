@@ -9,7 +9,7 @@ import { BaseDTO } from '../dto/base.dto';
 import { Constructor, Uuid } from '../../../types';
 
 export interface IBaseEntity<DTO extends BaseDTO, O = never> {
-    id: Uuid;
+    id: string;
     createdAt: Date;
     updatedAt: Date;
     deletedAt: Date;
@@ -24,7 +24,7 @@ export abstract class BaseEntity<DTO extends BaseDTO = BaseDTO, O = never>
     implements IBaseEntity<DTO, O>
 {
     @PrimaryGeneratedColumn('uuid')
-    id: Uuid;
+    id: string;
 
     @CreateDateColumn({ type: 'timestamp', name: 'createdAt' })
     createdAt: Date;

@@ -36,7 +36,7 @@ export class MigrationApiKeySeed {
     })
     async remove(): Promise<void> {
         try {
-            // await this.apiKeyService.deleteMany({});
+            await this.apiKeyService.deleteMany({});
         } catch (err: any) {
             throw new Error(err.message);
         }

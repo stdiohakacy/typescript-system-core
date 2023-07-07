@@ -1,13 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { randomBytes } from 'crypto';
 import { plainToInstance } from 'class-transformer';
 import { IUserService } from '../interfaces/user.service.interface';
 import { UserRegisterDTO } from '../dtos/user.register.dto';
 import { UserEntity } from '../entities/user.entity';
-import { UserStatus } from '../constants/user.enum.constant';
+import {
+    ENUM_USER_SIGN_UP_FROM,
+    ENUM_USER_STATUS,
+} from '../constants/user.enum.constant';
 import { HelperDateService } from '../../../common/helper/services/helper.date.service';
 import { UserPayloadSerialization } from '../serializations/user.payload.serialization';
 import { UserResetPasswordDTO } from '../dtos/user.reset-password.dto';
@@ -32,6 +35,10 @@ export class UserService implements IUserService {
         private readonly configService: ConfigService
     ) {
         this.uploadPath = this.configService.get<string>('user.uploadPath');
+    }
+
+    async deleteMany(find: Record<string, any>): Promise<DeleteResult> {
+        return await this.userRepo.delete(find);
     }
 
     async increasePasswordAttempt(user: UserEntity): Promise<void> {
@@ -75,7 +82,7 @@ export class UserService implements IUserService {
             passwordExpired,
             passwordCreated,
             passwordAttempt: 0,
-            status: UserStatus.INACTIVE,
+            status: ENUM_USER_STATUS.INACTIVE,
             activeKey: randomBytes(32).toString('hex'),
             activeExpire: this.helperDateService.forwardInMilliseconds(
                 3 * 24 * 60 * 60
@@ -92,7 +99,7 @@ export class UserService implements IUserService {
 
     async active(user: UserEntity) {
         await this.userRepo.update(user.id, {
-            status: UserStatus.ACTIVE,
+            status: ENUM_USER_STATUS.ACTIVE,
             activatedAt: this.helperDateService.create(),
             activeKey: '',
             activeExpire: null,
@@ -166,5 +173,13 @@ export class UserService implements IUserService {
         google: UserUpdateGoogleSSODTO
     ): Promise<void> {
         await this.userRepo.update(user.id, { google });
+    }
+
+    async inactivePermanent(user: UserEntity) {
+        // await this.userRepo.update(user.id, {
+        //     status: ENUM_USER_STATUS.INACTIVE,
+        //     inactivePermanent: true,
+        //     inactiveDate: this.helperDateService.create(),
+        // });
     }
 }

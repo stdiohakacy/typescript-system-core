@@ -2,7 +2,6 @@ import { CommandHandler, ICommand, ICommandHandler } from '@nestjs/cqrs';
 import { UserRegisterDTO } from '../dtos/user.register.dto';
 import { UserEntity } from '../entities/user.entity';
 import { UserService } from '../services/user.service';
-import { ConfigService } from '@nestjs/config';
 import { IMailService } from '../../../common/integration/mail/interfaces/mail.service.interface';
 import { MailServiceFactory } from '../../../common/integration/mail/factory/mail.factory.service';
 import { ConflictException } from '@nestjs/common';

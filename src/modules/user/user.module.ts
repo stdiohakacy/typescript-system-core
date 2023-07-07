@@ -18,6 +18,10 @@ import { UserUploadHandler } from './commands/user.upload.command';
 import { IntegrationModule } from '../../common/integration/integration.module';
 import { UserSignUpGoogleCallbackHandler } from './commands/user.sign-up-google-callback.command';
 import { UserLoginGoogleCallbackHandler } from './commands/user.login-google-callback.command';
+import { UserSelfDeleteHandler } from './commands/user.self-delete.command';
+import { AuthorizationModule } from '../../common/authorization/authorization.module';
+import { UserRoleService } from './services/user-role.service';
+import { UserRoleEntity } from './entities/user-role.entity';
 
 export const handlers = [
     UserRegisterHandler,
@@ -32,18 +36,20 @@ export const handlers = [
     UserUploadHandler,
     UserSignUpGoogleCallbackHandler,
     UserLoginGoogleCallbackHandler,
+    UserSelfDeleteHandler,
 ];
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([UserEntity]),
+        TypeOrmModule.forFeature([UserEntity, UserRoleEntity]),
         AuthModule,
         MailModule,
         SettingModule,
         IntegrationModule,
+        AuthorizationModule,
     ],
-    exports: [UserService],
-    providers: [...handlers, UserService],
+    exports: [UserService, UserRoleService],
+    providers: [...handlers, UserService, UserRoleService],
     controllers: [],
 })
 export class UserModule {}

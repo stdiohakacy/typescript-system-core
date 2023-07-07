@@ -2,7 +2,7 @@ import { CommandHandler, ICommand, ICommandHandler } from '@nestjs/cqrs';
 import { UserActiveDTO } from '../dtos/user.active.dto';
 import { UserService } from '../services/user.service';
 import { UserEntity } from '../entities/user.entity';
-import { UserStatus } from '../constants/user.enum.constant';
+import { ENUM_USER_STATUS } from '../constants/user.enum.constant';
 import { BadRequestException } from '@nestjs/common';
 import { ENUM_USER_STATUS_CODE_ERROR } from '../constants/user.status-code.constant';
 import { UserForgotPasswordDTO } from '../dtos/user.forgot-password.dto';
@@ -28,7 +28,7 @@ export class UserForgotPasswordHandler
                 message: 'user.error.notFound',
             });
         }
-        if (user.status !== UserStatus.ACTIVE) {
+        if (user.status !== ENUM_USER_STATUS.ACTIVE) {
             throw new BadRequestException({
                 statusCode: ENUM_USER_STATUS_CODE_ERROR.USER_INACTIVE_ERROR,
                 message: 'user.error.inactive',

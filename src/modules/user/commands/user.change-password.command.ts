@@ -2,7 +2,7 @@ import { CommandHandler, ICommand, ICommandHandler } from '@nestjs/cqrs';
 import { UserActiveDTO } from '../dtos/user.active.dto';
 import { UserService } from '../services/user.service';
 import { UserEntity } from '../entities/user.entity';
-import { UserStatus } from '../constants/user.enum.constant';
+import { ENUM_USER_STATUS } from '../constants/user.enum.constant';
 import { BadRequestException, ForbiddenException } from '@nestjs/common';
 import { ENUM_USER_STATUS_CODE_ERROR } from '../constants/user.status-code.constant';
 import { UserChangePasswordDTO } from '../dtos/user.change-password.dto';

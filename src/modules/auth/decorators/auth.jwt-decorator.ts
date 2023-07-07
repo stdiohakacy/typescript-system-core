@@ -1,5 +1,6 @@
 import {
     ExecutionContext,
+    SetMetadata,
     UseGuards,
     applyDecorators,
     createParamDecorator,
@@ -8,6 +9,7 @@ import { AuthJwtAccessGuard } from '../guards/jwt-access/auth.jwt-access.guard';
 import { IRequestApp } from '../../../common/request/interfaces/request.interface';
 import { UserPayloadSerialization } from '../../../modules/user/serializations/user.payload.serialization';
 import { AuthJwtRefreshGuard } from '../guards/jwt-refresh/auth.jwt-refresh.guard';
+import { ENUM_RBAC_ROLE_TYPE } from '../../../common/authorization/rbac/constants/rbac.enum.constant';
 
 export function AuthJwtAccessProtected(): MethodDecorator {
     return applyDecorators(UseGuards(AuthJwtAccessGuard));
