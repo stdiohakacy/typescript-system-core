@@ -1,11 +1,11 @@
 import { Command } from 'nestjs-command';
 import { Injectable } from '@nestjs/common';
-import { ENUM_RBAC_ROLE_TYPE } from '../../common/authorization/rbac/constants/rbac.enum.constant';
 import { ENUM_USER_SIGN_UP_FROM } from '../../modules/user/constants/user.enum.constant';
 import { RoleService } from '../../modules/role/services/role.service';
 import { AuthService } from '../../modules/auth/services/auth.service';
 import { UserService } from '../../modules/user/services/user.service';
 import { UserRoleService } from '../../modules/user/services/user-role.service';
+import { ENUM_ROLE_TYPE } from '../../modules/role/constants/role.enum.constant';
 
 @Injectable()
 export class MigrationUserSeed {
@@ -22,9 +22,9 @@ export class MigrationUserSeed {
         const passwordHashed = await this.authService.createPassword(password);
 
         const roles = await Promise.all([
-            this.roleService.findOneByName(ENUM_RBAC_ROLE_TYPE.SUPER_ADMIN),
-            this.roleService.findOneByName(ENUM_RBAC_ROLE_TYPE.ADMIN),
-            this.roleService.findOneByName(ENUM_RBAC_ROLE_TYPE.USER),
+            this.roleService.findOneByName(ENUM_ROLE_TYPE.SUPER_ADMIN),
+            this.roleService.findOneByName(ENUM_ROLE_TYPE.ADMIN),
+            this.roleService.findOneByName(ENUM_ROLE_TYPE.USER),
         ]);
 
         const usersData = [

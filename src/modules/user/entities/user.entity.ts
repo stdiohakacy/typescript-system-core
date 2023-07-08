@@ -6,14 +6,11 @@ import {
 import { UseDTO } from '../../../common/base/decorators/use-dto.decorator';
 import { UserDTO } from '../dtos/user.dto';
 import {
-    ENUM_PERMISSION_TYPE,
-    ENUM_ROLE_TYPE,
     ENUM_USER_SIGN_UP_FROM,
     ENUM_USER_STATUS,
 } from '../constants/user.enum.constant';
 import { AwsS3Serialization } from '../../../common/aws/serializations/aws.s3.serialization';
 import { IUserGoogleEntity } from '../interfaces/user.interface';
-import { RoleEntity } from 'src/modules/role/entities/role.entity';
 import { UserRoleEntity } from './user-role.entity';
 
 export interface IUserEntity extends IBaseEntity<UserDTO> {

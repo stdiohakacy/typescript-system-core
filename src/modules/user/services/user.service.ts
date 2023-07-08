@@ -176,10 +176,14 @@ export class UserService implements IUserService {
     }
 
     async joinWithRole(user: UserEntity) {
-        return await this.userRepo.findOne({
-            where: { id: user.id },
-            relations: ['role'],
-        });
+        return this.userRepo
+            .createQueryBuilder('users')
+            .leftJoin('users.userRoles', 'userRoles')
+            .leftJoin('userRoles.role', 'role')
+            .where('users.id = :id', { id: user.id })
+            .select('users')
+            .addSelect(['userRoles.id', 'role.id', 'role.name'])
+            .getOne();
     }
 
     async inactivePermanent(user: UserEntity) {
