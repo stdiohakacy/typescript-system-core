@@ -32,8 +32,8 @@ import {
     AuthGoogleOAuth2LoginProtected,
     AuthGoogleOAuth2SignUpProtected,
 } from '../../../modules/auth/decorators/auth.google.decorator';
-import { AuthJwtPayload } from 'src/modules/auth/decorators/auth.jwt-decorator';
-import { IAuthGooglePayload } from 'src/modules/auth/interfaces/auth.interface';
+import { AuthJwtPayload } from '../../../modules/auth/decorators/auth.jwt-decorator';
+import { IAuthGooglePayload } from '../../../modules/auth/interfaces/auth.interface';
 import { UserSignUpGoogleCallbackCommand } from '../commands/user.sign-up-google-callback.command';
 import { UserLoginGoogleCallbackCommand } from '../commands/user.login-google-callback.command';
 

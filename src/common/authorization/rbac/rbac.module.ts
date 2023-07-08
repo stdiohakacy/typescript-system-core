@@ -6,4 +6,4 @@ import { Module } from '@nestjs/common';
     controllers: [],
     imports: [],
 })
-export class RBACModule {}
+export class RBACCommonModule {}

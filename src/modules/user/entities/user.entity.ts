@@ -1,4 +1,4 @@
-import { Column, Entity, JoinTable, ManyToMany, OneToMany } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 import {
     BaseEntity,
     IBaseEntity,
@@ -11,6 +11,7 @@ import {
 } from '../constants/user.enum.constant';
 import { AwsS3Serialization } from '../../../common/aws/serializations/aws.s3.serialization';
 import { IUserGoogleEntity } from '../interfaces/user.interface';
+import { UserRoleEntity } from '../../../modules/rbac/entities/user-role.entity';
 
 export interface IUserEntity extends IBaseEntity<UserDTO> {
     username: string;
@@ -128,4 +129,7 @@ export class UserEntity extends BaseEntity<UserDTO> implements IUserEntity {
     inactiveDate?: Date;
 
     /* Relationships */
+
+    @OneToMany(() => UserRoleEntity, (userRoles) => userRoles.user)
+    userRoles: UserRoleEntity[];
 }

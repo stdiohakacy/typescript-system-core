@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, OneToOne } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 import { LoggerDTO } from '../dto/logger.dto';
 import {
     ENUM_LOGGER_ACTION,

@@ -7,10 +7,7 @@ import { plainToInstance } from 'class-transformer';
 import { IUserService } from '../interfaces/user.service.interface';
 import { UserRegisterDTO } from '../dtos/user.register.dto';
 import { UserEntity } from '../entities/user.entity';
-import {
-    ENUM_USER_SIGN_UP_FROM,
-    ENUM_USER_STATUS,
-} from '../constants/user.enum.constant';
+import { ENUM_USER_STATUS } from '../constants/user.enum.constant';
 import { HelperDateService } from '../../../common/helper/services/helper.date.service';
 import { UserPayloadSerialization } from '../serializations/user.payload.serialization';
 import { UserResetPasswordDTO } from '../dtos/user.reset-password.dto';

@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { RBACModule } from './rbac/rbac.module';
+import { RBACCommonModule } from './rbac/rbac.module';
 
 @Module({
     providers: [],
-    exports: [RBACModule],
+    exports: [RBACCommonModule],
     controllers: [],
-    imports: [RBACModule],
+    imports: [RBACCommonModule],
 })
 export class AuthorizationModule {}
