@@ -3,3 +3,8 @@ export enum ENUM_RBAC_ROLE_TYPE {
     ADMIN = 'admin',
     USER = 'user',
 }
+
+export enum ENUM_RBAC_PERMISSION_TYPE {
+    USER_CREATE = 'user:create',
+    USER_DELETE = 'user:delete',
+}

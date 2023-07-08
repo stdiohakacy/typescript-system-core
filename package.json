@@ -24,10 +24,11 @@
     "seed:user": "nestjs-command seed:user",
     "seed:apikey": "nestjs-command seed:apikey",
     "seed:role": "nestjs-command seed:role",
+    "seed:permission": "nestjs-command seed:permission",
     "rollback:apikey": "nestjs-command remove:apikey",
     "rollback:role": "nestjs-command remove:role",
     "rollback:user": "nestjs-command remove:user",
-    "seed": "yarn seed:apikey && yarn seed:role",
+    "seed": "yarn seed:apikey && yarn seed:role && yarn seed:permission",
     "rollback": "yarn rollback:apikey && yarn rollback:role"
 
   },

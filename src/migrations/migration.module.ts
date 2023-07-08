@@ -6,7 +6,8 @@ import { CommonModule } from '../common/common.module';
 import { UserModule } from '../modules/user/user.module';
 import { AuthModule } from '../modules/auth/auth.module';
 import { MigrationRoleSeed } from './seeds/migration.role.seed';
-import { RBACModule } from '../modules/rbac/rbac.module';
+import { MigrationPermissionSeed } from './seeds/migration.permission.seed';
+import { RBACCommonModule } from '../common/authorization/rbac/rbac.module';
 
 @Module({
     imports: [
@@ -15,9 +16,13 @@ import { RBACModule } from '../modules/rbac/rbac.module';
         CommonModule,
         UserModule,
         AuthModule,
-        RBACModule,
+        RBACCommonModule,
     ],
-    providers: [MigrationApiKeySeed, MigrationRoleSeed],
+    providers: [
+        MigrationApiKeySeed,
+        MigrationRoleSeed,
+        MigrationPermissionSeed,
+    ],
     exports: [],
 })
 export class MigrationModule {}
