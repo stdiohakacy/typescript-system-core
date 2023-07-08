@@ -187,10 +187,10 @@ export class UserService implements IUserService {
     }
 
     async inactivePermanent(user: UserEntity) {
-        // await this.userRepo.update(user.id, {
-        //     status: ENUM_USER_STATUS.INACTIVE,
-        //     inactivePermanent: true,
-        //     inactiveDate: this.helperDateService.create(),
-        // });
+        await this.userRepo.update(user.id, {
+            status: ENUM_USER_STATUS.INACTIVE,
+            inactivePermanent: true,
+            inactiveDate: this.helperDateService.create(),
+        });
     }
 }
