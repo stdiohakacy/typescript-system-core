@@ -10,6 +10,9 @@ import { IRequestApp } from '../../../common/request/interfaces/request.interfac
 import { UserPayloadSerialization } from '../../../modules/user/serializations/user.payload.serialization';
 import { AuthJwtRefreshGuard } from '../guards/jwt-refresh/auth.jwt-refresh.guard';
 import { ENUM_RBAC_ROLE_TYPE } from '../../../common/authorization/rbac/constants/rbac.enum.constant';
+import { RolesGuard } from '../../../common/authorization/rbac/guards/rbac.role.guard';
+import { ENUM_ROLE_TYPE } from '../../../modules/role/constants/role.enum.constant';
+import { RBAC_ROLE_TYPE_KEY } from 'src/common/authorization/rbac/constants/rbac.constant';
 
 export function AuthJwtAccessProtected(): MethodDecorator {
     return applyDecorators(UseGuards(AuthJwtAccessGuard));
@@ -37,3 +40,10 @@ export const AuthJwtToken = createParamDecorator(
         return authorizations.length >= 2 ? authorizations[1] : undefined;
     }
 );
+
+export function AuthJwtUserAccessProtected(): MethodDecorator {
+    return applyDecorators(
+        UseGuards(AuthJwtAccessGuard, RolesGuard),
+        SetMetadata(RBAC_ROLE_TYPE_KEY, [ENUM_ROLE_TYPE.USER])
+    );
+}

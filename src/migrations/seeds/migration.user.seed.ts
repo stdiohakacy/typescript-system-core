@@ -63,14 +63,17 @@ export class MigrationUserSeed {
             )
         );
 
-        await Promise.all(
-            roles.map((role, index) => {
-                return this.userRoleService.create(
-                    role.id,
-                    createdUsers[index].id
-                );
-            })
+        createdUsers.forEach(
+            async (user) => await this.userService.active(user)
         );
+
+        const userRoles = await Promise.all(
+            roles.map((role, index) => ({
+                userId: createdUsers[index].id,
+                roleId: role.id,
+            }))
+        );
+        await this.userRoleService.create(userRoles);
     }
 
     @Command({ command: 'remove:user', describe: 'remove users' })

@@ -175,6 +175,13 @@ export class UserService implements IUserService {
         await this.userRepo.update(user.id, { google });
     }
 
+    async joinWithRole(user: UserEntity) {
+        return await this.userRepo.findOne({
+            where: { id: user.id },
+            relations: ['role'],
+        });
+    }
+
     async inactivePermanent(user: UserEntity) {
         // await this.userRepo.update(user.id, {
         //     status: ENUM_USER_STATUS.INACTIVE,

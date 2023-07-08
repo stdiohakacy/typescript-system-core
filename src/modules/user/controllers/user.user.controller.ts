@@ -1,8 +1,10 @@
 import { Controller, Delete, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CommandBus } from '@nestjs/cqrs';
-import { RolesGuard } from '../../../common/authorization/rbac/guards/rbac.role.guard';
-import { Roles } from '../../../common/authorization/rbac/decorators/rbac.roles.decorator';
+import { UserUserSelfDeleteDoc } from '../docs/user.user.doc';
+import { Response } from '../../../common/response/decorators/response.decorator';
+import { AuthJwtUserAccessProtected } from '../../../modules/auth/decorators/auth.jwt-decorator';
+import { UserProtected } from '../decorators/user.decorator';
 
 @ApiTags('modules.user.user')
 @Controller({
@@ -22,8 +24,10 @@ export class UserUserController {
     //     return this.commandBus.execute(new UserSelfDeleteCommand(userAuth));
     // }
 
-    @Roles('user')
-    @UseGuards(RolesGuard)
+    @UserUserSelfDeleteDoc()
+    @Response('user.selfDelete')
+    @UserProtected()
+    @AuthJwtUserAccessProtected()
     @Delete('/protect')
     async protect() {
         console.log('pass');

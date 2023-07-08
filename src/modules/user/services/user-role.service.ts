@@ -11,8 +11,8 @@ export class UserRoleService implements IUserRoleService {
         private userRoleRepo: Repository<UserRoleEntity>
     ) {}
 
-    async create(userId: string, roleId: string): Promise<void> {
-        await this.userRoleRepo.save({ userId, roleId });
+    async create(payload): Promise<void> {
+        await this.userRoleRepo.save(this.userRoleRepo.create(payload));
     }
 
     async deleteMany(find: Record<string, any>): Promise<DeleteResult> {
