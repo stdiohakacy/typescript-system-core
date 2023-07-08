@@ -21,7 +21,6 @@ import { UserLoginGoogleCallbackHandler } from './commands/user.login-google-cal
 import { UserSelfDeleteHandler } from './commands/user.self-delete.command';
 import { AuthorizationModule } from '../../common/authorization/authorization.module';
 import { UserRoleService } from './services/user-role.service';
-import { UserRoleEntity } from './entities/user-role.entity';
 
 export const handlers = [
     UserRegisterHandler,
@@ -41,7 +40,7 @@ export const handlers = [
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([UserEntity, UserRoleEntity]),
+        TypeOrmModule.forFeature([UserEntity]),
         AuthModule,
         MailModule,
         SettingModule,

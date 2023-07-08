@@ -19,7 +19,7 @@ export class LoggerService implements ILoggerService {
         method,
         requestId,
         roleId,
-        type,
+        // type,
         params,
         bodies,
         path,
@@ -35,7 +35,7 @@ export class LoggerService implements ILoggerService {
         logger.method = method;
         logger.requestId = requestId;
         logger.roleId = roleId;
-        logger.type = type;
+        // // logger.type = type;
         logger.params = params;
         logger.bodies = bodies;
         logger.path = path;
@@ -51,7 +51,7 @@ export class LoggerService implements ILoggerService {
         method,
         requestId,
         roleId,
-        type,
+        // type,
         params,
         bodies,
         path,
@@ -67,7 +67,7 @@ export class LoggerService implements ILoggerService {
         logger.method = method;
         logger.requestId = requestId;
         logger.roleId = roleId;
-        logger.type = type;
+        // // logger.type = type;
         logger.params = params;
         logger.bodies = bodies;
         logger.path = path;
@@ -83,7 +83,7 @@ export class LoggerService implements ILoggerService {
         method,
         requestId,
         roleId,
-        type,
+        // type,
         params,
         bodies,
         path,
@@ -99,7 +99,7 @@ export class LoggerService implements ILoggerService {
         logger.method = method;
         logger.requestId = requestId;
         logger.roleId = roleId;
-        logger.type = type;
+        // // logger.type = type;
         logger.params = params;
         logger.bodies = bodies;
         logger.path = path;
@@ -115,7 +115,7 @@ export class LoggerService implements ILoggerService {
         method,
         requestId,
         roleId,
-        type,
+        // type,
         params,
         bodies,
         path,
@@ -131,7 +131,7 @@ export class LoggerService implements ILoggerService {
         logger.method = method;
         logger.requestId = requestId;
         logger.roleId = roleId;
-        logger.type = type;
+        // // logger.type = type;
         logger.params = params;
         logger.bodies = bodies;
         logger.path = path;
@@ -148,7 +148,7 @@ export class LoggerService implements ILoggerService {
         method,
         requestId,
         roleId,
-        type,
+        // type,
         params,
         bodies,
         path,
@@ -163,7 +163,7 @@ export class LoggerService implements ILoggerService {
             method,
             requestId,
             roleId,
-            type,
+            // type,
             params,
             bodies,
             path,

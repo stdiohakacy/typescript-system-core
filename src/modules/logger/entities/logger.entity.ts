@@ -8,7 +8,6 @@ import {
     BaseEntity,
     IBaseEntity,
 } from '../../../common/base/entity/base.entity';
-import { ENUM_ROLE_TYPE } from '../../role/constants/role.enum.constant';
 import { UseDTO } from '../../../common/base/decorators/use-dto.decorator';
 import { ENUM_REQUEST_METHOD } from '../../../common/request/constants/request.enum.constant';
 
@@ -21,7 +20,7 @@ export interface ILoggerEntity extends IBaseEntity<LoggerDTO> {
     role?: string;
     apiKey?: string;
     anonymous: boolean;
-    type?: ENUM_ROLE_TYPE;
+    // type?: ENUM_ROLE_TYPE;
     description: string;
     params?: Record<string, any>;
     bodies?: Record<string, any>;
@@ -56,8 +55,8 @@ export class LoggerEntity
     @Column({ nullable: true, default: true, name: 'anonymous' })
     anonymous: boolean;
 
-    @Column({ nullable: true, enum: ENUM_ROLE_TYPE, name: 'type' })
-    type?: ENUM_ROLE_TYPE;
+    // @Column({ nullable: true, enum: ENUM_ROLE_TYPE, name: 'type' })
+    // type?: ENUM_ROLE_TYPE;
 
     @Column({ name: 'description' })
     description: string;

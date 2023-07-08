@@ -22,12 +22,10 @@ import { MigrationApiKeySeed } from '../migrations/seeds/migration.api-key.seed'
 import { ApiKeyModule } from '../modules/api-key/api-key.module';
 import { MailModule } from './integration/mail/mail.module';
 import { AuthModule } from '../modules/auth/auth.module';
-import { MigrationRoleSeed } from '../migrations/seeds/migration.role.seed';
-import { RoleModule } from '../modules/role/role.module';
 
 @Module({
     controllers: [],
-    providers: [MigrationApiKeySeed, MigrationRoleSeed],
+    providers: [MigrationApiKeySeed],
     imports: [
         ConfigModule.forRoot({
             load: configs,
@@ -173,7 +171,6 @@ import { RoleModule } from '../modules/role/role.module';
         LoggerModule,
         ApiKeyModule,
         MailModule,
-        RoleModule,
         DebuggerModule.forRoot(),
         AuthModule.forRoot(),
     ],

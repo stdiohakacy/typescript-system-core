@@ -5,7 +5,6 @@ import {
     ENUM_LOGGER_LEVEL,
 } from '../constants/logger.enum.constant';
 import { ENUM_REQUEST_METHOD } from '../../../common/request/constants/request.enum.constant';
-import { ENUM_ROLE_TYPE } from '../../role/constants/role.enum.constant';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class LoggerDTO extends BaseDTO {
@@ -30,8 +29,8 @@ export class LoggerDTO extends BaseDTO {
     @ApiProperty()
     anonymous: boolean;
 
-    @ApiPropertyOptional({ enum: ENUM_ROLE_TYPE })
-    type?: ENUM_ROLE_TYPE;
+    // @ApiPropertyOptional({ enum: ENUM_ROLE_TYPE })
+    // type?: ENUM_ROLE_TYPE;
 
     @ApiProperty()
     description: string;
@@ -60,7 +59,7 @@ export class LoggerDTO extends BaseDTO {
         this.userId = entity.userId;
         this.roleId = entity.roleId;
         this.anonymous = entity.anonymous;
-        this.type = entity.type;
+        // this.type = entity.type;
         this.description = entity.description;
         this.params = entity.params;
         this.bodies = entity.bodies;
@@ -79,7 +78,7 @@ export class LoggerCreateDTO {
     method: ENUM_REQUEST_METHOD;
     path: string;
     roleId?: string;
-    type?: ENUM_ROLE_TYPE;
+    // type?: ENUM_ROLE_TYPE;
     tags?: string[];
     params?: Record<string, any>;
     bodies?: Record<string, any>;
