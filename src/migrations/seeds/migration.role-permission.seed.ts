@@ -19,21 +19,21 @@ export class MigrationRolePermissionSeed {
         describe: 'seeds role permissions',
     })
     async seeds(): Promise<void> {
-        const userRole = await this.roleService.findOneByName(
-            ENUM_RBAC_ROLE_TYPE.USER
-        );
-        const permissions = await this.permissionService.findByNames([
-            ENUM_PERMISSION_TYPE.SELF_USER_DELETE,
-            ENUM_PERMISSION_TYPE.USER_CREATE,
-        ]);
         try {
+            const roleName = ENUM_RBAC_ROLE_TYPE.USER;
+            const permissionNames = [
+                ENUM_PERMISSION_TYPE.SELF_USER_DELETE,
+                ENUM_PERMISSION_TYPE.USER_CREATE,
+            ];
+
+            const role = await this.roleService.findOneByName(roleName);
+            const permissions = await this.permissionService.findByNames(
+                permissionNames
+            );
+
             await Promise.all(
-                permissions.map(
-                    async (permission) =>
-                        await this.rolePermissionService.create({
-                            roleId: userRole.id,
-                            permissionId: permission.id,
-                        })
+                permissions.map((permission) =>
+                    this.createRolePermission(role.id, permission.id)
                 )
             );
         } catch (err: any) {
@@ -41,8 +41,15 @@ export class MigrationRolePermissionSeed {
         }
     }
 
+    private async createRolePermission(
+        roleId: string,
+        permissionId: string
+    ): Promise<void> {
+        await this.rolePermissionService.create({ roleId, permissionId });
+    }
+
     @Command({
-        command: 'remove:role:permissions',
+        command: 'remove:role:permission',
         describe: 'remove role permissions',
     })
     async remove(): Promise<void> {
