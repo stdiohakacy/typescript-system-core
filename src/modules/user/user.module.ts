@@ -20,7 +20,6 @@ import { UserSignUpGoogleCallbackHandler } from './commands/user.sign-up-google-
 import { UserLoginGoogleCallbackHandler } from './commands/user.login-google-callback.command';
 import { UserSelfDeleteHandler } from './commands/user.self-delete.command';
 import { AuthorizationModule } from '../../common/authorization/authorization.module';
-import { UserRoleService } from './services/user-role.service';
 
 export const handlers = [
     UserRegisterHandler,
@@ -47,8 +46,8 @@ export const handlers = [
         IntegrationModule,
         AuthorizationModule,
     ],
-    exports: [UserService, UserRoleService],
-    providers: [...handlers, UserService, UserRoleService],
+    exports: [UserService],
+    providers: [...handlers, UserService],
     controllers: [],
 })
 export class UserModule {}

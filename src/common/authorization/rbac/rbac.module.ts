@@ -6,6 +6,7 @@ import { RoleEntity } from '../../../modules/rbac/entities/role.entity';
 import { UserRoleEntity } from '../../../modules/rbac/entities/user-role.entity';
 import { RBACRoleService } from './services/rbac.role.service';
 import { RBACPermissionService } from './services/rbac.permission.service';
+import { RBACUserRoleService } from './services/rbac.user-role.service';
 
 @Module({
     imports: [
@@ -16,8 +17,8 @@ import { RBACPermissionService } from './services/rbac.permission.service';
             RolePermissionEntity,
         ]),
     ],
-    exports: [RBACRoleService, RBACPermissionService],
-    providers: [RBACRoleService, RBACPermissionService],
+    exports: [RBACRoleService, RBACPermissionService, RBACUserRoleService],
+    providers: [RBACRoleService, RBACPermissionService, RBACUserRoleService],
     controllers: [],
 })
 export class RBACCommonModule {}

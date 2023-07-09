@@ -16,9 +16,14 @@ export class RBACUserRoleService implements IRBACUserRoleService {
         userId,
         roleId,
     }: UserRoleCreateRawDTO): Promise<UserRoleEntity> {
-        throw new Error();
+        return await this.userRoleRepo.save(
+            this.userRoleRepo.create({
+                userId,
+                roleId,
+            })
+        );
     }
     async deleteMany(find: Record<string, any>): Promise<DeleteResult> {
-        throw new Error();
+        return this.userRoleRepo.delete(find);
     }
 }
