@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DeleteResult, Repository } from 'typeorm';
+import { DeleteResult, In, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PermissionEntity } from '../../../../modules/rbac/entities/permission.entity';
 import { PermissionCreateRawDTO } from '../dtos/permission.create-raw.dto';
@@ -22,6 +22,10 @@ export class RBACPermissionService implements IRBACPermissionService {
 
     async findOneByName(name: string): Promise<PermissionEntity> {
         return await this.permissionRepo.findOneBy({ name });
+    }
+
+    async findByNames(name: string[]): Promise<PermissionEntity[]> {
+        return this.permissionRepo.find({ where: { name: In(name) } });
     }
 
     async deleteMany(find: Record<string, any>): Promise<DeleteResult> {

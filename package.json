@@ -26,13 +26,15 @@
     "seed:permission": "nestjs-command seed:permission",
     "seed:user": "nestjs-command seed:user",
     "seed:user:role": "nestjs-command seed:user:role",
-    "seed": "yarn seed:apikey && yarn seed:permission && yarn seed:user && yarn seed:role && yarn seed:user:role",
+    "seed:role:permission": "nestjs-command seed:role:permission",
+    "seed": "yarn seed:apikey && yarn seed:permission && yarn seed:user && yarn seed:role && yarn seed:user:role && yarn seed:role:permission",
     "rollback:apikey": "nestjs-command remove:apikey",
     "rollback:user": "nestjs-command remove:user",
     "rollback:role": "nestjs-command remove:role",
     "rollback:permission": "nestjs-command remove:permission",
     "rollback:user:role": "nestjs-command remove:user:role",
-    "rollback": "yarn rollback:apikey && yarn rollback:user:role && yarn rollback:permission && yarn rollback:user && yarn rollback:role"
+    "rollback:role:permission": "nestjs-command remove:role:permission",
+    "rollback": "yarn rollback:apikey && yarn rollback:user:role && yarn rollback:role:permission && yarn rollback:permission && yarn rollback:user && yarn rollback:role"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.363.0",

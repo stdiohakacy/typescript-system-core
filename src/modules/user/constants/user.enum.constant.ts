@@ -9,5 +9,6 @@ export enum ENUM_USER_SIGN_UP_FROM {
 }
 
 export enum ENUM_PERMISSION_TYPE {
-    SELF_DELETE_USER = 'delete:user',
+    SELF_USER_DELETE = 'user:delete',
+    USER_CREATE = 'user:create',
 }

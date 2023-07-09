@@ -10,6 +10,7 @@ import { RBACCommonModule } from '../common/authorization/rbac/rbac.module';
 import { MigrationUserRoleSeed } from './seeds/migration.user-role.seed';
 import { MigrationUserSeed } from './seeds/migration.user.seed';
 import { MigrationPermissionSeed } from './seeds/migration.permission.seed';
+import { MigrationRolePermissionSeed } from './seeds/migration.role-permission.seed';
 
 @Module({
     imports: [
@@ -26,6 +27,7 @@ import { MigrationPermissionSeed } from './seeds/migration.permission.seed';
         MigrationUserRoleSeed,
         MigrationUserSeed,
         MigrationPermissionSeed,
+        MigrationRolePermissionSeed,
     ],
     exports: [],
 })

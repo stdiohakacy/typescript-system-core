@@ -32,9 +32,9 @@ export class RolePermissionEntity
         (permission) => permission.rolePermissions
     )
     @JoinColumn({ name: 'permissionId' })
-    permission: PermissionEntity;
+    permission?: PermissionEntity;
 
     @ManyToOne(() => RoleEntity, (roles) => roles.rolePermissions)
     @JoinColumn({ name: 'roleId' })
-    role: RoleEntity;
+    role?: RoleEntity;
 }
