@@ -30,10 +30,7 @@ export class MigrationApiKeySeed {
         return;
     }
 
-    @Command({
-        command: 'remove:apikey',
-        describe: 'remove apikeys',
-    })
+    @Command({ command: 'remove:apikey', describe: 'remove apikeys' })
     async remove(): Promise<void> {
         try {
             await this.apiKeyService.deleteMany({});
