@@ -23,9 +23,6 @@ export class RBACRolePermissionTypeAccessGuard implements CanActivate {
     ) {}
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
-        // let isRoleValid = true;
-        // let isPermissionValid = true;
-
         const requiredRoles: ENUM_RBAC_ROLE_TYPE[] =
             this.reflector.getAllAndOverride<ENUM_RBAC_ROLE_TYPE[]>(
                 RBAC_ROLE_TYPE_META_KEY,
