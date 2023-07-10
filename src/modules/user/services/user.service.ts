@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository } from 'typeorm';
+import { DeleteResult, Repository, SelectQueryBuilder } from 'typeorm';
 import { randomBytes } from 'crypto';
 import { plainToInstance } from 'class-transformer';
 import { IUserService } from '../interfaces/user.service.interface';
@@ -172,15 +172,22 @@ export class UserService implements IUserService {
         await this.userRepo.update(user.id, { google });
     }
 
-    async joinWithRole(user: UserEntity) {
-        return this.userRepo
+    async joinWithRole(): Promise<SelectQueryBuilder<UserEntity>> {
+        return await this.userRepo
             .createQueryBuilder('users')
             .leftJoin('users.userRoles', 'userRoles')
             .leftJoin('userRoles.role', 'role')
-            .where('users.id = :id', { id: user.id })
-            .select('users')
-            .addSelect(['userRoles.id', 'role.id', 'role.name'])
-            .getOne();
+            .leftJoin('role.rolePermissions', 'rolePermissions')
+            .leftJoin('rolePermissions.permission', 'permission')
+            .select([
+                'users',
+                'userRoles.id',
+                'role.id',
+                'role.name',
+                'rolePermissions.id',
+                'permission.id',
+                'permission.name',
+            ]);
     }
 
     async inactivePermanent(user: UserEntity) {

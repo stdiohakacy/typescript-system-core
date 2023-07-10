@@ -6,6 +6,7 @@ import { Response } from '../../../common/response/decorators/response.decorator
 import { GetUser, UserProtected } from '../decorators/user.decorator';
 import { UserEntity } from '../entities/user.entity';
 import { UserSelfDeleteCommand } from '../commands/user.self-delete.command';
+import { AuthJwtUserAccessProtected } from '../../../common/authentication/decorators/auth.jwt-decorator';
 
 @ApiTags('modules.user.user')
 @Controller({
@@ -18,8 +19,7 @@ export class UserUserController {
     @UserUserSelfDeleteDoc()
     @Response('user.selfDelete')
     @UserProtected()
-    // @AuthJwtUserAccessProtected()
-    // @RequiredPermission('users:delete')
+    @AuthJwtUserAccessProtected()
     @Delete('/delete')
     async delete(@GetUser() userAuth: UserEntity) {
         return this.commandBus.execute(new UserSelfDeleteCommand(userAuth));
