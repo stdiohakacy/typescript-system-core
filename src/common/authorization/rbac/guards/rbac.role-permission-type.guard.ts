@@ -23,8 +23,8 @@ export class RBACRolePermissionTypeAccessGuard implements CanActivate {
     ) {}
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
-        let isRoleValid = true;
-        let isPermissionValid = true;
+        // let isRoleValid = true;
+        // let isPermissionValid = true;
 
         const requiredRoles: ENUM_RBAC_ROLE_TYPE[] =
             this.reflector.getAllAndOverride<ENUM_RBAC_ROLE_TYPE[]>(
@@ -62,19 +62,12 @@ export class RBACRolePermissionTypeAccessGuard implements CanActivate {
         )
             return true;
 
-        for (let i = 0; i < requiredRoles.length; i++) {
-            if (!rolesName.includes(requiredRoles[i])) {
-                isRoleValid = false;
-                break;
-            }
-        }
-
-        for (let i = 0; i < requiredPermissions.length; i++) {
-            if (!permissionsName.includes(requiredPermissions[i])) {
-                isPermissionValid = false;
-                break;
-            }
-        }
+        const isRoleValid = requiredRoles.every((requireRole) =>
+            rolesName.includes(requireRole)
+        );
+        const isPermissionValid = requiredPermissions.every(
+            (requirePermission) => permissionsName.includes(requirePermission)
+        );
 
         if (!isRoleValid) {
             throw new ForbiddenException({
