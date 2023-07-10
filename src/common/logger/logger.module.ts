@@ -1,7 +1,7 @@
 import { Global, Module } from '@nestjs/common';
 import { LoggerService } from './services/logger.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { LoggerEntity } from './entities/logger.entity';
+import { LoggerEntity } from '../../modules/logger/entities/logger.entity';
 
 @Global()
 @Module({

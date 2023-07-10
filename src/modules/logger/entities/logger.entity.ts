@@ -1,15 +1,15 @@
-import { Column, Entity } from 'typeorm';
-import { LoggerDTO } from '../dto/logger.dto';
-import {
-    ENUM_LOGGER_ACTION,
-    ENUM_LOGGER_LEVEL,
-} from '../constants/logger.enum.constant';
+import { UseDTO } from '../../../common/base/decorators/use-dto.decorator';
 import {
     BaseEntity,
     IBaseEntity,
 } from '../../../common/base/entity/base.entity';
-import { UseDTO } from '../../../common/base/decorators/use-dto.decorator';
+import {
+    ENUM_LOGGER_ACTION,
+    ENUM_LOGGER_LEVEL,
+} from '../../../common/logger/constants/logger.enum.constant';
+import { LoggerDTO } from '../../../common/logger/dto/logger.dto';
 import { ENUM_REQUEST_METHOD } from '../../../common/request/constants/request.enum.constant';
+import { Column, Entity } from 'typeorm';
 
 export interface ILoggerEntity extends IBaseEntity<LoggerDTO> {
     level: string;
@@ -20,7 +20,6 @@ export interface ILoggerEntity extends IBaseEntity<LoggerDTO> {
     role?: string;
     apiKey?: string;
     anonymous: boolean;
-    // type?: ENUM_ROLE_TYPE;
     description: string;
     params?: Record<string, any>;
     bodies?: Record<string, any>;
@@ -54,9 +53,6 @@ export class LoggerEntity
 
     @Column({ nullable: true, default: true, name: 'anonymous' })
     anonymous: boolean;
-
-    // @Column({ nullable: true, enum: ENUM_ROLE_TYPE, name: 'type' })
-    // type?: ENUM_ROLE_TYPE;
 
     @Column({ name: 'description' })
     description: string;

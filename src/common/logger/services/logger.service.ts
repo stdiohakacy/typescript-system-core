@@ -3,8 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ILoggerService } from '../interfaces/logger.service.interface';
 import { LoggerCreateDTO, LoggerCreateRawDTO } from '../dto/logger.dto';
-import { LoggerEntity } from '../entities/logger.entity';
 import { ENUM_LOGGER_LEVEL } from '../constants/logger.enum.constant';
+import { LoggerEntity } from '../../../modules/logger/entities/logger.entity';
 
 @Injectable()
 export class LoggerService implements ILoggerService {
@@ -19,7 +19,6 @@ export class LoggerService implements ILoggerService {
         method,
         requestId,
         roleId,
-        // type,
         params,
         bodies,
         path,
@@ -35,7 +34,6 @@ export class LoggerService implements ILoggerService {
         logger.method = method;
         logger.requestId = requestId;
         logger.roleId = roleId;
-        // // logger.type = type;
         logger.params = params;
         logger.bodies = bodies;
         logger.path = path;
@@ -51,7 +49,6 @@ export class LoggerService implements ILoggerService {
         method,
         requestId,
         roleId,
-        // type,
         params,
         bodies,
         path,
@@ -67,7 +64,6 @@ export class LoggerService implements ILoggerService {
         logger.method = method;
         logger.requestId = requestId;
         logger.roleId = roleId;
-        // // logger.type = type;
         logger.params = params;
         logger.bodies = bodies;
         logger.path = path;
@@ -83,7 +79,6 @@ export class LoggerService implements ILoggerService {
         method,
         requestId,
         roleId,
-        // type,
         params,
         bodies,
         path,
@@ -99,7 +94,6 @@ export class LoggerService implements ILoggerService {
         logger.method = method;
         logger.requestId = requestId;
         logger.roleId = roleId;
-        // // logger.type = type;
         logger.params = params;
         logger.bodies = bodies;
         logger.path = path;
@@ -115,7 +109,6 @@ export class LoggerService implements ILoggerService {
         method,
         requestId,
         roleId,
-        // type,
         params,
         bodies,
         path,
@@ -131,7 +124,6 @@ export class LoggerService implements ILoggerService {
         logger.method = method;
         logger.requestId = requestId;
         logger.roleId = roleId;
-        // // logger.type = type;
         logger.params = params;
         logger.bodies = bodies;
         logger.path = path;
@@ -148,7 +140,6 @@ export class LoggerService implements ILoggerService {
         method,
         requestId,
         roleId,
-        // type,
         params,
         bodies,
         path,
@@ -163,7 +154,6 @@ export class LoggerService implements ILoggerService {
             method,
             requestId,
             roleId,
-            // type,
             params,
             bodies,
             path,

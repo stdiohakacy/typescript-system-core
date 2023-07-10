@@ -2,7 +2,7 @@ import { applyDecorators, SetMetadata, UseInterceptors } from '@nestjs/common';
 import {
     LOGGER_ACTION_META_KEY,
     LOGGER_OPTIONS_META_KEY,
-} from '../../../modules/logger/constants/logger.constant';
+} from '../constants/logger.constant';
 import { ENUM_LOGGER_ACTION } from '../constants/logger.enum.constant';
 import { ILoggerOptions } from '../interfaces/logger.interface';
 import { LoggerInterceptor } from '../interceptors/logger.interceptor';

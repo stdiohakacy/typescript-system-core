@@ -9,7 +9,7 @@ import { Response } from 'express';
 import { HttpArgumentsHost } from '@nestjs/common/interfaces';
 import { Reflector } from '@nestjs/core';
 import { LoggerService } from '../services/logger.service';
-import { IRequestApp } from '../../../common/request/interfaces/request.interface';
+import { IRequestApp } from '../../request/interfaces/request.interface';
 import {
     ENUM_LOGGER_ACTION,
     ENUM_LOGGER_LEVEL,
@@ -19,7 +19,7 @@ import {
     LOGGER_OPTIONS_META_KEY,
 } from '../constants/logger.constant';
 import { ILoggerOptions } from '../interfaces/logger.interface';
-import { ENUM_REQUEST_METHOD } from '../../../common/request/constants/request.enum.constant';
+import { ENUM_REQUEST_METHOD } from '../../request/constants/request.enum.constant';
 
 @Injectable()
 export class LoggerInterceptor implements NestInterceptor<any> {

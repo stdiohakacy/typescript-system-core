@@ -16,7 +16,7 @@ import { APP_LANGUAGE } from '../app/constants/app.constant';
 import { ENUM_MESSAGE_LANGUAGE } from './message/constant/message.enum.constant';
 import { DatabaseOptionsModule } from './database/database.options.module';
 import { MessageModule } from './message/message.module';
-import { LoggerModule } from '../modules/logger/logger.module';
+import { LoggerModule } from './logger/logger.module';
 import { MigrationApiKeySeed } from '../migrations/seeds/migration.api-key.seed';
 import { ApiKeyModule } from '../modules/api-key/api-key.module';
 import { MailModule } from './integration/mail/mail.module';
