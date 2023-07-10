@@ -4,7 +4,6 @@ import { DataSource } from 'typeorm';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { addTransactionalDataSource } from 'typeorm-transactional';
 import Joi from 'joi';
-
 import { DebuggerModule } from '../common/debugger/debugger.module';
 import { HelperModule } from '../common/helper/helper.module';
 import { ErrorModule } from '../common/error/error.module';
@@ -21,7 +20,7 @@ import { LoggerModule } from '../modules/logger/logger.module';
 import { MigrationApiKeySeed } from '../migrations/seeds/migration.api-key.seed';
 import { ApiKeyModule } from '../modules/api-key/api-key.module';
 import { MailModule } from './integration/mail/mail.module';
-import { AuthModule } from '../modules/auth/auth.module';
+import { AuthModule } from './authentication/auth.module';
 
 @Module({
     controllers: [],

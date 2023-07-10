@@ -32,12 +32,6 @@ import {
 } from '../dtos/user.auth.doc';
 import { UserPayloadSerialization } from '../serializations/user.payload.serialization';
 import { UserRefreshSerialization } from '../serializations/user.refresh-serialization';
-import {
-    AuthJwtAccessProtected,
-    AuthJwtPayload,
-    AuthJwtRefreshProtected,
-    AuthJwtToken,
-} from '../../../modules/auth/decorators/auth.jwt-decorator';
 import { UserRefreshTokenCommand } from '../commands/user.refresh-token.command';
 import { UserUpdateProfileDTO } from '../dtos/user.update-profile.dto';
 import { UserUpdateProfileCommand } from '../commands/user.update-profile.command';
@@ -49,6 +43,12 @@ import { FileRequiredPipe } from '../../../common/file/pipes/file.required.pipe'
 import { FileSizeImagePipe } from '../../../common/file/pipes/file.size.pipe';
 import { FileTypeImagePipe } from '../../../common/file/pipes/file.type.pipe';
 import { UserUploadCommand } from '../commands/user.upload.command';
+import {
+    AuthJwtAccessProtected,
+    AuthJwtPayload,
+    AuthJwtRefreshProtected,
+    AuthJwtToken,
+} from '../../../common/authentication/decorators/auth.jwt-decorator';
 
 @ApiTags('modules.auth.user')
 @Controller({ version: '1', path: '/user' })

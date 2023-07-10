@@ -1,10 +1,8 @@
 import { Command } from 'nestjs-command';
 import { Injectable } from '@nestjs/common';
-import { RBACRoleService } from '../../common/authorization/rbac/services/rbac.role.service';
-import { ENUM_RBAC_ROLE_TYPE } from '../../common/authorization/rbac/constants/rbac.enum.role.constant';
-import { AuthService } from '../../modules/auth/services/auth.service';
 import { UserService } from '../../modules/user/services/user.service';
 import { ENUM_USER_SIGN_UP_FROM } from '../../modules/user/constants/user.enum.constant';
+import { AuthService } from '../../common/authentication/services/auth.service';
 
 @Injectable()
 export class MigrationUserSeed {

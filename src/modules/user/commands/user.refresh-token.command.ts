@@ -1,10 +1,10 @@
 import { CommandHandler, ICommand, ICommandHandler } from '@nestjs/cqrs';
 import { UserEntity } from '../entities/user.entity';
-import { AuthService } from '../../../modules/auth/services/auth.service';
 import { ForbiddenException } from '@nestjs/common';
 import { ENUM_USER_STATUS_CODE_ERROR } from '../constants/user.status-code.constant';
 import { UserPayloadSerialization } from '../serializations/user.payload.serialization';
 import { UserService } from '../services/user.service';
+import { AuthService } from '../../../common/authentication/services/auth.service';
 
 export class UserRefreshTokenCommand implements ICommand {
     constructor(

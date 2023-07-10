@@ -38,7 +38,7 @@ import { ResponseDefaultSerialization } from '../../../common/response/serializa
 import { ResponsePagingSerialization } from '../../../common/response/serializations/response.paging.serialization';
 import { faker } from '@faker-js/faker';
 import { ENUM_POLICY_STATUS_CODE_ERROR } from '../../../common/policy/constants/policy.status-code.constant';
-import { ENUM_AUTH_STATUS_CODE_ERROR } from '../../../modules/auth/constants/auth.status-code.constant';
+import { ENUM_AUTH_STATUS_CODE_ERROR } from '../../../common/authentication/constants/auth.status-code.constant';
 
 export function DocDefault<T>(options: IDocDefaultOptions): MethodDecorator {
     const docs = [];

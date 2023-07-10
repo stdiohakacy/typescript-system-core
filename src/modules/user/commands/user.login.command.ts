@@ -14,7 +14,7 @@ import {
 import { SettingService } from '../../setting/services/setting.service';
 import { ENUM_USER_STATUS } from '../constants/user.enum.constant';
 import { UserPayloadSerialization } from '../serializations/user.payload.serialization';
-import { AuthService } from '../../../modules/auth/services/auth.service';
+import { AuthService } from '../../../common/authentication/services/auth.service';
 
 export class UserLoginCommand implements ICommand {
     constructor(public readonly payload: UserLoginDTO) {}

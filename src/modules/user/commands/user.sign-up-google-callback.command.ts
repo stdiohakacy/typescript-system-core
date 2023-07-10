@@ -1,14 +1,14 @@
 import { CommandHandler, ICommand, ICommandHandler } from '@nestjs/cqrs';
-import { IAuthGooglePayload } from '../../auth/interfaces/auth.interface';
 import { UserService } from '../services/user.service';
 import {
     ConflictException,
     InternalServerErrorException,
 } from '@nestjs/common';
 import { ENUM_USER_STATUS_CODE_ERROR } from '../constants/user.status-code.constant';
-import { AuthService } from '../../auth/services/auth.service';
 import { ENUM_USER_SIGN_UP_FROM } from '../constants/user.enum.constant';
 import { ENUM_ERROR_STATUS_CODE_ERROR } from '../../../common/error/constants/error.status-code.constant';
+import { AuthService } from '../../../common/authentication/services/auth.service';
+import { IAuthGooglePayload } from '../../../common/authentication/interfaces/auth.interface';
 
 export class UserSignUpGoogleCallbackCommand implements ICommand {
     constructor(public readonly payload: IAuthGooglePayload) {}

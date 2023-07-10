@@ -7,7 +7,7 @@ import { MailServiceFactory } from '../../../common/integration/mail/factory/mai
 import { ConflictException } from '@nestjs/common';
 import { ENUM_USER_STATUS_CODE_ERROR } from '../constants/user.status-code.constant';
 import { ENUM_MAIL_PROVIDER_TYPE } from '../../../common/integration/mail/constants/mail.enum.constant';
-import { AuthService } from '../../../modules/auth/services/auth.service';
+import { AuthService } from '../../../common/authentication/services/auth.service';
 
 export class UserRegisterCommand implements ICommand {
     constructor(public readonly payload: UserRegisterDTO) {}

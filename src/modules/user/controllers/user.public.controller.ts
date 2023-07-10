@@ -28,14 +28,14 @@ import { UserForgotPasswordDTO } from '../dtos/user.forgot-password.dto';
 import { UserForgotPasswordCommand } from '../commands/user.forgot-password.command';
 import { UserResetPasswordDTO } from '../dtos/user.reset-password.dto';
 import { UserResetPasswordCommand } from '../commands/user.reset-password.command';
+import { UserSignUpGoogleCallbackCommand } from '../commands/user.sign-up-google-callback.command';
+import { UserLoginGoogleCallbackCommand } from '../commands/user.login-google-callback.command';
 import {
     AuthGoogleOAuth2LoginProtected,
     AuthGoogleOAuth2SignUpProtected,
-} from '../../../modules/auth/decorators/auth.google.decorator';
-import { AuthJwtPayload } from '../../../modules/auth/decorators/auth.jwt-decorator';
-import { IAuthGooglePayload } from '../../../modules/auth/interfaces/auth.interface';
-import { UserSignUpGoogleCallbackCommand } from '../commands/user.sign-up-google-callback.command';
-import { UserLoginGoogleCallbackCommand } from '../commands/user.login-google-callback.command';
+} from '../../../common/authentication/decorators/auth.google.decorator';
+import { AuthJwtPayload } from '../../../common/authentication/decorators/auth.jwt-decorator';
+import { IAuthGooglePayload } from '../../../common/authentication/interfaces/auth.interface';
 
 @ApiTags('modules.public.user')
 @Controller({

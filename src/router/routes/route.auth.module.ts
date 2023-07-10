@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { UserAuthController } from '../../modules/user/controllers/user.auth.controller';
 import { UserModule } from '../../modules/user/user.module';
 import { CqrsModule } from '@nestjs/cqrs';
-import { AuthModule } from '../../modules/auth/auth.module';
-import { AuthorizationModule } from 'src/common/authorization/authorization.module';
+import { AuthorizationModule } from '../../common/authorization/authorization.module';
+import { AuthModule } from '../../common/authentication/auth.module';
 
 @Module({
     controllers: [UserAuthController],

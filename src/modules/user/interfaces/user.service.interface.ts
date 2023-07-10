@@ -3,12 +3,12 @@ import { UserRegisterDTO } from '../dtos/user.register.dto';
 import { UserEntity } from '../entities/user.entity';
 import { UserPayloadSerialization } from '../serializations/user.payload.serialization';
 import { UserResetPasswordDTO } from '../dtos/user.reset-password.dto';
-import { IAuthPassword } from '../../../modules/auth/interfaces/auth.interface';
 import { UserUpdateProfileDTO } from '../dtos/user.update-profile.dto';
 import { UserClaimUsernameDTO } from '../dtos/user.claim-username.dto';
 import { AwsS3Serialization } from '../../../common/aws/serializations/aws.s3.serialization';
 import { UserUpdateGoogleSSODTO } from '../dtos/user.update-google-sso.dto';
 import { DeleteResult } from 'typeorm';
+import { IAuthPassword } from '../../../common/authentication/interfaces/auth.interface';
 
 export interface IUserService {
     deleteMany(find: Record<string, any>): Promise<DeleteResult>;

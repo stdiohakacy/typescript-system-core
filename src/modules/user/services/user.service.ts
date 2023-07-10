@@ -12,13 +12,13 @@ import { HelperDateService } from '../../../common/helper/services/helper.date.s
 import { UserPayloadSerialization } from '../serializations/user.payload.serialization';
 import { UserResetPasswordDTO } from '../dtos/user.reset-password.dto';
 import { Uuid } from '../../../types';
-import { AuthService } from '../../../modules/auth/services/auth.service';
-import { IAuthPassword } from '../../../modules/auth/interfaces/auth.interface';
 import { UserUpdateProfileDTO } from '../dtos/user.update-profile.dto';
 import { UserClaimUsernameDTO } from '../dtos/user.claim-username.dto';
 import { HelperStringService } from '../../../common/helper/services/helper.string.service';
 import { AwsS3Serialization } from 'src/common/aws/serializations/aws.s3.serialization';
 import { UserUpdateGoogleSSODTO } from '../dtos/user.update-google-sso.dto';
+import { AuthService } from '../../../common/authentication/services/auth.service';
+import { IAuthPassword } from '../../../common/authentication/interfaces/auth.interface';
 
 @Injectable()
 export class UserService implements IUserService {
