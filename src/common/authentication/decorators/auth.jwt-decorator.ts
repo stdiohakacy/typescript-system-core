@@ -18,18 +18,36 @@ import {
     ENUM_RBAC_PERMISSION_TYPE,
     ENUM_RBAC_ROLE_TYPE,
 } from '../../../common/authorization/rbac/constants/rbac.enum.role.constant';
+import { ENUM_ACL_ROLE_TYPE } from '../../authorization/acl/constants/acl.role.enum.constant';
+import {
+    ENUM_ACL_PERMISSION_TYPE,
+    ENUM_ACL_RESOURCE_TYPE,
+} from '../../../common/authorization/acl/constants/acl.permission.enum.constant';
+import { ACLRolePermissionTypeAccessGuard } from '../../../common/authorization/acl/guards/acl.role-permission-type.guard';
+import {
+    ACL_PERMISSION_TYPE_META_KEY,
+    ACL_RESOURCE_TYPE_META_KEY,
+    ACL_ROLE_TYPE_META_KEY,
+} from '../../../common/authorization/acl/constants/acl.constant';
 
 export function AuthJwtAccessProtected(): MethodDecorator {
     return applyDecorators(UseGuards(AuthJwtAccessGuard));
 }
 
-export function AuthJwtUserAccessProtected(): MethodDecorator {
+export function AuthJwtRBACUserAccessProtected(): MethodDecorator {
     return applyDecorators(
         UseGuards(AuthJwtAccessGuard, RBACRolePermissionTypeAccessGuard),
         SetMetadata(RBAC_ROLE_TYPE_META_KEY, [ENUM_RBAC_ROLE_TYPE.USER]),
         SetMetadata(RBAC_PERMISSION_TYPE_META_KEY, [
             ENUM_RBAC_PERMISSION_TYPE.USER_DELETE,
         ])
+    );
+}
+
+export function AuthJwtACLUserAccessProtected(): MethodDecorator {
+    return applyDecorators(
+        UseGuards(AuthJwtAccessGuard, ACLRolePermissionTypeAccessGuard),
+        SetMetadata(ACL_RESOURCE_TYPE_META_KEY, [ENUM_ACL_RESOURCE_TYPE.USER])
     );
 }
 

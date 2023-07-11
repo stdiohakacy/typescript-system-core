@@ -16,7 +16,8 @@ export class UserSelfDeleteHandler
 
     async execute({ userAuth }: UserSelfDeleteCommand): Promise<void> {
         try {
-            await this.userService.inactivePermanent(userAuth);
+            console.log('lkasjfsjfsalfjkdfj');
+            // await this.userService.inactivePermanent(userAuth);
         } catch (err: any) {
             throw new InternalServerErrorException({
                 statusCode: ENUM_ERROR_STATUS_CODE_ERROR.ERROR_UNKNOWN,
