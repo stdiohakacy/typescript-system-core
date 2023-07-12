@@ -1,8 +1,12 @@
 import { faker } from '@faker-js/faker';
 import { ApiHideProperty, ApiProperty } from '@nestjs/swagger';
-import { Exclude } from 'class-transformer';
+import { Exclude, Type } from 'class-transformer';
 import { ResponseIdSerialization } from 'src/common/response/serializations/response.id.serialization';
-import { ENUM_USER_STATUS } from '../constants/user.enum.constant';
+import {
+    ENUM_USER_SIGN_UP_FROM,
+    ENUM_USER_STATUS,
+} from '../constants/user.enum.constant';
+import { AwsS3Serialization } from '../../../common/aws/serializations/aws.s3.serialization';
 
 export class UserGetSerialization extends ResponseIdSerialization {
     @ApiProperty({
@@ -11,6 +15,21 @@ export class UserGetSerialization extends ResponseIdSerialization {
         required: false,
     })
     readonly username?: string;
+
+    @ApiProperty({
+        required: true,
+        nullable: false,
+        example: ENUM_USER_SIGN_UP_FROM.LOCAL,
+    })
+    readonly signUpFrom: ENUM_USER_SIGN_UP_FROM;
+
+    @ApiProperty({
+        nullable: true,
+        required: false,
+        type: () => AwsS3Serialization,
+    })
+    @Type(() => AwsS3Serialization)
+    readonly photo?: AwsS3Serialization;
 
     @ApiProperty({
         required: true,

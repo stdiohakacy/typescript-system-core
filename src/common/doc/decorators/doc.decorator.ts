@@ -32,7 +32,7 @@ import { ENUM_ERROR_STATUS_CODE_ERROR } from '../../../common/error/constants/er
 import { ENUM_FILE_EXCEL_MIME } from '../../../common/file/constants/file.enum.constant';
 import { FileMultipleDto } from '../../../common/file/dtos/file.multiple.dto';
 import { FileSingleDto } from '../../../common/file/dtos/file.single.dto';
-import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from '../../../common/pagination/constants/pagination.enum.constant';
+import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from '../../pagination/mongo/constants/mongo.pagination.enum.constant';
 import { ENUM_REQUEST_STATUS_CODE_ERROR } from '../../../common/request/constants/request.status-code.constant';
 import { ResponseDefaultSerialization } from '../../../common/response/serializations/response.default.serialization';
 import { ResponsePagingSerialization } from '../../../common/response/serializations/response.paging.serialization';

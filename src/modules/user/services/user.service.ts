@@ -34,6 +34,20 @@ export class UserService implements IUserService {
         this.uploadPath = this.configService.get<string>('user.uploadPath');
     }
 
+    async findAllAndCount(
+        find?: Record<string, any>,
+        pagination?: Record<string, any>
+    ): Promise<[UserEntity[], number]> {
+        const { _limit, _offset, _order } = pagination;
+        return await this.userRepo.findAndCount({
+            where: find,
+        });
+    }
+
+    async findAll(find?: Record<string, any>): Promise<UserEntity[]> {
+        return await this.userRepo.find(find);
+    }
+
     async deleteMany(find: Record<string, any>): Promise<DeleteResult> {
         return await this.userRepo.delete(find);
     }

@@ -34,6 +34,7 @@ import {
     IMessage,
     IMessageOptionsProperties,
 } from '../../../common/message/interface/message.interface';
+import { MessageService } from '../../../message/services/message.serivce';
 
 @Injectable()
 export class ResponsePagingInterceptor<T>
@@ -41,7 +42,7 @@ export class ResponsePagingInterceptor<T>
 {
     constructor(
         private readonly reflector: Reflector,
-        private readonly messageService: any,
+        private readonly messageService: MessageService,
         private readonly helperArrayService: HelperArrayService
     ) {}
 

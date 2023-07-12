@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { ApiProperty, PickType } from '@nestjs/swagger';
-import { PAGINATION_AVAILABLE_ORDER_DIRECTION } from '../../../common/pagination/constants/pagination.constant';
-import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from '../../../common/pagination/constants/pagination.enum.constant';
+import { PAGINATION_AVAILABLE_ORDER_DIRECTION } from '../../pagination/mongo/constants/mongo.pagination.constant';
+import { ENUM_PAGINATION_ORDER_DIRECTION_TYPE } from '../../pagination/mongo/constants/mongo.pagination.enum.constant';
 import { RequestPaginationSerialization } from '../../../common/request/serializations/request.pagination.serialization';
 import {
     ResponseDefaultSerialization,

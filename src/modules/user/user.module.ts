@@ -20,8 +20,10 @@ import { UserLoginGoogleCallbackHandler } from './commands/user.login-google-cal
 import { UserSelfDeleteHandler } from './commands/user.self-delete.command';
 import { AuthorizationModule } from '../../common/authorization/authorization.module';
 import { AuthModule } from '../../common/authentication/auth.module';
+import { UserListHandler } from './queries/user.list.query';
+import { PaginationModule } from '../../common/pagination/pagination.module';
 
-export const handlers = [
+export const commandHandlers = [
     UserRegisterHandler,
     UserLoginHandler,
     UserActiveHandler,
@@ -37,6 +39,8 @@ export const handlers = [
     UserSelfDeleteHandler,
 ];
 
+export const queryHandlers = [UserListHandler];
+
 @Module({
     imports: [
         TypeOrmModule.forFeature([UserEntity]),
@@ -45,9 +49,10 @@ export const handlers = [
         SettingModule,
         IntegrationModule,
         AuthorizationModule,
+        PaginationModule,
     ],
     exports: [UserService],
-    providers: [...handlers, UserService],
+    providers: [...commandHandlers, ...queryHandlers, UserService],
     controllers: [],
 })
 export class UserModule {}

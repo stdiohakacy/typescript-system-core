@@ -18,6 +18,12 @@ export interface IUserService {
         authPassword: IAuthPassword
     ): Promise<UserEntity>;
 
+    findAll(find?: Record<string, any>): Promise<UserEntity[]>;
+
+    findAllAndCount(
+        find?: Record<string, any>
+    ): Promise<[UserEntity[], number]>;
+
     findOneByUsername<T>(username: string): Promise<T>;
 
     findOneById(id: Uuid): Promise<UserEntity>;

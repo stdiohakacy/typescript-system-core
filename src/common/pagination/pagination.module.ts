@@ -1,10 +1,10 @@
-import { Global, Module } from '@nestjs/common';
-import { PaginationService } from './services/pagination.service';
+import { Module } from '@nestjs/common';
+import { PostgresPaginationModule } from './postgres/postgres.pagination.module';
 
-@Global()
 @Module({
-    providers: [PaginationService],
-    exports: [PaginationService],
-    imports: [],
+    imports: [PostgresPaginationModule],
+    exports: [PostgresPaginationModule],
+    providers: [],
+    controllers: [],
 })
 export class PaginationModule {}
