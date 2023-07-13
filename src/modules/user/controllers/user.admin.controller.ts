@@ -23,6 +23,7 @@ import {
     PaginationQueryFilterInEnum,
 } from '../../../common/pagination/postgres/decorators/postgres.pagination.decorator';
 import { PaginationListDTO } from '../../../common/pagination/postgres/dtos/postgres.pagination.list.dto';
+import { AuthJwtRBACAdminAccessProtected } from '../../../common/authentication/decorators/auth.jwt-decorator';
 
 @ApiTags('modules.admin.user')
 @Controller({
@@ -34,7 +35,7 @@ export class UserAdminController {
 
     @UserAdminListDoc()
     @ResponsePaging('user.list', { serialization: UserListSerialization })
-    // @AuthJwtAdminAccessProtected()
+    @AuthJwtRBACAdminAccessProtected()
     @Get('/')
     async list(
         @PaginationQuery(

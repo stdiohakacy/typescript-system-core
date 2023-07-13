@@ -73,3 +73,13 @@ export const AuthJwtToken = createParamDecorator(
         return authorizations.length >= 2 ? authorizations[1] : undefined;
     }
 );
+
+export function AuthJwtRBACAdminAccessProtected(): MethodDecorator {
+    return applyDecorators(
+        UseGuards(AuthJwtAccessGuard, RBACRolePermissionTypeAccessGuard),
+        SetMetadata(RBAC_ROLE_TYPE_META_KEY, [ENUM_RBAC_ROLE_TYPE.ADMIN]),
+        SetMetadata(RBAC_PERMISSION_TYPE_META_KEY, [
+            ENUM_RBAC_PERMISSION_TYPE.USER_LIST,
+        ])
+    );
+}
