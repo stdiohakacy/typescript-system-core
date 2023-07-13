@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import {
     Response,
@@ -9,7 +9,11 @@ import {
     IResponsePaging,
 } from '../../../common/response/interfaces/response.interface';
 import { UserListSerialization } from '../../../modules/user/serializations/user.list.serialization';
-import { UserAdminGetDoc, UserAdminListDoc } from '../docs/user.admin.doc';
+import {
+    UserAdminCreateDoc,
+    UserAdminGetDoc,
+    UserAdminListDoc,
+} from '../docs/user.admin.doc';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import {
     USER_DEFAULT_AVAILABLE_ORDER_BY,
@@ -29,14 +33,19 @@ import {
     PaginationQueryFilterInEnum,
 } from '../../../common/pagination/postgres/decorators/postgres.pagination.decorator';
 import { PaginationListDTO } from '../../../common/pagination/postgres/dtos/postgres.pagination.list.dto';
-import { AuthJwtRBACAdminAccessProtected } from '../../../common/authentication/decorators/auth.jwt-decorator';
+import { AuthJwtRBACAccessProtected } from '../../../common/authentication/decorators/auth.jwt-decorator';
 import { UserGetSerialization } from '../serializations/user.get.serialization';
-import { RequestParamGuard } from 'src/common/request/decorators/request.decorator';
-import { GetUser } from '../decorators/user.decorator';
-import { UserEntity } from '../entities/user.entity';
+import { RequestParamGuard } from '../../../common/request/decorators/request.decorator';
 import { UserGetQuery } from '../queries/user.get.query';
 import { UserRequestDTO } from '../dtos/user.request.dto';
 import { UserAdminGetGuard } from '../decorators/user.admin.decorator';
+import { ResponseIdSerialization } from '../../../common/response/serializations/response.id.serialization';
+import {
+    ENUM_RBAC_PERMISSION_TYPE,
+    ENUM_RBAC_ROLE_TYPE,
+} from '../../../common/authorization/rbac/constants/rbac.enum.role.constant';
+import { UserCreateDTO } from '../dtos/user.create.dto';
+import { UserCreateCommand } from '../commands/user.create.command';
 
 @ApiTags('modules.admin.user')
 @Controller({
@@ -51,7 +60,10 @@ export class UserAdminController {
 
     @UserAdminListDoc()
     @ResponsePaging('user.list', { serialization: UserListSerialization })
-    @AuthJwtRBACAdminAccessProtected()
+    @AuthJwtRBACAccessProtected({
+        roles: [ENUM_RBAC_ROLE_TYPE.ADMIN],
+        permissions: [ENUM_RBAC_PERMISSION_TYPE.USER_LIST],
+    })
     @Get('/')
     async list(
         @PaginationQuery(
@@ -93,10 +105,27 @@ export class UserAdminController {
     @UserAdminGetDoc()
     @Response('user.get', { serialization: UserGetSerialization })
     @UserAdminGetGuard()
-    @AuthJwtRBACAdminAccessProtected()
+    @AuthJwtRBACAccessProtected({
+        roles: [ENUM_RBAC_ROLE_TYPE.ADMIN],
+        permissions: [ENUM_RBAC_PERMISSION_TYPE.USER_GET],
+    })
     @RequestParamGuard(UserRequestDTO)
     @Get('/get/:id')
     async get(@Param('id') id: string): Promise<IResponse> {
         return await this.queryBus.execute(new UserGetQuery(id));
+    }
+
+    @UserAdminCreateDoc()
+    @Response('user.create', { serialization: ResponseIdSerialization })
+    @AuthJwtRBACAccessProtected({
+        roles: [ENUM_RBAC_ROLE_TYPE.ADMIN],
+        permissions: [ENUM_RBAC_PERMISSION_TYPE.USER_CREATE],
+    })
+    @Post('/')
+    async create(
+        @Body()
+        payload: UserCreateDTO
+    ): Promise<IResponse> {
+        return await this.commandBus.execute(new UserCreateCommand(payload));
     }
 }

@@ -23,4 +23,8 @@ export class RBACRoleService implements IRBACRoleService {
     async deleteMany(find: Record<string, any>): Promise<DeleteResult> {
         return await this.roleRepo.delete(find);
     }
+
+    async findOneById(id: string): Promise<RoleEntity> {
+        return await this.roleRepo.findOneBy({ id });
+    }
 }

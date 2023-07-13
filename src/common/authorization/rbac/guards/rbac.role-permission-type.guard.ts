@@ -34,7 +34,6 @@ export class RBACRolePermissionTypeAccessGuard implements CanActivate {
                 RBAC_PERMISSION_TYPE_META_KEY,
                 [context.getHandler(), context.getClass()]
             );
-
         const { user } = context.switchToHttp().getRequest();
 
         const userEntity = await (await this.userService.joinWithRole())

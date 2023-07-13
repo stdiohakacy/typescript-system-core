@@ -74,12 +74,23 @@ export const AuthJwtToken = createParamDecorator(
     }
 );
 
-export function AuthJwtRBACAdminAccessProtected(): MethodDecorator {
+// export function AuthJwtRBACAdminAccessProtected(): MethodDecorator {
+//     return applyDecorators(
+//         UseGuards(AuthJwtAccessGuard, RBACRolePermissionTypeAccessGuard),
+//         SetMetadata(RBAC_ROLE_TYPE_META_KEY, [ENUM_RBAC_ROLE_TYPE.ADMIN]),
+//         SetMetadata(RBAC_PERMISSION_TYPE_META_KEY, [
+//             ENUM_RBAC_PERMISSION_TYPE.USER_LIST,
+//         ])
+//     );
+// }
+
+export function AuthJwtRBACAccessProtected(policy: {
+    roles?: ENUM_RBAC_ROLE_TYPE[];
+    permissions?: ENUM_RBAC_PERMISSION_TYPE[];
+}): MethodDecorator {
     return applyDecorators(
         UseGuards(AuthJwtAccessGuard, RBACRolePermissionTypeAccessGuard),
-        SetMetadata(RBAC_ROLE_TYPE_META_KEY, [ENUM_RBAC_ROLE_TYPE.ADMIN]),
-        SetMetadata(RBAC_PERMISSION_TYPE_META_KEY, [
-            ENUM_RBAC_PERMISSION_TYPE.USER_LIST,
-        ])
+        SetMetadata(RBAC_ROLE_TYPE_META_KEY, policy.roles),
+        SetMetadata(RBAC_PERMISSION_TYPE_META_KEY, policy.permissions)
     );
 }

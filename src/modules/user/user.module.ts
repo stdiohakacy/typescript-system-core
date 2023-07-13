@@ -23,6 +23,8 @@ import { AuthModule } from '../../common/authentication/auth.module';
 import { UserListHandler } from './queries/user.list.query';
 import { PaginationModule } from '../../common/pagination/pagination.module';
 import { UserGetHandler } from './queries/user.get.query';
+import { UserCreateCommandHandler } from './commands/user.create.command';
+import { RBACCommonModule } from 'src/common/authorization/rbac/rbac.module';
 
 export const commandHandlers = [
     UserRegisterHandler,
@@ -38,6 +40,7 @@ export const commandHandlers = [
     UserSignUpGoogleCallbackHandler,
     UserLoginGoogleCallbackHandler,
     UserSelfDeleteHandler,
+    UserCreateCommandHandler,
 ];
 
 export const queryHandlers = [UserListHandler, UserGetHandler];
@@ -51,6 +54,7 @@ export const queryHandlers = [UserListHandler, UserGetHandler];
         IntegrationModule,
         AuthorizationModule,
         PaginationModule,
+        RBACCommonModule,
     ],
     exports: [UserService],
     providers: [...commandHandlers, ...queryHandlers, UserService],

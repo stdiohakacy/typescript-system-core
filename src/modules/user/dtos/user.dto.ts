@@ -6,7 +6,9 @@ import {
     IsEnum,
     IsNotEmpty,
     IsNumber,
+    IsOptional,
     IsString,
+    IsUUID,
     MaxLength,
     MinLength,
     ValidateIf,
@@ -145,6 +147,11 @@ export class UserDTO extends BaseDTO {
     @IsString()
     @IsNotEmpty()
     readonly signUpFrom: ENUM_USER_SIGN_UP_FROM;
+
+    @ApiProperty({ example: faker.string.uuid(), required: false })
+    @IsOptional()
+    @IsUUID('4')
+    readonly roleId: string;
 
     constructor(user: UserEntity) {
         super(user);

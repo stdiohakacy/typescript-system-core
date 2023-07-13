@@ -19,6 +19,7 @@ import { AwsS3Serialization } from 'src/common/aws/serializations/aws.s3.seriali
 import { UserUpdateGoogleSSODTO } from '../dtos/user.update-google-sso.dto';
 import { AuthService } from '../../../common/authentication/services/auth.service';
 import { IAuthPassword } from '../../../common/authentication/interfaces/auth.interface';
+import { UserCreateDTO } from '../dtos/user.create.dto';
 
 @Injectable()
 export class UserService implements IUserService {
@@ -75,8 +76,12 @@ export class UserService implements IUserService {
         return await this.userRepo.findOne({ where: { id } });
     }
 
+    async findOneByPhone(phone: string): Promise<UserEntity> {
+        return await this.userRepo.findOneBy({ phone });
+    }
+
     async create(
-        payload: UserRegisterDTO,
+        payload: UserRegisterDTO | UserCreateDTO,
         authPassword: IAuthPassword
     ): Promise<UserEntity> {
         const { email, username, firstName, lastName, phone, signUpFrom } =

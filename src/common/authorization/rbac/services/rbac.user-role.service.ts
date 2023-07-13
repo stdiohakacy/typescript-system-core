@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { DeleteResult, Repository } from 'typeorm';
+import { DeleteResult, InsertResult, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRoleEntity } from 'src/modules/rbac/entities/user-role.entity';
 import { IRBACUserRoleService } from '../interfaces/rbac.user-role.service.interface';
 import { UserRoleCreateRawDTO } from '../dtos/user-role.create-raw.dto';
+import { UserRoleDTO } from '../dtos/user-role.dto';
+import { UserRoleCreateDTO } from '../dtos/user-role.create.dto';
 
 @Injectable()
 export class RBACUserRoleService implements IRBACUserRoleService {
@@ -11,6 +13,11 @@ export class RBACUserRoleService implements IRBACUserRoleService {
         @InjectRepository(UserRoleEntity)
         private userRoleRepo: Repository<UserRoleEntity>
     ) {}
+    async create(data: UserRoleCreateDTO) {
+        const userRoleEntity = this.userRoleRepo.create(data);
+        return await this.userRoleRepo.save(userRoleEntity);
+        // return await this.userRoleRepo.insert(this.userRoleRepo.create(data));
+    }
 
     async createRaw({
         userId,
@@ -23,6 +30,7 @@ export class RBACUserRoleService implements IRBACUserRoleService {
             })
         );
     }
+
     async deleteMany(find: Record<string, any>): Promise<DeleteResult> {
         return this.userRoleRepo.delete(find);
     }
