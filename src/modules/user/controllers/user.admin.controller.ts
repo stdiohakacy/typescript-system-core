@@ -1,10 +1,16 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { ResponsePaging } from '../../../common/response/decorators/response.decorator';
-import { IResponsePaging } from '../../../common/response/interfaces/response.interface';
+import {
+    Response,
+    ResponsePaging,
+} from '../../../common/response/decorators/response.decorator';
+import {
+    IResponse,
+    IResponsePaging,
+} from '../../../common/response/interfaces/response.interface';
 import { UserListSerialization } from '../../../modules/user/serializations/user.list.serialization';
-import { UserAdminListDoc } from '../docs/user.admin.doc';
-import { QueryBus } from '@nestjs/cqrs';
+import { UserAdminGetDoc, UserAdminListDoc } from '../docs/user.admin.doc';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import {
     USER_DEFAULT_AVAILABLE_ORDER_BY,
     USER_DEFAULT_AVAILABLE_SEARCH,
@@ -24,6 +30,13 @@ import {
 } from '../../../common/pagination/postgres/decorators/postgres.pagination.decorator';
 import { PaginationListDTO } from '../../../common/pagination/postgres/dtos/postgres.pagination.list.dto';
 import { AuthJwtRBACAdminAccessProtected } from '../../../common/authentication/decorators/auth.jwt-decorator';
+import { UserGetSerialization } from '../serializations/user.get.serialization';
+import { RequestParamGuard } from 'src/common/request/decorators/request.decorator';
+import { GetUser } from '../decorators/user.decorator';
+import { UserEntity } from '../entities/user.entity';
+import { UserGetQuery } from '../queries/user.get.query';
+import { UserRequestDTO } from '../dtos/user.request.dto';
+import { UserAdminGetGuard } from '../decorators/user.admin.decorator';
 
 @ApiTags('modules.admin.user')
 @Controller({
@@ -31,7 +44,10 @@ import { AuthJwtRBACAdminAccessProtected } from '../../../common/authentication/
     path: '/user',
 })
 export class UserAdminController {
-    constructor(private readonly queryBus: QueryBus) {}
+    constructor(
+        private readonly queryBus: QueryBus,
+        private readonly commandBus: CommandBus
+    ) {}
 
     @UserAdminListDoc()
     @ResponsePaging('user.list', { serialization: UserListSerialization })
@@ -72,5 +88,15 @@ export class UserAdminController {
             _order,
         } as PaginationListDTO;
         return await this.queryBus.execute(new UserListQuery(find, pagination));
+    }
+
+    @UserAdminGetDoc()
+    @Response('user.get', { serialization: UserGetSerialization })
+    @UserAdminGetGuard()
+    @AuthJwtRBACAdminAccessProtected()
+    @RequestParamGuard(UserRequestDTO)
+    @Get('/get/:id')
+    async get(@Param('id') id: string): Promise<IResponse> {
+        return await this.queryBus.execute(new UserGetQuery(id));
     }
 }

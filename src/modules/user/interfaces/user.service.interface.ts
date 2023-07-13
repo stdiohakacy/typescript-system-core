@@ -26,7 +26,7 @@ export interface IUserService {
 
     findOneByUsername<T>(username: string): Promise<T>;
 
-    findOneById(id: Uuid): Promise<UserEntity>;
+    findOneById(id: string): Promise<UserEntity>;
 
     increasePasswordAttempt(user: UserEntity): Promise<void>;
 

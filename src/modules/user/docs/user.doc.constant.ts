@@ -33,19 +33,9 @@ export const UserDocQueryInactivePermanent = [
     },
 ];
 
-// export const UserDocQueryRole = [
-//     {
-//         name: 'role',
-//         allowEmptyValue: true,
-//         required: false,
-//         type: 'string',
-//         example: faker.string.uuid(),
-//     },
-// ];
-
 export const UserDocParamsId = [
     {
-        name: 'user',
+        name: 'id',
         allowEmptyValue: false,
         required: true,
         type: 'string',

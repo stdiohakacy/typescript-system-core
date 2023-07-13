@@ -71,7 +71,7 @@ export class UserService implements IUserService {
         return <T>this.userRepo.findOne({ where: { username } });
     }
 
-    async findOneById(id: Uuid): Promise<UserEntity> {
+    async findOneById(id: string): Promise<UserEntity> {
         return await this.userRepo.findOne({ where: { id } });
     }
 

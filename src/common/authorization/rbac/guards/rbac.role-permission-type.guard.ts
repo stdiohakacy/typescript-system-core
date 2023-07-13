@@ -36,7 +36,6 @@ export class RBACRolePermissionTypeAccessGuard implements CanActivate {
             );
 
         const { user } = context.switchToHttp().getRequest();
-        console.log(user);
 
         const userEntity = await (await this.userService.joinWithRole())
             .where('users.id = :id', { id: user.id })

@@ -22,6 +22,7 @@ import { AuthorizationModule } from '../../common/authorization/authorization.mo
 import { AuthModule } from '../../common/authentication/auth.module';
 import { UserListHandler } from './queries/user.list.query';
 import { PaginationModule } from '../../common/pagination/pagination.module';
+import { UserGetHandler } from './queries/user.get.query';
 
 export const commandHandlers = [
     UserRegisterHandler,
@@ -39,7 +40,7 @@ export const commandHandlers = [
     UserSelfDeleteHandler,
 ];
 
-export const queryHandlers = [UserListHandler];
+export const queryHandlers = [UserListHandler, UserGetHandler];
 
 @Module({
     imports: [
