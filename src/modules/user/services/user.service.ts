@@ -41,6 +41,9 @@ export class UserService implements IUserService {
         const { _limit, _offset, _order } = pagination;
         return await this.userRepo.findAndCount({
             where: find,
+            take: _limit,
+            skip: _offset,
+            order: _order,
         });
     }
 

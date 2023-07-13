@@ -1,8 +1,8 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { ResponsePaging } from 'src/common/response/decorators/response.decorator';
-import { IResponsePaging } from 'src/common/response/interfaces/response.interface';
-import { UserListSerialization } from 'src/modules/user/serializations/user.list.serialization';
+import { ResponsePaging } from '../../../common/response/decorators/response.decorator';
+import { IResponsePaging } from '../../../common/response/interfaces/response.interface';
+import { UserListSerialization } from '../../../modules/user/serializations/user.list.serialization';
 import { UserAdminListDoc } from '../docs/user.admin.doc';
 import { QueryBus } from '@nestjs/cqrs';
 import {
@@ -10,7 +10,6 @@ import {
     USER_DEFAULT_AVAILABLE_SEARCH,
     USER_DEFAULT_BLOCKED,
     USER_DEFAULT_INACTIVE_PERMANENT,
-    USER_DEFAULT_IS_ACTIVE,
     USER_DEFAULT_ORDER_BY,
     USER_DEFAULT_ORDER_DIRECTION,
     USER_DEFAULT_PER_PAGE,
@@ -20,6 +19,7 @@ import { UserListQuery } from '../queries/user.list.query';
 import { ENUM_USER_STATUS } from '../constants/user.enum.constant';
 import {
     PaginationQuery,
+    PaginationQueryFilterInBoolean,
     PaginationQueryFilterInEnum,
 } from '../../../common/pagination/postgres/decorators/postgres.pagination.decorator';
 import { PaginationListDTO } from '../../../common/pagination/postgres/dtos/postgres.pagination.list.dto';
@@ -50,9 +50,21 @@ export class UserAdminController {
             USER_DEFAULT_STATUS,
             ENUM_USER_STATUS
         )
-        status: Record<string, any>
+        status: Record<string, any>,
+        @PaginationQueryFilterInBoolean('blocked', USER_DEFAULT_BLOCKED)
+        blocked: Record<string, any>,
+        @PaginationQueryFilterInBoolean(
+            'inactivePermanent',
+            USER_DEFAULT_INACTIVE_PERMANENT
+        )
+        inactivePermanent: Record<string, any>
     ): Promise<IResponsePaging> {
-        const find = { ..._search, ...status };
+        const find = {
+            ..._search,
+            ...status,
+            ...blocked,
+            ...inactivePermanent,
+        };
         const pagination = {
             _limit,
             _offset,

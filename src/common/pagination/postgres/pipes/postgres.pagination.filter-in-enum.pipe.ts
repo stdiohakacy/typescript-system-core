@@ -19,19 +19,6 @@ export function PaginationFilterInEnumPipe<T>(
 
         async transform(value: string) {
             let finalValue: T[] = defaultValue as T[];
-            // if (value) {
-            //     finalValue = value
-            //         .split(',')
-            //         .map((val: string) => defaultEnum[val])
-            //         .filter((val: string) => val) as T[];
-            // }
-
-            // if (raw) {
-            //     return {
-            //         [field]: finalValue,
-            //     };
-            // }
-
             return this.paginationService.filterIn<T>(field, finalValue);
         }
     }
