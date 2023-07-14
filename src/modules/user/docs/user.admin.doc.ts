@@ -75,3 +75,43 @@ export function UserAdminUpdateDoc(): MethodDecorator {
         })
     );
 }
+
+export function UserAdminInactiveDoc(): MethodDecorator {
+    return applyDecorators(
+        Doc({ operation: 'modules.admin.user' }),
+        DocRequest({ params: UserDocParamsId }),
+        DocAuth({ jwtAccessToken: true }),
+        DocGuard({ role: true, policy: true }),
+        DocResponse('user.inactive')
+    );
+}
+
+export function UserAdminActiveDoc(): MethodDecorator {
+    return applyDecorators(
+        Doc({ operation: 'modules.admin.user' }),
+        DocRequest({ params: UserDocParamsId }),
+        DocAuth({ jwtAccessToken: true }),
+        DocGuard({ role: true, policy: true }),
+        DocResponse('user.active')
+    );
+}
+
+export function UserAdminBlockedDoc(): MethodDecorator {
+    return applyDecorators(
+        Doc({ operation: 'modules.admin.user' }),
+        DocRequest({ params: UserDocParamsId }),
+        DocAuth({ jwtAccessToken: true }),
+        DocGuard({ role: true, policy: true }),
+        DocResponse('user.blocked')
+    );
+}
+
+export function UserAdminForceDeleteDoc(): MethodDecorator {
+    return applyDecorators(
+        Doc({ operation: 'modules.admin.user' }),
+        DocRequest({ params: UserDocParamsId }),
+        DocAuth({ jwtAccessToken: true }),
+        DocGuard({ role: true, policy: true }),
+        DocResponse('user.delete')
+    );
+}

@@ -74,4 +74,12 @@ export interface IUserService {
         { firstName, lastName }: UserUpdateNameDTO,
         userAuth: UserEntity
     ): Promise<void>;
+
+    inactive(id: string, updatedBy: UserEntity): Promise<void>;
+
+    forceActive(id: string, userAuth: UserEntity): Promise<void>;
+
+    block(id: string, updatedBy: UserEntity): Promise<void>;
+
+    forceDelete(id: string, deletedBy: UserEntity): Promise<void>;
 }

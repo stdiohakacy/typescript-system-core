@@ -23,9 +23,13 @@ import { AuthModule } from '../../common/authentication/auth.module';
 import { UserListHandler } from './queries/user.list.query';
 import { PaginationModule } from '../../common/pagination/pagination.module';
 import { UserGetHandler } from './queries/user.get.query';
-import { UserCreateCommandHandler } from './commands/user.create.command';
+import { UserCreateHandler } from './commands/user.create.command';
 import { RBACCommonModule } from 'src/common/authorization/rbac/rbac.module';
 import { UserUpdateNameHandler } from './commands/user.update-name.command';
+import { UserInActiveHandler } from './commands/user.inactive.command';
+import { UserForceActiveHandler } from './commands/user.force-active.command';
+import { UserBlockHandler } from './commands/user.block.command';
+import { UserForceDeleteHandler } from './commands/user.force-delete.command';
 
 export const commandHandlers = [
     UserRegisterHandler,
@@ -41,8 +45,12 @@ export const commandHandlers = [
     UserSignUpGoogleCallbackHandler,
     UserLoginGoogleCallbackHandler,
     UserSelfDeleteHandler,
-    UserCreateCommandHandler,
+    UserCreateHandler,
     UserUpdateNameHandler,
+    UserInActiveHandler,
+    UserForceActiveHandler,
+    UserBlockHandler,
+    UserForceDeleteHandler,
 ];
 
 export const queryHandlers = [UserListHandler, UserGetHandler];

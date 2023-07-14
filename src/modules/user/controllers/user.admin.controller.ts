@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Patch,
+    Post,
+    Put,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import {
     Response,
@@ -10,8 +19,12 @@ import {
 } from '../../../common/response/interfaces/response.interface';
 import { UserListSerialization } from '../../../modules/user/serializations/user.list.serialization';
 import {
+    UserAdminActiveDoc,
+    UserAdminBlockedDoc,
     UserAdminCreateDoc,
+    UserAdminForceDeleteDoc,
     UserAdminGetDoc,
+    UserAdminInactiveDoc,
     UserAdminListDoc,
     UserAdminUpdateDoc,
 } from '../docs/user.admin.doc';
@@ -34,17 +47,18 @@ import {
     PaginationQueryFilterInEnum,
 } from '../../../common/pagination/postgres/decorators/postgres.pagination.decorator';
 import { PaginationListDTO } from '../../../common/pagination/postgres/dtos/postgres.pagination.list.dto';
-import {
-    AuthJwtAccessProtected,
-    AuthJwtRBACAccessProtected,
-} from '../../../common/authentication/decorators/auth.jwt-decorator';
+import { AuthJwtRBACAccessProtected } from '../../../common/authentication/decorators/auth.jwt-decorator';
 import { UserGetSerialization } from '../serializations/user.get.serialization';
 import { RequestParamGuard } from '../../../common/request/decorators/request.decorator';
 import { UserGetQuery } from '../queries/user.get.query';
 import { UserRequestDTO } from '../dtos/user.request.dto';
 import {
+    UserAdminForceActiveGuard,
+    UserAdminForceDeleteGuard,
     UserAdminGetGuard,
+    UserAdminUpdateBlockedGuard,
     UserAdminUpdateGuard,
+    UserAdminUpdateInactiveGuard,
 } from '../decorators/user.admin.decorator';
 import { ResponseIdSerialization } from '../../../common/response/serializations/response.id.serialization';
 import {
@@ -53,10 +67,14 @@ import {
 } from '../../../common/authorization/rbac/constants/rbac.enum.role.constant';
 import { UserCreateDTO } from '../dtos/user.create.dto';
 import { UserCreateCommand } from '../commands/user.create.command';
-import { GetUser, UserProtected } from '../decorators/user.decorator';
+import { GetUser } from '../decorators/user.decorator';
 import { UserEntity } from '../entities/user.entity';
 import { UserUpdateNameDTO } from '../dtos/user.update-name.dto';
 import { UserUpdateNameCommand } from '../commands/user.update-name.command';
+import { UserInActiveCommand } from '../commands/user.inactive.command';
+import { UserForceActiveCommand } from '../commands/user.force-active.command';
+import { UserBlockCommand } from '../commands/user.block.command';
+import { UserForceDeleteCommand } from '../commands/user.force-delete.command';
 
 @ApiTags('modules.admin.user')
 @Controller({
@@ -142,13 +160,13 @@ export class UserAdminController {
 
     @UserAdminUpdateDoc()
     @Response('user.update', { serialization: ResponseIdSerialization })
-    @UserProtected()
-    @AuthJwtAccessProtected()
-    // @UserAdminUpdateGuard()
-    // @AuthJwtRBACAccessProtected({
-    //     roles: [ENUM_RBAC_ROLE_TYPE.ADMIN],
-    //     permissions: [ENUM_RBAC_PERMISSION_TYPE.USER_UPDATE],
-    // })
+    // @UserProtected()
+    // @AuthJwtAccessProtected()
+    @UserAdminUpdateGuard()
+    @AuthJwtRBACAccessProtected({
+        roles: [ENUM_RBAC_ROLE_TYPE.ADMIN],
+        permissions: [ENUM_RBAC_PERMISSION_TYPE.USER_UPDATE],
+    })
     @RequestParamGuard(UserRequestDTO)
     @Put('/:id')
     async update(
@@ -158,6 +176,74 @@ export class UserAdminController {
     ): Promise<IResponse> {
         return await this.commandBus.execute(
             new UserUpdateNameCommand(id, payload, userAuth)
+        );
+    }
+
+    @UserAdminInactiveDoc()
+    @Response('user.inactive')
+    @UserAdminUpdateInactiveGuard()
+    @AuthJwtRBACAccessProtected({
+        roles: [ENUM_RBAC_ROLE_TYPE.ADMIN],
+        permissions: [ENUM_RBAC_PERMISSION_TYPE.USER_UPDATE],
+    })
+    @RequestParamGuard(UserRequestDTO)
+    @Patch('/:id/inactive')
+    async inactive(
+        @Param('id') id: string,
+        @GetUser() userAuth: UserEntity
+    ): Promise<void> {
+        return await this.commandBus.execute(
+            new UserInActiveCommand(id, userAuth)
+        );
+    }
+
+    @UserAdminActiveDoc()
+    @Response('user.active')
+    @UserAdminForceActiveGuard()
+    @AuthJwtRBACAccessProtected({
+        roles: [ENUM_RBAC_ROLE_TYPE.ADMIN],
+        permissions: [ENUM_RBAC_PERMISSION_TYPE.USER_UPDATE],
+    })
+    @RequestParamGuard(UserRequestDTO)
+    @Patch('/:id/active')
+    async forceActive(
+        @Param('id') id: string,
+        @GetUser() user: UserEntity
+    ): Promise<void> {
+        await this.commandBus.execute(new UserForceActiveCommand(id, user));
+    }
+
+    @UserAdminBlockedDoc()
+    @Response('user.blocked')
+    @UserAdminUpdateBlockedGuard()
+    @AuthJwtRBACAccessProtected({
+        roles: [ENUM_RBAC_ROLE_TYPE.ADMIN],
+        permissions: [ENUM_RBAC_PERMISSION_TYPE.USER_UPDATE],
+    })
+    @RequestParamGuard(UserRequestDTO)
+    @Patch('/:id/block')
+    async block(
+        @Param('id') id: string,
+        @GetUser() userAuth: UserEntity
+    ): Promise<void> {
+        await this.commandBus.execute(new UserBlockCommand(id, userAuth));
+    }
+
+    @UserAdminForceDeleteDoc()
+    @Response('user.delete')
+    @UserAdminForceDeleteGuard()
+    @AuthJwtRBACAccessProtected({
+        roles: [ENUM_RBAC_ROLE_TYPE.ADMIN],
+        permissions: [ENUM_RBAC_PERMISSION_TYPE.USER_DELETE],
+    })
+    @RequestParamGuard(UserRequestDTO)
+    @Delete('/:id')
+    async delete(
+        @Param('id') id: string,
+        @GetUser() userAuth: UserEntity
+    ): Promise<void> {
+        return await this.commandBus.execute(
+            new UserForceDeleteCommand(id, userAuth)
         );
     }
 }

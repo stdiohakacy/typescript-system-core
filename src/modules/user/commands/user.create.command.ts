@@ -16,9 +16,7 @@ export class UserCreateCommand implements ICommand {
 }
 
 @CommandHandler(UserCreateCommand)
-export class UserCreateCommandHandler
-    implements ICommandHandler<UserCreateCommand>
-{
+export class UserCreateHandler implements ICommandHandler<UserCreateCommand> {
     constructor(
         private readonly userService: UserService,
         private readonly roleService: RBACRoleService,

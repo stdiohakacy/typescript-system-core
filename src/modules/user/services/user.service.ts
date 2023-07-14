@@ -231,4 +231,36 @@ export class UserService implements IUserService {
             inactiveDate: this.helperDateService.create(),
         });
     }
+
+    async inactive(id: string, updatedBy: UserEntity): Promise<void> {
+        await this.userRepo.update(id, {
+            status: ENUM_USER_STATUS.INACTIVE,
+            inactivePermanent: true,
+            inactiveDate: this.helperDateService.create(),
+            updatedBy: updatedBy.id,
+        });
+    }
+
+    async forceActive(id: string, userAuth: UserEntity): Promise<void> {
+        await this.userRepo.update(id, {
+            status: ENUM_USER_STATUS.ACTIVE,
+            inactiveDate: this.helperDateService.create(),
+            updatedBy: userAuth.id,
+        });
+    }
+
+    async block(id: string, updatedBy: UserEntity): Promise<void> {
+        await this.userRepo.update(id, {
+            blocked: true,
+            blockedAt: this.helperDateService.create(),
+            updatedBy: updatedBy.id,
+        });
+    }
+
+    async forceDelete(id: string, deletedBy: UserEntity): Promise<void> {
+        await this.userRepo.update(id, {
+            deletedBy: deletedBy.id,
+            deletedAt: new Date(),
+        });
+    }
 }
