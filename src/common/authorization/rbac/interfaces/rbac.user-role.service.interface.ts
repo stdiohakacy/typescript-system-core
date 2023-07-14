@@ -3,6 +3,7 @@ import { RoleEntity } from '../../../../modules/rbac/entities/role.entity';
 import { UserRoleCreateRawDTO } from '../dtos/user-role.create-raw.dto';
 import { UserRoleEntity } from '../../../../modules/rbac/entities/user-role.entity';
 import { UserRoleDTO } from '../dtos/user-role.dto';
+import { UserRoleCreateDTO } from '../dtos/user-role.create.dto';
 
 export interface IRBACUserRoleService {
     createRaw({
@@ -12,4 +13,6 @@ export interface IRBACUserRoleService {
     deleteMany(find: Record<string, any>): Promise<DeleteResult>;
 
     create(data: UserRoleDTO);
+
+    createMany(payload: UserRoleCreateDTO[]): Promise<void>;
 }

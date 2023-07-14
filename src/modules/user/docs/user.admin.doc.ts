@@ -4,6 +4,7 @@ import {
     DocAuth,
     DocGuard,
     DocRequest,
+    DocRequestFile,
     DocResponse,
     DocResponsePaging,
 } from '../../../common/doc/decorators/doc.decorator';
@@ -113,5 +114,15 @@ export function UserAdminForceDeleteDoc(): MethodDecorator {
         DocAuth({ jwtAccessToken: true }),
         DocGuard({ role: true, policy: true }),
         DocResponse('user.delete')
+    );
+}
+
+export function UserAdminImportDoc(): MethodDecorator {
+    return applyDecorators(
+        Doc({ operation: 'modules.admin.user' }),
+        DocAuth({ jwtAccessToken: true }),
+        DocRequestFile(),
+        DocGuard({ role: true, policy: true }),
+        DocResponse('user.import', { httpStatus: HttpStatus.CREATED })
     );
 }

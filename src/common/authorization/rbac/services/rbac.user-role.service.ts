@@ -16,7 +16,6 @@ export class RBACUserRoleService implements IRBACUserRoleService {
     async create(data: UserRoleCreateDTO) {
         const userRoleEntity = this.userRoleRepo.create(data);
         return await this.userRoleRepo.save(userRoleEntity);
-        // return await this.userRoleRepo.insert(this.userRoleRepo.create(data));
     }
 
     async createRaw({
@@ -33,5 +32,9 @@ export class RBACUserRoleService implements IRBACUserRoleService {
 
     async deleteMany(find: Record<string, any>): Promise<DeleteResult> {
         return this.userRoleRepo.delete(find);
+    }
+
+    async createMany(payload: UserRoleCreateDTO[]) {
+        await this.userRoleRepo.save(payload);
     }
 }

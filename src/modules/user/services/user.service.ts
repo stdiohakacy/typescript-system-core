@@ -20,6 +20,7 @@ import { AuthService } from '../../../common/authentication/services/auth.servic
 import { IAuthPassword } from '../../../common/authentication/interfaces/auth.interface';
 import { UserCreateDTO } from '../dtos/user.create.dto';
 import { UserUpdateNameDTO } from '../dtos/user.update-name.dto';
+import { UserImportDTO } from '../dtos/user.import.dto';
 
 @Injectable()
 export class UserService implements IUserService {
@@ -34,7 +35,6 @@ export class UserService implements IUserService {
     ) {
         this.uploadPath = this.configService.get<string>('user.uploadPath');
     }
-
     async updateName(
         id: string,
         { firstName, lastName }: UserUpdateNameDTO,
@@ -262,5 +262,35 @@ export class UserService implements IUserService {
             deletedBy: deletedBy.id,
             deletedAt: new Date(),
         });
+    }
+
+    async import(
+        payload: UserImportDTO[],
+        { passwordCreated, passwordHash, salt }: IAuthPassword
+    ): Promise<UserEntity[]> {
+        const passwordExpired: Date = this.helperDateService.backwardInDays(1);
+        const users: UserEntity[] = payload.map(
+            ({ email, firstName, lastName, phone, signUpFrom }) => {
+                const user = this.userRepo.create();
+                user.firstName = firstName;
+                user.email = email;
+                user.password = passwordHash;
+                user.status = ENUM_USER_STATUS.ACTIVE;
+                user.inactivePermanent = false;
+                user.blocked = false;
+                user.lastName = lastName;
+                user.salt = salt;
+                user.passwordExpired = passwordExpired;
+                user.passwordCreated = passwordCreated;
+                user.createdAt = this.helperDateService.create();
+                user.passwordAttempt = 0;
+                user.phone = phone ?? undefined;
+                user.signUpFrom = signUpFrom;
+
+                return user;
+            }
+        );
+
+        return await this.userRepo.save(users);
     }
 }

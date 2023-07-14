@@ -7,6 +7,7 @@ import {
     Patch,
     Post,
     Put,
+    UploadedFile,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import {
@@ -24,6 +25,7 @@ import {
     UserAdminCreateDoc,
     UserAdminForceDeleteDoc,
     UserAdminGetDoc,
+    UserAdminImportDoc,
     UserAdminInactiveDoc,
     UserAdminListDoc,
     UserAdminUpdateDoc,
@@ -75,6 +77,15 @@ import { UserInActiveCommand } from '../commands/user.inactive.command';
 import { UserForceActiveCommand } from '../commands/user.force-active.command';
 import { UserBlockCommand } from '../commands/user.block.command';
 import { UserForceDeleteCommand } from '../commands/user.force-delete.command';
+import { FileRequiredPipe } from '../../../common/file/pipes/file.required.pipe';
+import { FileSizeExcelPipe } from '../../../common/file/pipes/file.size.pipe';
+import { FileTypeExcelPipe } from '../../../common/file/pipes/file.type.pipe';
+import { FileExtractPipe } from '../../../common/file/pipes/file.extract.pipe';
+import { FileValidationPipe } from '../../../common/file/pipes/file.validation.pipe';
+import { UserImportDTO } from '../dtos/user.import.dto';
+import { IFileExtract } from '../../../common/file/interfaces/file.interface';
+import { UserImportCommand } from '../commands/user.import.command';
+import { UploadFileSingle } from 'src/common/file/decorators/file.decorator';
 
 @ApiTags('modules.admin.user')
 @Controller({
@@ -245,5 +256,26 @@ export class UserAdminController {
         return await this.commandBus.execute(
             new UserForceDeleteCommand(id, userAuth)
         );
+    }
+
+    @UserAdminImportDoc()
+    @Response('user.import')
+    @UploadFileSingle('file')
+    @AuthJwtRBACAccessProtected({
+        roles: [ENUM_RBAC_ROLE_TYPE.ADMIN],
+        permissions: [ENUM_RBAC_PERMISSION_TYPE.USER_IMPORT],
+    })
+    @Post('/import')
+    async import(
+        @UploadedFile(
+            FileRequiredPipe,
+            FileSizeExcelPipe,
+            FileTypeExcelPipe,
+            FileExtractPipe,
+            new FileValidationPipe<UserImportDTO>(UserImportDTO)
+        )
+        file: IFileExtract<UserImportDTO>
+    ): Promise<void> {
+        return await this.commandBus.execute(new UserImportCommand(file));
     }
 }

@@ -10,6 +10,7 @@ import { UserUpdateGoogleSSODTO } from '../dtos/user.update-google-sso.dto';
 import { DeleteResult } from 'typeorm';
 import { IAuthPassword } from '../../../common/authentication/interfaces/auth.interface';
 import { UserUpdateNameDTO } from '../dtos/user.update-name.dto';
+import { UserImportDTO } from '../dtos/user.import.dto';
 
 export interface IUserService {
     deleteMany(find: Record<string, any>): Promise<DeleteResult>;
@@ -82,4 +83,9 @@ export interface IUserService {
     block(id: string, updatedBy: UserEntity): Promise<void>;
 
     forceDelete(id: string, deletedBy: UserEntity): Promise<void>;
+
+    import(
+        payload: UserImportDTO[],
+        { passwordCreated, passwordHash, salt }: IAuthPassword
+    ): Promise<UserEntity[]>;
 }
