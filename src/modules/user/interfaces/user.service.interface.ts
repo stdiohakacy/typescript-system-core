@@ -9,6 +9,7 @@ import { AwsS3Serialization } from '../../../common/aws/serializations/aws.s3.se
 import { UserUpdateGoogleSSODTO } from '../dtos/user.update-google-sso.dto';
 import { DeleteResult } from 'typeorm';
 import { IAuthPassword } from '../../../common/authentication/interfaces/auth.interface';
+import { UserUpdateNameDTO } from '../dtos/user.update-name.dto';
 
 export interface IUserService {
     deleteMany(find: Record<string, any>): Promise<DeleteResult>;
@@ -67,4 +68,10 @@ export interface IUserService {
     ): Promise<void>;
 
     inactivePermanent(user: UserEntity): Promise<void>;
+
+    updateName(
+        id: string,
+        { firstName, lastName }: UserUpdateNameDTO,
+        userAuth: UserEntity
+    ): Promise<void>;
 }

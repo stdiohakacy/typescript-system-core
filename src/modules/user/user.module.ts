@@ -25,6 +25,7 @@ import { PaginationModule } from '../../common/pagination/pagination.module';
 import { UserGetHandler } from './queries/user.get.query';
 import { UserCreateCommandHandler } from './commands/user.create.command';
 import { RBACCommonModule } from 'src/common/authorization/rbac/rbac.module';
+import { UserUpdateNameHandler } from './commands/user.update-name.command';
 
 export const commandHandlers = [
     UserRegisterHandler,
@@ -41,6 +42,7 @@ export const commandHandlers = [
     UserLoginGoogleCallbackHandler,
     UserSelfDeleteHandler,
     UserCreateCommandHandler,
+    UserUpdateNameHandler,
 ];
 
 export const queryHandlers = [UserListHandler, UserGetHandler];

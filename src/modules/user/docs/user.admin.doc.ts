@@ -60,3 +60,18 @@ export function UserAdminCreateDoc(): MethodDecorator {
         })
     );
 }
+
+export function UserAdminUpdateDoc(): MethodDecorator {
+    return applyDecorators(
+        Doc({ operation: 'modules.admin.user' }),
+        DocRequest({
+            params: UserDocParamsId,
+            bodyType: ENUM_DOC_REQUEST_BODY_TYPE.JSON,
+        }),
+        DocAuth({ jwtAccessToken: true }),
+        DocGuard({ role: true, policy: true }),
+        DocResponse<ResponseIdSerialization>('user.update', {
+            serialization: ResponseIdSerialization,
+        })
+    );
+}

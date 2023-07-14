@@ -9,4 +9,5 @@ export enum ENUM_RBAC_PERMISSION_TYPE {
     USER_DELETE = 'user:delete',
     USER_LIST = 'user:list',
     USER_GET = 'user:get',
+    USER_UPDATE = 'user:update',
 }

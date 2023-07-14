@@ -11,7 +11,6 @@ import { ENUM_USER_STATUS } from '../constants/user.enum.constant';
 import { HelperDateService } from '../../../common/helper/services/helper.date.service';
 import { UserPayloadSerialization } from '../serializations/user.payload.serialization';
 import { UserResetPasswordDTO } from '../dtos/user.reset-password.dto';
-import { Uuid } from '../../../types';
 import { UserUpdateProfileDTO } from '../dtos/user.update-profile.dto';
 import { UserClaimUsernameDTO } from '../dtos/user.claim-username.dto';
 import { HelperStringService } from '../../../common/helper/services/helper.string.service';
@@ -20,6 +19,7 @@ import { UserUpdateGoogleSSODTO } from '../dtos/user.update-google-sso.dto';
 import { AuthService } from '../../../common/authentication/services/auth.service';
 import { IAuthPassword } from '../../../common/authentication/interfaces/auth.interface';
 import { UserCreateDTO } from '../dtos/user.create.dto';
+import { UserUpdateNameDTO } from '../dtos/user.update-name.dto';
 
 @Injectable()
 export class UserService implements IUserService {
@@ -33,6 +33,18 @@ export class UserService implements IUserService {
         private readonly configService: ConfigService
     ) {
         this.uploadPath = this.configService.get<string>('user.uploadPath');
+    }
+
+    async updateName(
+        id: string,
+        { firstName, lastName }: UserUpdateNameDTO,
+        userAuth: UserEntity
+    ): Promise<void> {
+        await this.userRepo.update(id, {
+            firstName,
+            lastName,
+            updatedBy: userAuth.id,
+        });
     }
 
     async findAllAndCount(

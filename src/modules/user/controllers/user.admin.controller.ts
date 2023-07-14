@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import {
     Response,
@@ -13,6 +13,7 @@ import {
     UserAdminCreateDoc,
     UserAdminGetDoc,
     UserAdminListDoc,
+    UserAdminUpdateDoc,
 } from '../docs/user.admin.doc';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import {
@@ -33,12 +34,18 @@ import {
     PaginationQueryFilterInEnum,
 } from '../../../common/pagination/postgres/decorators/postgres.pagination.decorator';
 import { PaginationListDTO } from '../../../common/pagination/postgres/dtos/postgres.pagination.list.dto';
-import { AuthJwtRBACAccessProtected } from '../../../common/authentication/decorators/auth.jwt-decorator';
+import {
+    AuthJwtAccessProtected,
+    AuthJwtRBACAccessProtected,
+} from '../../../common/authentication/decorators/auth.jwt-decorator';
 import { UserGetSerialization } from '../serializations/user.get.serialization';
 import { RequestParamGuard } from '../../../common/request/decorators/request.decorator';
 import { UserGetQuery } from '../queries/user.get.query';
 import { UserRequestDTO } from '../dtos/user.request.dto';
-import { UserAdminGetGuard } from '../decorators/user.admin.decorator';
+import {
+    UserAdminGetGuard,
+    UserAdminUpdateGuard,
+} from '../decorators/user.admin.decorator';
 import { ResponseIdSerialization } from '../../../common/response/serializations/response.id.serialization';
 import {
     ENUM_RBAC_PERMISSION_TYPE,
@@ -46,6 +53,10 @@ import {
 } from '../../../common/authorization/rbac/constants/rbac.enum.role.constant';
 import { UserCreateDTO } from '../dtos/user.create.dto';
 import { UserCreateCommand } from '../commands/user.create.command';
+import { GetUser, UserProtected } from '../decorators/user.decorator';
+import { UserEntity } from '../entities/user.entity';
+import { UserUpdateNameDTO } from '../dtos/user.update-name.dto';
+import { UserUpdateNameCommand } from '../commands/user.update-name.command';
 
 @ApiTags('modules.admin.user')
 @Controller({
@@ -127,5 +138,26 @@ export class UserAdminController {
         payload: UserCreateDTO
     ): Promise<IResponse> {
         return await this.commandBus.execute(new UserCreateCommand(payload));
+    }
+
+    @UserAdminUpdateDoc()
+    @Response('user.update', { serialization: ResponseIdSerialization })
+    @UserProtected()
+    @AuthJwtAccessProtected()
+    // @UserAdminUpdateGuard()
+    // @AuthJwtRBACAccessProtected({
+    //     roles: [ENUM_RBAC_ROLE_TYPE.ADMIN],
+    //     permissions: [ENUM_RBAC_PERMISSION_TYPE.USER_UPDATE],
+    // })
+    @RequestParamGuard(UserRequestDTO)
+    @Put('/:id')
+    async update(
+        @Param('id') id: string,
+        @GetUser() userAuth: UserEntity,
+        @Body() payload: UserUpdateNameDTO
+    ): Promise<IResponse> {
+        return await this.commandBus.execute(
+            new UserUpdateNameCommand(id, payload, userAuth)
+        );
     }
 }
