@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, SelectQueryBuilder } from 'typeorm';
 import { randomBytes } from 'crypto';
+import { faker } from '@faker-js/faker';
 import { plainToInstance } from 'class-transformer';
 import { IUserService } from '../interfaces/user.service.interface';
 import { UserRegisterDTO } from '../dtos/user.register.dto';
@@ -272,6 +273,10 @@ export class UserService implements IUserService {
         const users: UserEntity[] = payload.map(
             ({ email, firstName, lastName, phone, signUpFrom }) => {
                 const user = this.userRepo.create();
+                user.username = faker.internet.userName(
+                    faker.name.firstName(),
+                    faker.name.lastName()
+                );
                 user.firstName = firstName;
                 user.email = email;
                 user.password = passwordHash;
