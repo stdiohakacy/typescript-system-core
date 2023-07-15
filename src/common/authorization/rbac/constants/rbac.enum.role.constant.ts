@@ -11,4 +11,5 @@ export enum ENUM_RBAC_PERMISSION_TYPE {
     USER_GET = 'user:get',
     USER_UPDATE = 'user:update',
     USER_IMPORT = 'user:import',
+    USER_EXPORT = 'user:export',
 }

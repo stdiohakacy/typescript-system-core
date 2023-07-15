@@ -291,11 +291,10 @@ export class UserAdminController {
         serialization: UserListSerialization,
         fileType: ENUM_HELPER_FILE_TYPE.CSV,
     })
-    // @PolicyAbilityProtected({
-    //     subject: ENUM_POLICY_SUBJECT.USER,
-    //     action: [ENUM_POLICY_ACTION.READ, ENUM_POLICY_ACTION.EXPORT],
-    // })
-    // @AuthJwtAdminAccessProtected()
+    @AuthJwtRBACAccessProtected({
+        roles: [ENUM_RBAC_ROLE_TYPE.ADMIN],
+        permissions: [ENUM_RBAC_PERMISSION_TYPE.USER_EXPORT],
+    })
     @HttpCode(HttpStatus.OK)
     @Post('/export')
     async export(): Promise<IResponse> {
