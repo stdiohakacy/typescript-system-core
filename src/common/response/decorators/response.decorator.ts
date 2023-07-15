@@ -7,6 +7,7 @@ import {
 import { ENUM_HELPER_FILE_TYPE } from '../../helper/constants/helper.enum.constant';
 import {
     RESPONSE_EXCEL_TYPE_META_KEY,
+    RESPONSE_FILE_TYPE_META_KEY,
     RESPONSE_MESSAGE_PATH_META_KEY,
     RESPONSE_MESSAGE_PROPERTIES_META_KEY,
     RESPONSE_SERIALIZATION_META_KEY,
@@ -18,7 +19,26 @@ import {
     IResponseOptions,
     IResponsePagingOptions,
     IResponseExcelOptions,
+    IResponseFileOptions,
 } from '../../response/interfaces/response.interface';
+import { ResponseFileInterceptor } from '../interceptors/response.file.interceptor';
+
+export function ResponseFile(
+    options?: IResponseFileOptions<void>
+): MethodDecorator {
+    return applyDecorators(
+        UseInterceptors(ResponseFileInterceptor),
+        SetMetadata(RESPONSE_SERIALIZATION_META_KEY, options?.serialization),
+        SetMetadata(
+            RESPONSE_FILE_TYPE_META_KEY,
+            options?.fileType ?? ENUM_HELPER_FILE_TYPE.CSV
+        ),
+        SetMetadata(
+            RESPONSE_MESSAGE_PROPERTIES_META_KEY,
+            options?.messageProperties
+        )
+    );
+}
 
 export function Response<T>(
     messagePath: string,

@@ -31,6 +31,7 @@ import { UserForceActiveHandler } from './commands/user.force-active.command';
 import { UserBlockHandler } from './commands/user.block.command';
 import { UserForceDeleteHandler } from './commands/user.force-delete.command';
 import { UserImportHandler } from './commands/user.import.command';
+import { UserExportHandler } from './commands/user.export.command';
 
 export const commandHandlers = [
     UserRegisterHandler,
@@ -53,6 +54,7 @@ export const commandHandlers = [
     UserBlockHandler,
     UserForceDeleteHandler,
     UserImportHandler,
+    UserExportHandler,
 ];
 
 export const queryHandlers = [UserListHandler, UserGetHandler];

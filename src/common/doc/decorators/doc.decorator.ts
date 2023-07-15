@@ -569,8 +569,6 @@ export function DocResponseFile(
 
     return applyDecorators(
         ApiProduces(options?.fileType ?? ENUM_FILE_EXCEL_MIME.CSV),
-        ApiResponse({
-            status: httpStatus,
-        })
+        ApiResponse({ status: httpStatus })
     );
 }

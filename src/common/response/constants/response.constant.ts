@@ -5,3 +5,4 @@ export const RESPONSE_MESSAGE_PROPERTIES_META_KEY =
     'ResponseSerializationPropertiesMetaKey';
 export const RESPONSE_MESSAGE_PATH_META_KEY = 'ResponseMessagePathMetaKey';
 export const RESPONSE_EXCEL_TYPE_META_KEY = 'ResponseExcelTypeMetaKey';
+export const RESPONSE_FILE_TYPE_META_KEY = 'ResponseFileTypeMetaKey';

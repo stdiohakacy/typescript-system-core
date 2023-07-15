@@ -6,6 +6,7 @@ import {
     DocRequest,
     DocRequestFile,
     DocResponse,
+    DocResponseFile,
     DocResponsePaging,
 } from '../../../common/doc/decorators/doc.decorator';
 import { UserListSerialization } from '../serializations/user.list.serialization';
@@ -124,5 +125,14 @@ export function UserAdminImportDoc(): MethodDecorator {
         DocRequestFile(),
         DocGuard({ role: true, policy: true }),
         DocResponse('user.import', { httpStatus: HttpStatus.CREATED })
+    );
+}
+
+export function UserAdminExportDoc(): MethodDecorator {
+    return applyDecorators(
+        Doc({ operation: 'modules.admin.user' }),
+        DocAuth({ jwtAccessToken: true }),
+        DocGuard({ role: true, policy: true }),
+        DocResponseFile()
     );
 }

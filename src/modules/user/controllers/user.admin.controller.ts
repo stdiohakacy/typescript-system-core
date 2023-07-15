@@ -3,6 +3,8 @@ import {
     Controller,
     Delete,
     Get,
+    HttpCode,
+    HttpStatus,
     Param,
     Patch,
     Post,
@@ -12,6 +14,7 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import {
     Response,
+    ResponseFile,
     ResponsePaging,
 } from '../../../common/response/decorators/response.decorator';
 import {
@@ -23,6 +26,7 @@ import {
     UserAdminActiveDoc,
     UserAdminBlockedDoc,
     UserAdminCreateDoc,
+    UserAdminExportDoc,
     UserAdminForceDeleteDoc,
     UserAdminGetDoc,
     UserAdminImportDoc,
@@ -85,7 +89,10 @@ import { FileValidationPipe } from '../../../common/file/pipes/file.validation.p
 import { UserImportDTO } from '../dtos/user.import.dto';
 import { IFileExtract } from '../../../common/file/interfaces/file.interface';
 import { UserImportCommand } from '../commands/user.import.command';
-import { UploadFileSingle } from 'src/common/file/decorators/file.decorator';
+import { UploadFileSingle } from '../../../common/file/decorators/file.decorator';
+import { DocResponseFile } from '../../../common/doc/decorators/doc.decorator';
+import { ENUM_HELPER_FILE_TYPE } from 'src/common/helper/constants/helper.enum.constant';
+import { UserExportCommand } from '../commands/user.export.command';
 
 @ApiTags('modules.admin.user')
 @Controller({
@@ -277,5 +284,21 @@ export class UserAdminController {
         file: IFileExtract<UserImportDTO>
     ): Promise<void> {
         return await this.commandBus.execute(new UserImportCommand(file));
+    }
+
+    @UserAdminExportDoc()
+    @ResponseFile({
+        serialization: UserListSerialization,
+        fileType: ENUM_HELPER_FILE_TYPE.CSV,
+    })
+    // @PolicyAbilityProtected({
+    //     subject: ENUM_POLICY_SUBJECT.USER,
+    //     action: [ENUM_POLICY_ACTION.READ, ENUM_POLICY_ACTION.EXPORT],
+    // })
+    // @AuthJwtAdminAccessProtected()
+    @HttpCode(HttpStatus.OK)
+    @Post('/export')
+    async export(): Promise<IResponse> {
+        return await this.commandBus.execute(new UserExportCommand());
     }
 }

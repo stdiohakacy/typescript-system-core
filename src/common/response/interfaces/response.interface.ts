@@ -50,3 +50,11 @@ export interface IResponsePaging {
 export interface IResponseExcel {
     data: IHelperFileRows[];
 }
+
+export interface IResponseFile {
+    data: IHelperFileRows[];
+}
+
+export interface IResponseFileOptions<T> extends IResponseOptions<T> {
+    fileType?: ENUM_HELPER_FILE_TYPE;
+}
